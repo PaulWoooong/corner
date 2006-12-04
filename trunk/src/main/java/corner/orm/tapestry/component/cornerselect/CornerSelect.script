@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!DOCTYPE script PUBLIC
+  "-//Apache Software Foundation//Tapestry Script Specification 3.0//EN"
+  "http://jakarta.apache.org/tapestry/dtd/Script_3_0.dtd">
+<script>
+<input-symbol key="id" required="yes" />
+<input-symbol key="props" required="yes" />
+<input-symbol key="form" required="yes" />
+    <body>
+        <unique>
+            dojo.require("dojo.io");
+            dojo.require("dojo.event");
+            dojo.require("dojo.widget.Manager");
+            dojo.require("dojo.widget.Select");
+            
+            dojo.require("tapestry.widget.*");
+        </unique>
+    </body>
+    <initialization>
+        var ${id}prop=${props};
+        tapestry.widget.synchronizeWidgetState("${id}", "Select", ${id}prop);
+        var ${id}CornerSelect =dojo.widget.byId(${id}prop["widgetId"]);
+        //取得domNode的样式类.
+		var textInputClass =dojo.html.getClass(${id}CornerSelect.domNode);
+		var width=dojo.style.getContentWidth(${id}CornerSelect.domNode);
+
+        //删除domNode的样式.
+        dojo.html.removeClass(${id}CornerSelect.domNode,textInputClass,false);
+
+        //替换TextInputNode的样式为源节点的样式
+        dojo.html.replaceClass(${id}CornerSelect.textInputNode,textInputClass,"dojoComboBoxInput");
+        dojo.debug(${id}CornerSelect.textInputNode.style.width);
+        //设定widget中table的样式
+        //dojo.html.replaceClass(${id}CornerSelect.cbTableNode,textInputClass,"dojoComboBox");
+        
+        ${id}CornerSelect["optionsListWrapper"].style.textAlign ="left";
+        
+        ${id}CornerSelect.downArrowNode.style.verticalAlign="middle";
+        ${id}CornerSelect.textInputNode.style.verticalAlign="middle";
+        dojo.style.setContentWidth(${id}CornerSelect.domNode,width);
+        //设定widget中table的边框
+        ${id}CornerSelect.cbTableNode.style.border="none";
+        dojo.debug(${id}prop["cnlabel"]);
+        dojo.debug(${id}prop["value"]);
+        if (${id}prop["cnlabel"] &amp;&amp; ${id}prop["value"]){
+            ${id}CornerSelect.setValue(${id}prop["value"]);
+            ${id}CornerSelect.setLabel(${id}prop["cnlabel"]);
+        }
+    </initialization>
+</script>

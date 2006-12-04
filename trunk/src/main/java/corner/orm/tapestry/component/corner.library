@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+  copyright:	Beijing Maxinfo Technology Ltd. http://www.bjmaxinfo.com
+-->
+
+<!DOCTYPE library-specification PUBLIC 
+  "-//Apache Software Foundation//Tapestry Specification 4.0//EN" 
+  "http://jakarta.apache.org/tapestry/dtd/Tapestry_4_0.dtd">
+	
+<library-specification>
+
+  <meta key="org.apache.tapestry.component-class-packages" value="corner.orm.component.component"/>
+
+  
+  <component-type type="DropdownMenu" specification-path="menu/DropdownMenu.jwc"/>
+  <component-type type="SlideMenu" specification-path="menu/SlideMenu.jwc"/>
+
+  <component-type type="TabContainer" specification-path="tab/TabContainer.jwc"/>
+  <component-type type="ContentPane" specification-path="tab/ContentPane.jwc"/>
+  <component-type type="UpdateSelect" specification-path="select/UpdateSelect.jwc"/>
+  <component-type type="TextAreaBox" specification-path="textareabox/TextAreaBox.jwc"/>
+  <component-type type="CornerSelect" specification-path="cornerselect/CornerSelect.jwc"/>
+  <component-type type="MagicField" specification-path="magic/FormField.jwc"/>
+  <component-type type="RadioGroup" specification-path="radio/RadioGroup.jwc"/>
+  <component-type type="TextField" specification-path="textfield/TextField.jwc"/>
+  <component-type type="PropertySelection" specification-path="propertyselection/PropertySelection.jwc"/>
+  <component-type type="GoAnchor" specification-path="anchor/GoAnchor.jwc"/>
+  <component-type type="Insert" specification-path="insert/Insert.jwc"/>
+  <component-type type="Selector" specification-path="select/Selector.jwc"/>
+
+  <component-type type="MatrixHead" specification-path="matrix/MatrixHead.jwc"/>
+  <component-type type="MatrixRowField" specification-path="matrix/MatrixRowField.jwc"/>
+  
+</library-specification>

@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<TITLE>对查询的页面的支持 </TITLE>
+<META NAME="Generator" CONTENT="EditPlus">
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+
+djConfig = { isDebug: true,
+               baseRelativePath: "../../../../main/js/dojo",
+               preventBackButtonFix: false,
+               parseWidgets: false
+          };
+
+//-->
+</SCRIPT>
+<SCRIPT LANGUAGE="JavaScript" src="../../../../main/js/dojo/dojo.js"></script>
+<SCRIPT LANGUAGE="JavaScript" src="../../../../main/js/corner/corner.js"></script>
+
+
+<script>
+<!--
+
+dojo.require("corner.widget.QueryBox");
+
+dojo.addOnLoad(function(){
+		dojo.widget.createWidget("corner:QueryBox",{widgetId:"testQ",url:"querybox_page.html"},dojo.byId("testQ"));
+	});
+
+//-->
+</script>
+</HEAD>
+<BODY>
+<pre>
+对选择的时候，支持查询的widget。
+在查询的时候,支持弹出层的页面跳转，以及对查询页面的缓存.
+TODO:
+    增强美观
+</pre>
+<input id="testQ" ></div>
+$Id$
+</body>
+</html>

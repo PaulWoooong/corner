@@ -1,0 +1,12 @@
+<module id="corner.validator" version="1.0.0"
+	package="corner.orm.tapestry.validator">
+	
+	<!--  validator -->
+	<contribution configuration-id="tapestry.form.validator.Validators">
+		<validator name="numPattern" class="NumPattern"/>
+		<validator name="uniqueEntity" class="UniqueEntity"/>
+		<validator name="fieldMin" class="FieldMin"/>
+		<validator name="fieldPlusEq" class="FieldPlusEq"/>
+		<validator name="personID" class="PersonID" configurable="false"/>
+	</contribution>
+</module>
