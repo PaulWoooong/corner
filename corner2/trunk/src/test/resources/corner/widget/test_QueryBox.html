@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<TITLE>对查询的页面的支持 </TITLE>
+<META NAME="Generator" CONTENT="EditPlus">
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+
+djConfig = { isDebug: true,
+               baseRelativePath: "../../../../main/js/dojo",
+               preventBackButtonFix: false,
+               parseWidgets: false
+          };
+
+//-->
+</SCRIPT>
+<SCRIPT LANGUAGE="JavaScript" src="../../../../main/js/dojo/dojo.js"></script>
+<SCRIPT LANGUAGE="JavaScript" src="../../../../main/js/tapestry/core.js"></script>
+<script type="text/javascript">
+dojo.require("dojo.logging.Logger");
+dojo.log.setLevel(dojo.log.getLevel("WARNING"));
+dojo.require("tapestry.namespace")
+</script>
+	
+<SCRIPT LANGUAGE="JavaScript" src="../../../../main/js/corner/corner.js"></script>
+</HEAD>
+<BODY>
+<script type="text/javascript"><!--
+
+
+        
+            dojo.require("dojo.widget.Manager");
+            dojo.require("tapestry.widget.Widget");
+            dojo.require("corner.widget.QueryBox");
+        
+    
+
+// --></script>
+
+
+<form method="post" action="/widget/QueryBoxTest,AForm.direct" id="AForm">
+<div style="display:none;" id="AFormhidden"><input type="hidden" name="formids" value="queryBoxField"/>
+<input type="hidden" name="submitmode" value=""/>
+<input type="hidden" name="submitname" value=""/>
+</div>
+
+	<input type="text" name="queryBoxField" value="" id="queryBoxField"/>
+	<br/>
+	<input type="submit"/>
+</form>	
+<script>
+<!--
+
+/*
+dojo.event.connect("after",window,"onload",function(e) {
+	 w=dojo.widget.byId("queryBoxField");
+	 dojo.event.connect(w,"processSelectedObj",dojo.lang.hitch(w,function(obj){
+			dojo.debug(obj.getAttribute("label"));
+			dojo.debug(this.inputNode);
+			this.inputNode.value=obj.getAttribute("label");
+		}));
+	
+	});
+*/
+//-->
+</script>
+
+<!--
+<div jwcid="@contrib:InspectorButton"/>
+-->
+<br/>
+<span>Version:0.0.1  $Revision: 3677 $ $Date: 2007-11-14 12:36:40 +0800 (星期三, 14 十一月 2007) $ </span>
+<script type="text/javascript"><!--
+dojo.event.connect("before",window,"onload",function(e) {
+dojo.require("tapestry.form");tapestry.form.registerForm("AForm");
+
+        var queryBoxFieldprop={"widgetId":"queryBoxField","inputId":"queryBoxField","inputName":"queryBoxField","url":"querybox_page.html"};
+        tapestry.widget.synchronizeWidgetState("queryBoxField", "corner:QueryBox", queryBoxFieldprop);
+    
+tapestry.form.focusField('queryBoxField');
+tapestry.form.clearProfiles('AForm'); tapestry.form.registerProfile('AForm',{"required":["queryBoxField"],"queryBoxField":{"required":["请输入[NAME]的内容。"]}});
+});
+// --></script>
+</body>
+</html>

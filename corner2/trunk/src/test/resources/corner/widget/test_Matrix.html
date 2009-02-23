@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<TITLE> 对二维表的展现进行测试</TITLE>
+<META NAME="Generator" CONTENT="EditPlus">
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+
+djConfig = { isDebug: true,
+               baseRelativePath: "../../../../main/js/dojo",
+               preventBackButtonFix: false,
+               parseWidgets: false
+          };
+
+//-->
+</SCRIPT>
+<SCRIPT LANGUAGE="JavaScript" src="../../../../main/js/dojo/dojo.js"></script>
+<SCRIPT LANGUAGE="JavaScript" src="../../../../main/js/corner/corner.js"></script>
+
+
+<script>
+<!--
+
+dojo.require("corner.widget.Matrix");
+
+dojo.addOnLoad(function(){
+		dojo.widget.createWidget("corner:Matrix",{},dojo.byId("testMatrix"));
+	});
+
+//-->
+</script>
+</HEAD>
+<BODY>
+<p>
+    <pre>
+对二维表展现的测试，下面可以动态的增加行和列，上面的TextArea为对应的值.
+下面的一行对应数据库的是一条记录。目前记录这些值采用一个字段，存储的类型为向量(java.util.Vector).
+
+TODO:
+    在增加的时候可以支持拖拽(DND)。 
+    对填入的数据进行客户端的验证.   
+    </pre>
+</p>
+<div id="testMatrix" ></div>
+$Id: test_Matrix.html 4082 2008-06-19 05:01:08Z jcai $
+</body>
+</html>

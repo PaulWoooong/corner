@@ -1,0 +1,87 @@
+<html>
+<head>
+<title>Dialog Widget Dojo Tests</title>
+<script type="text/javascript"> djConfig = { isDebug: true }; </script>
+<SCRIPT LANGUAGE="JavaScript" src="../../../../main/js/dojo/dojo.js"></script>
+<script type="text/javascript">
+	dojo.require("dojo.widget.Dialog");
+
+</script>
+<SCRIPT>
+var width=0;
+	dojo.addOnLoad(function(e){
+	
+	
+	dlg = dojo.widget.createWidget("Dialog",{},dojo.byId("DialogContent"));
+	dojo.debug(dlg);
+	dlg.domNode.style.width=(width+30);
+
+	var btn = dojo.byId("hider");
+	dlg.setCloseControl("hider");
+	dojo.byId('contentFRM').onload = new Function("autofitIframe()");
+
+	});
+	
+</script>
+	<script type="text/javascript">
+function autofitIframe(id){
+
+	dojo.debug("autofit");
+	height=dojo.html.iframeContentDocument(dojo.byId('contentFRM')).body.offsetHeight+"px";
+dojo.debug("height"+height);
+		this.iframe=dojo.html.iframeContentDocument(dojo.byId('contentFRM'));
+		dojo.debug("scroll width"+this.iframe.body.scrollWidth);
+		width=this.iframe.body.scrollWidth;
+		dojo.byId('contentFRM').style.width='100%';
+		dojo.debug("dojo.html.getContentBox():"+dojo.html.getBorderBox(this.iframe.body).width);
+		
+
+
+}
+</script>
+<style type="text/css">
+body { font-family : sans-serif; }
+.dojoDialog {
+	background : #eee;
+	border : 1px solid #999;
+	-moz-border-radius : 5px;
+	padding : 4px;
+}
+
+form {
+	margin-bottom : 0;
+}
+
+</style>
+	
+</head>
+<body>
+
+<a href="javascript:dlg.show()">Show Dialog</a><br>
+
+我们中国人
+
+<div id="DialogContent" >
+	<input type="button" id="hider" value="hide dialog"/><br/>
+	<iframe id="contentFRM" name="contentFRM" onload="autofitIframe('contentFRM')"  src="querybox_page2.html"  marginwidth="0" marginheight="0" scrolling="auto" frameborder="0"/>
+	
+	<br/>
+</div>
+<select>
+	<option>Lorem</option>
+	<option>ipsum</option>
+	<option>dolor</option>
+	<option>sit</option>
+	<option>amet</option>
+</select>
+
+<p>
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
+semper sagittis velit. Cras in mi. Duis porta mauris ut ligula. Proin
+porta rutrum lacus. Etiam consequat scelerisque quam. Nulla facilisi.
+Maecenas luctus venenatis nulla. In sit amet dui non mi semper iaculis.
+Sed molestie tortor at ipsum. Morbi dictum rutrum magna. Sed vitae
+risus.
+</p>
+</body>
+</html>

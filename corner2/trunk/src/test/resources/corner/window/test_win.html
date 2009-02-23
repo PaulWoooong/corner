@@ -1,0 +1,177 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<TITLE>对查询的页面的支持 </TITLE>
+<META NAME="Generator" CONTENT="EditPlus">
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+<link href="../../../../main/js/corner/prototype/window/themes/default.css" rel="stylesheet" type="text/css" >	 </link>
+<link href="../../../../main/js/corner/prototype/window/themes/alphacube.css" rel="stylesheet" type="text/css" >	 </link>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+djConfig = { isDebug: true,
+               baseRelativePath: "../../../../main/js/dojo",
+               preventBackButtonFix: false,
+               parseWidgets: false
+          };
+//-->
+</SCRIPT>
+
+<SCRIPT LANGUAGE="JavaScript" src="../../../../main/js/dojo/dojo.js"></script>
+<SCRIPT LANGUAGE="JavaScript" src="../../../../main/js/tapestry/core.js"></script>
+
+
+<script type="text/javascript">
+dojo.require("dojo.html.iframe");
+dojo.require("dojo.html.layout");
+</script>
+	
+<SCRIPT LANGUAGE="JavaScript" src="../../../../main/js/corner/corner.js"></script>
+<style>
+.menu-normal {
+	background-image: url(../image/sample_3.jpg);
+	background-repeat: no-repeat;
+	background-position: left bottom;
+	white-space: nowrap;
+	height: 30px;
+	width: 80px;
+	text-align: center;
+	cursor: pointer ;
+}
+.menu-selected {
+	background-image: url(../image/sample_1.jpg);
+	background-repeat: no-repeat;
+	background-position: left bottom;
+	white-space: nowrap;
+	height: 30px;
+	width: 80px;
+	text-align: center;
+	text-indent: 4px;
+
+}
+.menu-selected-after {
+	background-image: url(../image/sample_2.jpg);
+	background-repeat: no-repeat;
+	background-position: left bottom;
+	white-space: nowrap;
+	height: 30px;
+	width: 80px;
+	text-align: center;
+
+}
+.menu-table{
+	height:30px;
+	width:960px;
+	text-align: center;
+	font-size: 12px;
+	color: #000000;
+
+}
+.popMenuDiv,#popMenuDiv{
+	position: absolute;
+	background-color: white;
+	border:1px solid black;
+	font: normal 12px Verdana;
+}
+
+
+#popMenuDiv  a,.popMenuDiv a{
+	font-size:12px;
+	text-decoration: none;
+	padding-left: 6px;
+	color: black;
+	display: block;
+}
+
+#popMenuDiv a:hover,.popMenuDiv a:hover{ 
+	background-color: #CCFF9D;
+}
+.popDiv,#popDiv{
+	position: absolute;
+	background-color:#FFFF99;
+	border:1px solid black;
+	font: normal 12px Verdana;
+	color:#FF0000;
+}
+
+
+#popDiv  a,.popDiv a{
+	font-size:12px;
+	text-decoration: none;
+	padding-left: 6px;
+	color: black;
+	display: block;
+}
+
+#popDiv a:hover,.popDiv a:hover{ 
+	background-color: #CCFF9D;
+}
+</style>
+</HEAD>
+
+<body bottommargin="0" rightmargin="0" topmargin="0" leftmargin="0" id="Body">
+<script type="text/javascript" src="../../../../main/js/corner/prototype/window/javascripts/prototype.js"> </script> 
+<script type="text/javascript" src="../../../../main/js/corner/prototype/window/javascripts/effects.js"> </script>
+<script type="text/javascript" src="../../../../main/js/corner/prototype/window/javascripts/window.js"> </script>
+<script type="text/javascript" src="../../../../main/js/corner/prototype/window/javascripts/window_effects.js"> </script>
+<script type="text/javascript" src="../../../../main/js/corner/prototype/cornerBuilder.js"> </script>
+<script type="text/javascript" src="../../../../main/java/corner/orm/tapestry/component/prototype/window/fade.js"> </script>
+<script type="text/javascript" src="../../../../main/java/corner/orm/tapestry/component/prototype/window/WindowQueryDialog.js"> </script>
+
+
+<form method="post" action="/widget/QueryDialogTest,AForm.direct" id="AForm">
+	<span id="winDialog">
+	<img name="pwin_winDialog_button" id="pwin_winDialog_button" src="../../../../main/js/corner/widget/templates/dic.gif" border="0" /></span>
+	<div id="test" style="FILTER: alpha(opacity=0);" class="popDiv">fjdskajfdksjl</div><br/>
+	<br>
+	
+	<input id="testddd" />
+	<input type="submit"/>
+</form>	
+<script>
+<!--
+function selectRecord(obj,fieldElement){
+	dojo.byId('testddd').value=obj.getAttribute("label");
+}
+
+function queryDialogLoad(obj,fieldElement){
+   
+    var queryBox = eval(obj);
+    queryBox.maps["aa"] = "aa";
+    queryBox.maps["bb"] = "bb";
+    queryBox.maps["cc"] = "cc";
+    
+    for(var key in queryBox.maps){
+       dojo.debug("key is: "+key);
+       dojo.debug("value is: "+queryBox.maps[key]);
+    }
+    
+}
+function aaa(){
+	alert("11111111111");
+}
+
+//-->
+</script>
+
+<!--
+<div jwcid="@contrib:InspectorButton"/>
+-->
+
+<br/>
+<span>Version:0.0.1  $Revision: 4349 $ $Date: 2009-02-03 09:15:53 +0800 (星期二, 03 二月 2009) $ </span>
+<script type="text/javascript"><!--
+	
+	new WindowQueryDialogAction($("pwin_winDialog_button"),{"className":"alphacube","title":"google",
+									   "url":"haha.html","top ":"0","right":"0","width":"500","height":"300",
+									   "maxWidth":"none","maxHeight":"none","minWidth ":"500","minHeight":"300",
+									   "resizable":"true","closable":"true","minimizable":"true","maximizable":"true",
+									   "draggable":"true","showEffectOptions":"none","hideEffectOptions":"none","effectOptions":"none",
+									   "opacity":1,"recenterAuto":"true","gridX":1,"gridY":1,"wiredDrag":"false",
+									   "destroyOnClose":"false","all callbacks":"none"},"selectRecord","queryDialogLoad",true,"test","aaa");
+	
+// --></script></body>
+</html>
+<!-- Render time: ~ 922 ms -->
+
+

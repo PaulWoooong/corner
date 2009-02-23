@@ -1,0 +1,43 @@
+
+<html>
+<head>
+<title>Dojo ComboBox Widget Demo</title>
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+
+djConfig = { isDebug: true,
+               baseRelativePath: "../../../../main/js/dojo",
+               preventBackButtonFix: false,
+               parseWidgets: false
+          };
+
+//-->
+</SCRIPT>
+<SCRIPT LANGUAGE="JavaScript" src="../../../../main/js/dojo/dojo.js"></script>
+<SCRIPT LANGUAGE="JavaScript" src="../../../../main/js/corner/corner.js"></script>
+
+</head>
+<body style="width:100px;overflow-x:hidden">
+<br/><br/><br/><br/>
+			<input type="radio" label='���ѽ' id='SelectedField' /> r1
+
+
+<!--
+<div jwcid="@contrib:InspectorButton"/>
+-->
+<br/>
+<span>Version:0.0.1  $Revision: 3677 $ $Date: 2007-11-14 12:36:40 +0800 (星期三, 14 十一月 2007) $ </span>
+<script type="text/javascript"><!--
+dojo.event.connect("before",window,"onload",function(e) {
+
+
+dojo.debug("init selected field");
+dojo.event.connect(dojo.byId("SelectedField"),"onclick",function(evt){
+	var src=dojo.html.getEventTarget(evt);
+	dojo.debug("event"+evt+" src:"+src+" querybox: "+queryBox);
+	queryBox.onSelect(src);
+});  
+
+});
+// --></script></body>
+</html>

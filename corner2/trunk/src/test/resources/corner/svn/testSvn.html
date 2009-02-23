@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+        "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>test sun</title>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+
+djConfig = { isDebug: true
+          };
+
+//-->
+</SCRIPT>
+	
+<link rel="stylesheet" type="text/css" media="all" href="../../../../main/java/corner/orm/tapestry/component/insert/prototip/prototip.css" />
+<link rel="stylesheet" type="text/css" media="all" href="../../../../main/webapp/css/sandbox.css" />
+<SCRIPT LANGUAGE="JavaScript" src="../../../../main/js/dojo/dojo.js"></script>
+<SCRIPT LANGUAGE="JavaScript" src="../../../../main/js/corner/corner.js"></script>
+<SCRIPT LANGUAGE="JavaScript" src="../../../../main/js/corner/prototype/window/javascripts/prototype.js"></script>
+<SCRIPT LANGUAGE="JavaScript" src="../../../../main/java/corner/orm/tapestry/component/insert/prototip/prototip.js"></script>
+<SCRIPT LANGUAGE="JavaScript" src="../../../../main/java/corner/orm/tapestry/component/insert/VersionInsert.js"></script>
+<script LANGUAGE="JavaScript" src="../../../../main/java/corner/orm/tapestry/component/insert/XinDiff.js"></script>
+
+</head>
+
+<body>
+	
+ <span class="diff">
+  <span id="legend">
+   <dl>
+    <dt class="add"></dt><dd>Added</dd>
+    <dt class="mod"></dt><dd>Modified</dd>
+    <dt class="cp"></dt><dd>Copied or renamed</dd>
+   </dl>
+  </span>
+ </span>
+<br><br><br><br><br>
+<span class="view"><del>deleted</del> <ins>inserted</ins> <span>same</span></span><br>
+增加：<span id ="addField" >dsadsa</span><br>
+不同的：<span class="view" id ="addField_diff" >dsadsa</span><br>
+<input class="button" type="submit" name="fds" value="side by side"  onclick="VersionInserts.resetTips();" />
+
+<input class="button" type="submit" name="ggg" value="inline" onclick="VersionInserts.closeTips();"/>
+
+<a id="reset" onclick="VersionInserts.resetTips();">reset</a><br>
+
+<a id="destroy" onclick="VersionInserts.closeTips();">destroy</a><br>
+
+<input id="otherVer_hid" type="hidden" value="555"/>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+var flags = eval({"entity":{"id":"test01","name":"0.0"}});
+var flags2 = eval({"entity":{"id":"test01","name":"0.0"}});
+var type ="show1";
+	
+dojo.event.connect(window,"onload",this,"add");
+add=function(evt){
+	new VersionInsert("addField",flags,flags2,"entity","name",type);
+}
+
+//-->
+</SCRIPT>
+	
+</body>
+
+</html>

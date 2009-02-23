@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="Untitled_report_2"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Portrait"
+		 pageWidth="595"
+		 pageHeight="842"
+		 columnWidth="535"
+		 columnSpacing="0"
+		 leftMargin="30"
+		 rightMargin="30"
+		 topMargin="20"
+		 bottomMargin="20"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<parameter name="entity" isForPrompting="true" class="java.lang.String"/>
+
+	<parameter name="Atest.jasper" class="java.io.InputStream"/>
+	<parameter name="Btest.jasper" class="java.io.InputStream"/>
+
+	<field name="subdataSource" class="net.sf.jasperreports.engine.JRDataSource">
+		<fieldDescription><![CDATA[ognl:subdataSource]]></fieldDescription>
+	</field>
+	<field name="subdataSourceA" class="net.sf.jasperreports.engine.JRDataSource">
+		<fieldDescription><![CDATA[ognl:subdataSourceA]]></fieldDescription>
+	</field>
+
+		<background>
+			<band height="500"  isSplitAllowed="true" >
+				<subreport  isUsingCache="true">
+					<reportElement
+						x="65"
+						y="261"
+						width="407"
+						height="194"
+						key="subreport-2"/>
+					<dataSourceExpression><![CDATA[$F{subdataSource}]]></dataSourceExpression>
+					<subreportExpression  class="java.io.InputStream"><![CDATA[$P{Atest.jasper}]]></subreportExpression>
+				</subreport>
+				<subreport  isUsingCache="true">
+					<reportElement
+						x="65"
+						y="29"
+						width="406"
+						height="186"
+						key="subreport-3"/>
+					<dataSourceExpression><![CDATA[$F{subdataSourceA}]]></dataSourceExpression>
+					<subreportExpression  class="java.io.InputStream"><![CDATA[$P{Btest.jasper}]]></subreportExpression>
+				</subreport>
+				<line direction="TopDown">
+					<reportElement
+						x="10"
+						y="235"
+						width="505"
+						height="0"
+						key="line-1"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+			</band>
+		</background>
+		<title>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</title>
+		<pageHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>

@@ -1,0 +1,9 @@
+<ul><li><span class="returnValue" style="display:none"><script type="text/javascript"><!--
+	{"updateField1":"CustomIdField","updateField2":"squeezer object"}
+	// --></script>
+</span><span class="selectme">value1</span></li>
+<li><span class="returnValue" style="display:none"><script type="text/javascript"><!--
+	{"updateField1":"CustomIdField","updateField2":"squeezer object"}
+	// --></script>
+</span><span class="selectme">value2</span></li>
+</ul>

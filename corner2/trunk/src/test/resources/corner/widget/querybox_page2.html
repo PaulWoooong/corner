@@ -1,0 +1,112 @@
+
+<html>
+<head>
+<title>Dojo ComboBox Widget Demo</title>
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+
+djConfig = { isDebug: true,
+               baseRelativePath: "../../../../main/js/dojo",
+               preventBackButtonFix: false,
+               parseWidgets: false
+          };
+
+
+//-->
+</SCRIPT>
+<SCRIPT LANGUAGE="JavaScript" src="../../../../main/js/dojo/dojo.js"></script>
+<SCRIPT LANGUAGE="JavaScript" src="../../../../main/js/corner/corner.js"></script>
+	<script>
+function autofitThis(){
+	parent.dojo.debug("auto fit this");
+dojo.debug("call form this");
+dojo.debug("width"+this.document.body.scrollWidth);
+
+}
+	dojo.addOnLoad(function(){
+		dojo.event.connect(dojo.byId('r1'),"onclick",function(evt){
+			var src=dojo.html.getEventTarget(evt);
+	dojo.debug("event"+evt+" src:"+src+" querybox: "+queryBox);
+	queryBox.onSelect(src);
+		});
+	});
+	</script>
+</head>
+<body >
+<div  style="width:532px">
+	<table >
+		<tr><td>asdfasdfasd fasdfasdfasdfasdf asdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdf我们</td><td>asdf wo </td></tr>
+	</table>
+<br/>
+	<a href="http://www.sina.com.cn">sina</a>
+	<form action="?testf=asdf">
+		<input type="text">
+
+		<input type="submit"/>
+	</form>
+			list:<br/>
+			<input type="radio"  name='r1' id='r1' /> r1
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+asdfasdf
+</div>
+</body>
+</html>

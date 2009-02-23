@@ -1,0 +1,200 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+        "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>test gainPoint</title>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+<script type="text/javascript" src="../../../../main/js/corner/prototype/window/javascripts/prototype.js"> </script>
+<SCRIPT LANGUAGE="JavaScript" src="../../../../main/java/corner/orm/tapestry/component/gain/GainPoint.js"></script>
+<SCRIPT LANGUAGE="JavaScript" src="moneyUtil.js"></script>
+
+<link href="../../../../main/js/corner/prototype/window/themes/default.css" rel="stylesheet" type="text/css" >	 </link>
+<link href="../../../../main/js/corner/prototype/window/themes/alphacube.css" rel="stylesheet" type="text/css" >	 </link>
+
+<link rel="stylesheet" type="text/css" media="all" href="../../../../main/webapp/css/sandbox.css" />
+<link rel="stylesheet" type="text/css" media="all" href="../../../../main/webapp/css/coolestCalendar/aqua/theme.css" title="Aqua" />
+<script type="text/javascript" src="../../../../main/java/corner/orm/tapestry/component/calendar/coolest/calendar.js"></script>
+
+<!-- import the language module -->
+<script type="text/javascript" src="../../../../main/java/corner/orm/tapestry/component/calendar/coolest/lang/calendar-en.js"></script>
+<script type="text/javascript" src="../../../../main/java/corner/orm/tapestry/component/calendar/coolest/lang/calendar-zh.js"></script>
+<script type="text/javascript" src="../../../../main/java/corner/orm/tapestry/component/calendar/coolest/calendar-setup.js"></script>
+
+
+<script type="text/javascript" src="../../../../main/js/corner/prototype/window/javascripts/effects.js"> </script>
+<script type="text/javascript" src="../../../../main/js/corner/prototype/window/javascripts/window.js"> </script>
+<script type="text/javascript" src="../../../../main/js/corner/prototype/window/javascripts/window_effects.js"> </script>
+<script type="text/javascript" src="../../../../main/js/corner/prototype/cornerBuilder.js"> </script>
+<script type="text/javascript" src="../../../../main/java/corner/orm/tapestry/component/prototype/window/fade.js"> </script>
+<script type="text/javascript" src="../../../../main/java/corner/orm/tapestry/component/prototype/window/WindowQueryDialog.js"> </script>
+<script type="text/javascript" src="../../../../main/java/corner/orm/tapestry/component/prototype/window/LeftTreeDialog.js"> </script>
+
+<script type="text/javascript" src="../../../../main/js/corner/prototype/window/javascripts/controls.js"> </script>
+<SCRIPT LANGUAGE="JavaScript" src="../../../../main/java//corner/orm/tapestry/component/prototype/autocompleter/autocompleter.js"></script>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+djConfig = { isDebug: true,
+               baseRelativePath: "../../../../main/js/dojo",
+               preventBackButtonFix: false,
+               parseWidgets: false
+          };
+//-->
+</SCRIPT>
+
+<SCRIPT LANGUAGE="JavaScript" src="../../../../main/js/dojo/dojo.js"></script>
+<SCRIPT LANGUAGE="JavaScript" src="../../../../main/js/corner/corner.js"></script>
+<SCRIPT LANGUAGE="JavaScript" src="../../../../main/js/tapestry/core.js"></script>
+<SCRIPT LANGUAGE="JavaScript" src="../../../../main/java/corner/orm/tapestry/component/gain/GPCalendar.js"></script>
+<SCRIPT LANGUAGE="JavaScript" src="../../../../main/java/corner/orm/tapestry/component/gain/GPWinDialog.js"></script>
+<SCRIPT LANGUAGE="JavaScript" src="../../../../main/java/corner/orm/tapestry/component/gain/GPAutocompleter.js"></script>
+
+<style>
+.popMenuDiv,#popMenuDiv{
+	position: absolute;
+	background-color: white;
+	border:1px solid black;
+	font: normal 12px Verdana;
+}
+
+
+#popMenuDiv  a,.popMenuDiv a{
+	font-size:12px;
+	text-decoration: none;
+	padding-left: 6px;
+	color: black;
+	display: block;
+}
+
+#popMenuDiv a:hover,.popMenuDiv a:hover{ 
+	background-color: #CCFF9D;
+}
+.popDiv,#popDiv{
+	position: absolute;
+	background-color:#FFFF99;
+	border:1px solid black;
+	font: normal 12px Verdana;
+	color:#FF0000;
+}
+
+
+#popDiv  a,.popDiv a{
+	font-size:12px;
+	text-decoration: none;
+	padding-left: 6px;
+	color: black;
+	display: block;
+}
+
+#popDiv a:hover,.popDiv a:hover{ 
+	background-color: #CCFF9D;
+}
+</style>
+
+</head>
+
+<body>
+<form id="BForm">
+	增加一行<a href=# onclick="gp.addRow()"><img src="../../../../main/webapp/images/add.png" border="0"/></a> <div id="caps"></div><br/>
+	增加多行<a href=# onclick="gp.addRows()">adds</a><br/>
+	删除最后一行<a href=# onclick="gp.delLastRow()""><img src="../../../../main/webapp/images/cancel.png" border="0"/></a><br/>
+      <table id="t">
+		<tr jwcid="GainPointIdField">
+			<td style="width:3%">
+				id<input type="text" name ="poid" value="fjkdsajfldsu4o329048347832012j4kl48" />
+			</td>
+			<td style="width:5%">
+				日期 
+				  <input id="field1" type="text" name="name" onclick="return showCalendar(this, '%Y-%m-%d', true);" style="width:80%"/>
+			</td>
+			<td style="width:5%">
+				金额 
+				  <input id="field1" type="text" name="cnName" onchange="calc()" style="width:80%" />
+			</td>
+            <td style="width:5%">
+				弹出选择 <input type="text" name="show" value=""/>
+			</td>
+			<td>
+				弹出Tree <input type="text" name="tree" value=""/>
+			</td>
+			<td>
+				AutoEva <input type="text" name="area" value=""/>
+			</td>
+			<td>是否采用
+			  <input name="subsidy_check" type="checkbox"  onclick="checkHidField('subsidy',this)" />
+				<input type="hidden" name="subsidy" value=""/>
+			</td>
+	  <td>
+				<a href=# onclick="gp.delRowById(this)"><img src="../../../../main/webapp/images/cancel.png" border="0"/></a>
+			</td>
+		</tr>
+	</table>
+	
+	<span id="winDialog">
+	<img name="pwin_winDialog_button" id="pwin_winDialog_button" src="../../../../main/js/corner/widget/templates/dic.gif" border="0" />
+	</span>
+	<div id="test" style="FILTER: alpha(opacity=0);" class="popDiv">fjdskajfdksjl</div><br/>
+	<br>
+	
+	<input id="testddd" />
+	<input type="submit" />
+</form>
+
+<a href=# onclick="gp.init()">reElementValues1</a><br />
+
+<script>
+<!--
+function selectRecord(obj,fieldElement){
+	dojo.byId('testddd').value=obj.getAttribute("label");
+	fieldElement.value="label";
+}
+
+function selectRecordShow(obj,fieldElement){
+	dojo.debug(obj.getAttribute("treeName"));
+	fieldElement.value=obj.getAttribute("treename");
+}
+
+function aaa(){
+	alert("11111111111");
+}
+
+//-->
+</script>
+
+<script type="text/javascript">
+dojo.require("dojo.html.iframe");
+dojo.require("dojo.html.layout");
+</script>
+
+<script type="text/javascript">
+<!--
+	dojo.require("dojo.math");
+	//var gp = new GainPoint("t","poid",4,{"poid":["282828c11361334801136133f7cd0002","282828c11361334801136133f7cd0003","282828c113613348011361345cc00006","282828c113613348011361345cc00007"],"name":["1","z","5","6"],"cnName":["q","x","p","o"],"show":[null,"","on",""],"subsidy":[null,null,"on",null]},['subsidy']);
+	
+	var gp = new GainPoint("t","poid",4,{},[],{"area":"autoEva","show":"popWin","tree":"popTree"});
+	
+	calc=function(){
+		var elements = document.getElementsByName("cnName");
+		var money=0;
+		for (var i=0;i<elements.length;i++){
+			money +=getNumber(elements[i].value);
+		}
+		dojo.debug("money  = " + money);
+		dojo.byId('caps').innerHTML = "<font color='#FF0000'>"+changeToBig(money)+"</font>";
+	}
+	
+	function popWin(element){
+		initWindowDialog(element,"google","pop.html","selectRecord");
+	}
+	
+	function popTree(element){
+		initWindowDialog(element,"google","../window/tree/tree.html","selectRecordShow","我是树","com.xf.com",{},"page");
+	}
+	
+	function autoEva(element){
+		initAutocompleter(element,"elementId","../autocompleter/test.txt","../../../../main/java/corner/orm/tapestry/component/prototype/autocompleter/indicator.gif");
+	}
+// --></script>
+</body>
+
+</html>
