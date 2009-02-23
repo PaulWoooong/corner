@@ -1,0 +1,49 @@
+<span jwcid="@DemoBorder">
+    <a listener="listener:doCancelEntityAction" jwcid="@DirectLink" href="BList.html">Return </a>
+    
+    <form jwcid="BForm" action="BList.html">
+    	<span  style="display:none">
+        <span jwcid="addressField"></span>
+        </span>
+		增加 <a href=# onclick="GainPointField_0_fun.addRow()"><img src="../images/add.png" border="0"/></a><br/>
+      <table id="t">
+		 
+		<tr jwcid="GainPointField">
+			<td>
+				id <input type="hidden" name ="poid" value=""	/>
+			</td>
+			<td>
+				name <input type="text" name ="name" onclick="return showCalendar(this, '%Y-%m-%d', true);"/>
+			</td>
+			<td>
+				cnName <input type="text" name ="cnName" />
+			</td>
+			<td>
+				address <input type="text" name ="address" />
+			</td>
+			<td>
+				<a href=# onclick="GainPointField_0_fun.delRowById(this)""><img src="../images/cancel.png" border="0"/>
+			</td>							
+		</tr>
+      </table>
+      <input jwcid="@Submit" type="Submit" value="message:button.Okay"/>
+      <input jwcid="@Any" type="Button" value="message:button.Cancel" onClick="javascript:tapestry.form.cancel(this.form);"/>
+    </form>
+<script type="text/javascript">
+	function selectRecord(obj,fieldElement){
+		fieldElement.value=obj.value;
+	}
+
+	function popWin(element){
+		var url = '<spen jwcid="@PageLink" page="widget/WinSelectionListPage" renderer="ognl:renderer"/>';
+		initWindowDialog(element,"test Title",url,"selectRecord");
+	}
+	
+	function autoEva(element){
+		var url = '<span jwcid="@Insert" value="ognl:autoEvaUrl" raw="true"></span>';
+		var picUrl = '<span jwcid="@Insert" value="ognl:indicatorAsset"></span>';
+		initAutocompleter(element,"addressField",url,picUrl);
+	}
+</script>
+    <br/>
+</span>

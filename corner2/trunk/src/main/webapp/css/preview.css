@@ -1,0 +1,51 @@
+	html {
+		overflow: hidden;
+	}
+	#box {
+		position: absolute;
+		background: #111;
+		border: gray solid 1px;
+		visibility: hidden;
+	}
+	#screen {
+		position: absolute;
+		left: 0px;
+		width: 100%;
+		top: 10%;
+		height: 80%;
+		background: #000;
+		border: gray solid 1px;
+	}
+	#box img  {
+		position: absolute;
+		border: gray solid 1px;
+		cursor: pointer;
+	}
+	#box span {
+		position: absolute;
+		color: #ccc;
+		font-family: verdana;
+		font-size: 12px;
+		width: 200px;
+	}
+	#box a {
+		text-decoration: none;
+		color:#ff8000;
+	}
+	#box a:hover	{
+		text-decoration: none;
+		background:#ff8000;
+		color:#ffffff;
+	}
+	#box a:visited {
+		text-decoration: none;
+		color:#ff8000;
+	}
+	#box a:visited:hover {
+		text-decoration: none;
+		background:#ff8000;
+		color:#ffffff;
+	}
+	#lnk {
+		visibility: hidden;
+	}

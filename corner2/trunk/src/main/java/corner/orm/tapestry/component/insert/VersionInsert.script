@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE script PUBLIC
+	"-//Apache Software Foundation//Tapestry Script Specification 3.0//EN"
+	"http://jakarta.apache.org/tapestry/dtd/Script_3_0.dtd">
+<script>
+
+<include-script resource-path="/scriptaculous-1.7.1/prototype.js" />
+<include-script resource-path="/corner/orm/tapestry/component/insert/prototip/prototip.js" />
+<include-script resource-path="/corner/orm/tapestry/component/insert/VersionInsert.js" />
+<include-script resource-path="/corner/orm/tapestry/component/insert/XinDiff.js" />
+
+<input-symbol key="component" required="yes" />
+
+<initialization>
+	new VersionInsert("${component.clientId}",${component.jsonName},${component.jsonOtherName},"${component.entityName}","${component.showProperty}",type);
+</initialization>
+</script>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE page-specification PUBLIC "-//Apache Software Foundation//Tapestry Specification 4.0//EN" "http://jakarta.apache.org/tapestry/dtd/Tapestry_4_0.dtd">
+
+<page-specification class="corner.demo.page.widget.QueryBoxTestPage">
+  <description>corner.demo.model.one.A Form Page</description>
+  <bean class="org.apache.tapestry.valid.ValidationDelegate" name="delegate"/>
+  <property persist="entity" initial-value="new corner.demo.model.one.A()" name="entity"/>
+  <component type="Form" id="AForm">
+    <binding value="ognl:beans.delegate" name="delegate"/>
+    <binding value="ognl:true" name="clientValidationEnabled"/>
+    <binding value="listener:doSaveEntityAction" name="success"/>
+  </component>
+  <component type="corner:DirectQueryDialog" id="dialog1">
+		<binding value="listener:doPopQueryPage" name="listener"/>
+	  <binding value="literal:widget/SelectionListPage" name="parameters"/>
+	    <binding value="literal:selectRecord" name="onSelectFunName"/>
+  </component>
+  <component type="corner:WindowQueryDialog" id="winDialog">
+	<binding value="listener:doWinPopQueryPage" name="listener"/>
+	<binding value="literal:selectRecord" name="onSelectFunName"/>
+    <binding value="literal:google" name="title"/>
+    <binding name="showCleanDiv" value="ognl:true" />
+    <binding name="showCleanDivClass" value="literal:popMenuDiv" />
+  </component>
+  <component type="corner:WindowQueryDialog" id="dialog2">
+	  <binding value="literal:widget/WinSelectionListPage" name="queryPageName"/>
+  </component>
+  <component type="corner:WindowQueryDialog" id="checkPop">
+	  <binding value="literal:widget/CheckBoxListPage" name="queryPageName"/>
+      <binding name="onSelectFunName" value="literal:checkSelectRecord" />
+  </component>
+  <component type="corner:VersionCommentBox" id="popText">
+      <binding value="literal:widget/pop" name="queryPageName"/>
+      <binding value="ognl:svnAuthorValue" name="svnAuthor"/>
+      <binding value="ognl:svnLog" name="svnLog"/>
+      <binding value="ognl:svnCommit" name="svnCommit"/>
+      <binding value="literal:admin" name="svnAuthorDefaultValue"/>
+  </component>
+</page-specification>

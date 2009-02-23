@@ -1,0 +1,58 @@
+<module id="corner.orm" version="1.0.0">
+	
+	<!-- for session manager -->
+	<contribution
+		configuration-id="tapestry.state.StateObjectPersistenceManagers">
+		<manager scope="sessionEntity"
+			object="service:EntitySessionScopeManager"/>
+	</contribution>
+	<service-point id="EntitySessionScopeManager"
+		interface="org.apache.tapestry.engine.state.StateObjectPersistenceManager">
+		Manages application state objects in the session.
+		
+		<invoke-factory>
+			<construct
+				class="corner.orm.tapestry.state.EntitySessionScopeManager">
+				<set-object property="request" value="infrastructure:request"/>
+				<set-object property="applicationId"
+					value="infrastructure:applicationId"/>
+				<set-object property="dataSqueezer"
+					value="service:tapestry.data.DataSqueezer"/>
+			</construct>
+		</invoke-factory> </service-point>
+	
+	<!-- for relative page operations -->
+	<service-point id="relativeOperator"
+		interface="corner.orm.tapestry.page.relative.support.IRelativeObjectOperator">
+		<invoke-factory>
+			<construct
+				class="corner.orm.tapestry.page.relative.support.RelativeObjectOperator">
+				<set-object property="requestCycle"
+					value="infrastructure:requestCycle"/>
+			</construct>
+		</invoke-factory>
+	</service-point>
+	
+	<sub-module descriptor="corner.blob.xml"/>
+	<sub-module descriptor="corner.translators.xml"/>
+	<sub-module descriptor="corner.spring.xml"/>
+	<sub-module descriptor="corner.osiv.xml"/>
+	<sub-module descriptor="corner.squeezer.xml"/>
+	<sub-module descriptor="corner.persist.xml"/>
+	<sub-module descriptor="corner.validator.xml"/>
+	<sub-module descriptor="corner.asset.xml"/>
+	<sub-module descriptor="corner.worker.xml"/>
+	<sub-module descriptor="corner.page.xml"/>
+	<sub-module descriptor="corner.service.xml"/>
+	<sub-module descriptor="corner.state.xml"/>
+	<sub-module descriptor="corner.excel.xml"/>
+	<sub-module descriptor="corner.pdf.xml"/>
+	<sub-module descriptor="corner.jasper.xml"/>
+	<sub-module descriptor="corner.pushlet.xml"/>
+	<sub-module descriptor="corner.formats.xml"/>
+	<!-- for guice container -->
+	<sub-module descriptor="corner.guice.xml"/>
+	<!-- for xfire -->
+	<sub-module descriptor="corner.xfire.xml"/>
+	
+</module>

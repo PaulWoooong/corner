@@ -1,0 +1,38 @@
+<span jwcid="@DemoBorder">
+    <a listener="listener:doCancelEntityAction" jwcid="@DirectLink" href="AEventListenerList.html">Return A List</a>
+    <form jwcid="AForm" action="AEventListenerList.html">
+      <table>
+        <tr>
+          <td>
+            <span key="name">name</span>
+          </td>
+          <td>
+            <input jwcid="SheetCateField"/>
+			<div jwcid="selectLinkDiv@Any">
+				<span jwcid="@If" condition="ognl:show">
+				  	<span jwcid="passwordField" type="text" />
+				</span>
+			</div>
+          </td>
+		</tr>
+      </table>
+      <input jwcid="@Submit" type="Submit" value="message:button.Okay"/>
+      <input jwcid="@Any" type="Button" value="message:button.Cancle" onClick="javascript:tapestry.form.cancel(this.form);"/>
+    </form>
+  
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	var nodeId = "SheetCateField";
+	dojo.byId(nodeId).trigger=function(data){
+		return true;
+	}
+	dojo.event.connect(dojo.byId(nodeId),"onchange",function(){
+		var value = dojo.byId(nodeId).value;
+		data={"selected": value}
+		dojo.byId(nodeId).trigger(data);
+	});
+//-->
+</SCRIPT>
+	
+	<div id="debug">f</div>
+</span>

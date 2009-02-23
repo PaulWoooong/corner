@@ -1,0 +1,20 @@
+<module id="corner.validator" version="1.0.0"
+	package="corner.orm.tapestry.validator">
+	
+	<!--  validator -->
+	<contribution configuration-id="tapestry.form.validator.Validators">
+		<validator name="numPattern" class="NumPattern"/>
+		<validator name="uniqueEntity" class="UniqueEntity"/>
+		<validator name="fieldMin" class="FieldMin"/>
+		<validator name="fieldPlusEq" class="FieldPlusEq"/>
+		<validator name="reletiveFieldNotNull" class="ReletiveFieldNotNull"/>
+		<validator name="pictureSize" class="PictureSize"/>
+		<validator name="fileType" class="FileType"/>
+		<validator name="checkboxGroupRequired" class="CheckboxGroupRequired"/>
+		<validator name="personID" class="PersonID" configurable="false"/>
+		<validator name="captcha" class="CaptchaValidator" configurable="false"/>
+		<validator name="relationAss" class="RelationAss" configurable="false"/>
+		<validator name="GPRequired" class="GainPointRequired" configurable="false"/>
+		<validator name="upLoadFileSize" class="UpLoadFileSize"/>
+	</contribution>
+</module>

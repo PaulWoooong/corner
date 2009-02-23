@@ -1,0 +1,19 @@
+<span jwcid="$content$">
+    	<span class="diff">
+        	<span id="legend">
+        		<dl><dd><span jwcid="@Any" id="ver_showInfo"></span></dd></dl>
+                <dt class="add"></dt><dd>Add</dd>
+                <dt class="mod"></dt><dd>Edit</dd>
+                <dt class="cp"></dt><dd>Delete</dd>
+        	</span>
+        </span>
+        <div class="svnRightDiv">
+        	<span jwcid="@If" renderTag="ognl:false" condition="ognl:showButton">
+                <input class="svnbutton" type="button" id="showside" onClick="VersionInserts.resetTips();" jwcid="@Any" value="ognl:showside"/>
+                    &nbsp;&nbsp;
+                <input class="svnbutton" type="button" id="showLine" onClick="VersionInserts.closeTips();" jwcid="@Any" value="ognl:showLine"/>
+            </span>
+        </div>
+<input type="hidden" id="ver_hid"/>
+<input type="hidden" id="otherVer_hid"/>
+</span>

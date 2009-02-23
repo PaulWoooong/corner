@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+copyright:	Beijing Maxinfo Technology Ltd. http://www.bjmaxinfo.com
+-->
+
+<!DOCTYPE component-specification PUBLIC 
+  "-//Apache Software Foundation//Tapestry Specification 4.0//EN" 
+  "http://tapestry.apache.org/dtd/Tapestry_4_0.dtd">
+
+<component-specification class="corner.orm.tapestry.component.date.DropdownDatePicker" allow-body="no">
+  
+  <parameter name="value" required="yes"/>
+  <parameter name="disabled"/>
+  <parameter name="iconAlt" default-value="literal:请选择日期" />
+  <!-- 是否自动带有默认日期: true:带有,false:不带 -->
+  <parameter name="currentDate" default-value="true"/>
+  <!-- 录入日期的格式 -->
+  <parameter name="pattern" default-value="literal:yyyy-MM-dd"/>
+  
+  <parameter name="displayName"/>
+  <parameter name="translator" default-value="translator:string"/>
+  <parameter name="validators"/>
+  <parameter name="id" property="idParameter" default-value="id"/>
+  
+  <inject property="script" type="script" object="DropdownDatePicker.script"/>
+  <inject property="translatedFieldSupport" object="service:tapestry.form.TranslatedFieldSupport"/>
+  <inject property="validatableFieldSupport" object="service:tapestry.form.ValidatableFieldSupport"/>
+    
+</component-specification>

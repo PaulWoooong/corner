@@ -1,0 +1,22 @@
+<module id="corner.translator" version="1.0.0"
+	package="corner.orm.tapestry.translator">
+	<!-- for trasnlator -->
+	<contribution configuration-id="tapestry.form.translator.Translators">
+		<bean name="vector" class="VectorTranslator"/>
+		<bean name="num" class="NumTranslator"/>
+		<!-- 将yyyy-MM-dd HH:mm:ss格式的字符串转化成Date类型 -->
+		<bean name="exactdate" class="ExactDateTranslator"/>
+		<!-- 将yyyy-MM-dd格式的字符串转化成Date类型 -->
+		<bean name="simpledate" class="SimpleDateTranslator"/>
+		<!-- 将yyyy-MM-dd格式的字符串作为String保存 -->
+		<bean name="stringdate" class="StringDateTranslator"/>
+		<!-- 将HH:mm:ss格式的字符串转化成Date -->
+		<bean name="timedate" class="TimeTranslator"/>
+		<!-- 将HH:mm格式的字符串转化成Date -->
+		<bean name="simpleTimeDate" class="SimpleTimeTranslator"/>
+		<!-- 将yyyy-MM格式的字符串转化成Date -->
+		<bean name="monthYear" class="MonthYearTranslator"/>
+		<!-- 将MM-dd格式的字符串转化成Date -->
+		<bean name="monthDay" class="MonthDayTranslator"/>
+	</contribution>
+</module>

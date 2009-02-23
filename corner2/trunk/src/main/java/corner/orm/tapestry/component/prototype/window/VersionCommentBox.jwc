@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+  copyright:	Beijing Maxinfo Technology Ltd. http://www.bjmaxinfo.com
+-->
+
+<!DOCTYPE component-specification PUBLIC 
+  "-//Apache Software Foundation//Tapestry Specification 4.0//EN" 
+  "http://tapestry.apache.org/dtd/Tapestry_4_0.dtd">
+	
+<component-specification class="corner.orm.tapestry.component.prototype.window.VersionCommentBox" allow-body="no" allow-informal-parameters="yes">
+  <component type="WindowQueryDialog" id="WindowQueryDialogField">
+    <binding name="queryPageName" value="ognl:queryPageName"/>
+    <binding name="eventHeaderId" value="ognl:eventHeaderId"/>
+    <binding name="windowShowButtonText" value="ognl:windowShowButtonText"/>
+    <binding name="title" value="ognl:title"/>
+    <binding name="width" value="ognl:500"/>
+    <binding name="height" value="ognl:300"/>
+  </component>
+  <component type="Hidden" id="svnAuthor">
+    <binding name="defaultValue" value="ognl:svnAuthorDefaultValue"/>
+    <binding name="value" value="ognl:svnAuthor"/>
+  </component>
+</component-specification>

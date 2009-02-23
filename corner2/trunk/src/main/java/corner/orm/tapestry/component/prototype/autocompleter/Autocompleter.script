@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE script PUBLIC
+	"-//Apache Software Foundation//Tapestry Script Specification 3.0//EN"
+	"http://jakarta.apache.org/tapestry/dtd/Script_3_0.dtd">
+<script>
+<include-script resource-path="/scriptaculous-1.7.1/prototype.js" />
+<include-script resource-path="/scriptaculous-1.7.1/effects.js" />
+<include-script resource-path="/scriptaculous-1.7.1/controls.js" />
+<include-script resource-path="/corner/orm/tapestry/component/prototype/autocompleter/autocompleter.js" />
+<input-symbol key="updateUrl" required="yes" />
+<input-symbol key="inputId" required="yes" />
+<input-symbol key="updateId" required="yes" />
+<input-symbol key="elementclass" required="yes" />
+<input-symbol key="options"/>
+<input-symbol key="indicator_pic"/>
+<input-symbol key="dependFields"/>
+
+
+<initialization>
+${inputId}_AC = ac.createAjaxAutocompleter("${updateId}", "${inputId}", "${updateUrl}", "${elementclass}", 0.2,${options},"${indicator_pic}","${dependFields}");
+</initialization>
+</script>

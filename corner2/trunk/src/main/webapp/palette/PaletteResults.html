@@ -1,0 +1,20 @@
+<span jwcid="@DemoBorder">
+
+<p>Here are your selections.  If the Palette was set for manual sorting, then the order
+is significant.
+
+<ul>
+<li jwcid="loop"><span jwcid="@Insert" value="ognl:components.loop.value"/></li>
+</ul>
+
+<span jwcid="@If" condition="ognl:! selectedColors">
+<p>You made no selections.
+</span>
+
+<p>
+<a jwcid="@PageLink" page="palette/Palette"><img jwcid="backRollover" alt="[Back]"/></a>
+<br/>
+<span jwcid="@Insert" value="ognl:currentTime" format="ognl:@corner.demo.page.palette.Palette@TIME_PATTERN"/>
+<br/>
+regDate:<span jwcid="@Insert" value="ognl:regDate" format="date:date"/>
+</span>

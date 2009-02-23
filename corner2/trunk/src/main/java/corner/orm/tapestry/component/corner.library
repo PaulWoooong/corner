@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+  copyright:	Beijing Maxinfo Technology Ltd. http://www.bjmaxinfo.com
+-->
+
+<!DOCTYPE library-specification PUBLIC 
+  "-//Apache Software Foundation//Tapestry Specification 4.0//EN" 
+  "http://jakarta.apache.org/tapestry/dtd/Tapestry_4_0.dtd">
+	
+<library-specification>
+
+  <meta key="org.apache.tapestry.component-class-packages" value="corner.orm.component.component"/>
+
+  
+  <component-type type="DropdownMenu" specification-path="menu/DropdownMenu.jwc"/>
+  <component-type type="SlideMenu" specification-path="menu/SlideMenu.jwc"/>
+
+  <component-type type="TabContainer" specification-path="tab/TabContainer.jwc"/>
+  <component-type type="ContentPane" specification-path="tab/ContentPane.jwc"/>
+  <component-type type="UpdateSelect" specification-path="select/UpdateSelect.jwc"/>
+  <component-type type="TextAreaBox" specification-path="textareabox/TextAreaBox.jwc"/>
+  <component-type type="CornerSelect" specification-path="cornerselect/CornerSelect.jwc"/>
+  <component-type type="MagicField" specification-path="magic/FormField.jwc"/>
+  <component-type type="RadioGroup" specification-path="radio/RadioGroup.jwc"/>
+  <component-type type="TextField" specification-path="textfield/TextField.jwc"/>
+  <component-type type="TextArea" specification-path="textArea/TextArea.jwc"/>
+  <component-type type="Hidden" specification-path="hidden/Hidden.jwc"/>
+  <component-type type="PropertySelection" specification-path="propertyselection/PropertySelection.jwc"/>
+  <component-type type="GoAnchor" specification-path="anchor/GoAnchor.jwc"/>
+  <component-type type="Insert" specification-path="insert/Insert.jwc"/>
+  <component-type type="Selector" specification-path="select/Selector.jwc"/>
+
+  <component-type type="MatrixHead" specification-path="matrix/MatrixHead.jwc"/>
+  <component-type type="MatrixRowField" specification-path="matrix/MatrixRowField.jwc"/>
+  <component-type type="MatrixRowTextField" specification-path="matrix/MatrixRowTextField.jwc"/>
+  
+  <component-type type="QueryBoxField" specification-path="textfield/QueryBox.jwc"/>
+  <component-type type="SelectedField" specification-path="textfield/SelectedField.jwc"/>
+  
+  <component-type type="UploadBox" specification-path="uploadBox/UploadBox.jwc"/>
+  <component-type type="TinyMceEditor" specification-path="tinymce/TinyMceEditor.jwc"/>
+  <component-type type="StringCheckbox" specification-path="checkbox/StringCheckbox.jwc"/>
+  <component-type type="CaptchaImage" specification-path="captcha/CaptchaImage.jwc"/>
+  <component-type type="PageQueryDialog" specification-path="textfield/PageQueryDialog.jwc"/>
+  <component-type type="DirectQueryDialog" specification-path="textfield/DirectQueryDialog.jwc"/>
+  <component-type type="DropdownDatePicker" specification-path="date/DropdownDatePicker.jwc"/>
+  <component-type type="DatePicker" specification-path="date/DatePicker.jwc"/>
+  <component-type type="TablePages" specification-path="/corner/orm/tapestry/table/TablePages.jwc"/>
+  
+  <component-type type="ExcelServiceFullLink" specification-path="/corner/orm/tapestry/service/excel/ExcelServiceFullLink.jwc"/>
+  <component-type type="ExcelServicePageLink" specification-path="/corner/orm/tapestry/service/excel/ExcelServicePageLink.jwc"/>
+  
+  <component-type type="JasperEntityLink" specification-path="/corner/orm/tapestry/jasper/link/JasperEntityLink.jwc"/>
+  <component-type type="JasperPrinterLink" specification-path="/corner/orm/tapestry/jasper/link/JasperPrinterLink.jwc"/>
+  
+  <component-type type="GainPoint" specification-path="gain/GainPoint.jwc"/>
+  
+  <component-type type="MulitUpload" specification-path="mulitupload/MulitUpload.jwc"/>
+  
+  <component-type type="CoolestPicker" specification-path="calendar/coolest/CoolestCalendar.jwc"/>
+  
+  <component-type type="CodeAC" specification-path="prototype/autocompleter/CodeModelAutocompleter.jwc"/>
+  <component-type type="AutoEva" specification-path="prototype/autocompleter/AutoEvaluateModelAutocompleter.jwc"/>
+  <component-type type="AssAC" specification-path="prototype/autocompleter/AssociateAutocompleter.jwc"/>
+  
+  <component-type type="WindowQueryDialog" specification-path="prototype/window/WindowQueryDialog.jwc"/>
+  <component-type type="LeftTreeDialog" specification-path="prototype/window/LeftTreeDialog.jwc"/>
+  <component-type type="WinSelectedField" specification-path="prototype/window/WinSelectedField.jwc"/>
+  <component-type type="WinTextArea" specification-path="prototype/window/WinTextArea.jwc"/>
+  <component-type type="VersionCommentBox" specification-path="prototype/window/VersionCommentBox.jwc"/>
+  <component-type type="MultiCBToStringSelectedField" specification-path="prototype/window/MultiCheckBoxToStringSelectedField.jwc"/>
+  
+  <component-type type="VInsert" specification-path="insert/VersionInsert.jwc"/>
+  <component-type type="VManage" specification-path="insert/VersionManage.jwc"/>
+  <component-type type="VJson" specification-path="insert/VersionJson.jwc"/>
+  <component-type type="VDownLoads" specification-path="insert/VersionDownLoadFile.jwc"/>
+  
+  <component-type type="PopTree" specification-path="tree/pop/PopTree.jwc"/>
+  <component-type type="PageTree" specification-path="tree/page/PageTree.jwc"/>
+  
+  <component-type type="SelectBox" specification-path="selectBox/SelectBox.jwc"/>
+  
+  <component-type type="AjaxPageRes" specification-path="ajax/AjaxPageResponse.jwc"/>
+  
+  <component-type type="PushletFrame" specification-path="pushlet/PushletFrame.jwc"/>
+</library-specification>

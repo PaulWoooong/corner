@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE script PUBLIC
+	"-//Apache Software Foundation//Tapestry Script Specification 3.0//EN"
+	"http://jakarta.apache.org/tapestry/dtd/Script_3_0.dtd">
+<script>
+<include-script resource-path="/scriptaculous-1.7.1/prototype.js" />
+<include-script resource-path="/scriptaculous-1.7.1/effects.js" />
+<include-script resource-path="/scriptaculous-1.7.1/controls.js" />
+<include-script resource-path="/corner/orm/tapestry/component/gain/GainPoint.js" />
+<include-script resource-path="/corner/orm/tapestry/component/gain/GPCalendar.js" />
+<include-script resource-path="/corner/orm/tapestry/component/gain/GPWinDialog.js" />
+<include-script resource-path="/corner/orm/tapestry/component/gain/GPAutocompleter.js" />
+<include-script resource-path="/corner/orm/tapestry/component/calendar/coolest/calendar.js" />
+<include-script resource-path="/corner/orm/tapestry/component/calendar/coolest/lang/calendar-en.js" />
+<include-script resource-path="/corner/orm/tapestry/component/calendar/coolest/lang/calendar-zh.js" />
+
+<include-script resource-path="/corner/prototype/window/javascripts/window.js" />
+<include-script resource-path="/corner/prototype/window/javascripts/window_effects.js" />
+<include-script resource-path="/corner/prototype/cornerBuilder.js" />
+<include-script resource-path="/corner/orm/tapestry/component/prototype/window/fade.js" />
+<include-script resource-path="/corner/orm/tapestry/component/prototype/window/WindowQueryDialog.js" />
+<include-script resource-path="/corner/orm/tapestry/component/prototype/window/LeftTreeDialog.js" />
+
+<include-script resource-path="/corner/orm/tapestry/component/prototype/autocompleter/autocompleter.js" />
+
+<input-symbol key="tableId" required="yes" />
+<input-symbol key="elementSize" required="yes" />
+<input-symbol key="pagePersistentId" required="yes" />
+<input-symbol key="gpid" required="yes" />
+<input-symbol key="elementValues" required="yes" />
+<input-symbol key="checkBoxFields" required="yes" />
+<input-symbol key="initFuns" required="yes" />
+
+<initialization>
+	${gpid}_fun = new GainPoint("${tableId}","${pagePersistentId}",${elementSize},${elementValues},${checkBoxFields},${initFuns});
+</initialization>
+</script>
