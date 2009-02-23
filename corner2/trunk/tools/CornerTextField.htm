@@ -1,0 +1,112 @@
+<!DOCTYPE HTML SYSTEM "-//Macromedia//DWExtension layout-engine 5.0//dialog">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>Corner TextField</title>
+<script language="JavaScript">
+
+function isDOMRequired() { 
+	// Return false, indicating that this object is available in code view.
+	return false;
+}
+
+function objectTag() {
+		
+		var returnValue= "";//返回值
+		var insertTag="";
+		var cssTag = "";
+		if (document.insertTagForm.insertTagField.value != ""){
+			insertTag=document.insertTagForm.insertTagField.value;
+		} else{
+			insertTag='text'; 
+		}
+		
+		if (document.insertTagForm.cssTagField.value != ""){
+			cssTag=document.insertTagForm.cssTagField.value;
+		} else {
+			if(cssTag == "" || cssTag.length==0){
+				//cssTag = 'input-form';//default value
+				cssTag = '';
+			}			
+		}
+			//取得当前浏览的dom
+	
+		var dom = dw.getDocumentDOM();
+		var domSelection =dom.getSelection();		
+		if(dw.getFocus() == 'document'){
+			if(domSelection && domSelection.length==2){
+				if(domSelection[0] != domSelection[1]){
+					var pattern = "</textarea>";
+					var selectSource = dom.source.getText(domSelection[0],domSelection[1]);
+					var result = selectSource.toLowerCase().indexOf(pattern);
+					if(result && result>-1){//如果是TextArea
+						if(dreamweaver.canDeleteSelection()){//删除选中部分
+							dom.deleteSelection();
+						}
+						if(cssTag && cssTag.length>0){
+							returnValue = "<textarea name=\""+insertTag+"\" jwcid=\""+insertTag+"Field\" class=\""+cssTag+"\"/></textarea>";					
+						} else {
+							returnValue = "<textarea name=\""+insertTag+"\" jwcid=\""+insertTag+"Field\"/></textarea>";
+							
+						}
+					}
+				} 
+			}
+		}
+		if(returnValue == null || returnValue == ""){
+			if(dreamweaver.canDeleteSelection()){//删除选中部分
+				dom.deleteSelection();
+			}
+			if(cssTag && cssTag.length>0){
+				returnValue ="<input type=\"text\" name=\""+insertTag+"\" jwcid=\""+insertTag+"Field\" class=\""+cssTag+"\"/>";
+				
+			} else {
+				returnValue ="<input type=\"text\" name=\""+insertTag+"\" jwcid=\""+insertTag+"Field\"/>";
+			}
+		}
+		return returnValue;
+	}
+	
+	function copyCss(){
+			//取得当前浏览的dom
+		var dom = dw.getDocumentDOM();
+		var domSelection =dom.getSelection();
+		if(dw.getFocus() == 'document'){
+			if(domSelection && domSelection.length==2){
+				if(domSelection[0] != domSelection[1]){
+					var pattern = /class=\"([^"]+)\"/;
+					var selectSource = dom.source.getText(domSelection[0],domSelection[1]);
+					var result = selectSource.match(pattern);
+					if(result && result[1]){
+						document.insertTagForm.cssTagField.value = result[1];
+					}
+				} 
+			} 
+		} 
+	}
+
+	function displayHelp(){
+		dreamweaver.browseDocument("mailto:Ghostbb@bjmaxinfo.com");
+	}
+	
+</script>
+</head>
+<body onload="copyCss();">
+<form action="" method="post" name="insertTagForm" id="insertTagForm">
+  <table width="380" border="0" cellspacing="3" cellpadding="2">
+    <tr>
+      <td><font size="2" face="新宋体">字段名称(默认:text)</font></td>
+      <td><input type="text" name="insertTagField" id="insertTagField">
+      </td>
+    </tr>
+    <tr>
+      <td><font size="2" face="新宋体">CSS名称(默认:input-form)</font></td>
+      <td><input type="text" name="cssTagField" id="cssTagField">
+      </td>
+    </tr>
+  </table>
+  <hr>
+<p align="left"><font color="#0080FF" size="+1" face="Comic Sans MS">bjmaxinfo'Ghostbb</font></p>
+</form>
+</body>
+</html>

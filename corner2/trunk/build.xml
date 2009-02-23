@@ -1,0 +1,33 @@
+<project name="corner"  basedir="." xmlns:artifact="urn:maven-artifact-ant">
+    <path id="maven-ant-tasks.classpath" path="support/ant-lib/maven-ant-tasks-2.0.7.jar"/>
+    <typedef resource="org/apache/maven/artifact/ant/antlib.xml" uri="urn:maven-artifact-ant"
+             classpathref="maven-ant-tasks.classpath"/>
+    <!-- 定义中央文件服务地址 -->
+    <artifact:remoteRepository id="maxinfo.repository" url="http://dev.bjmaxinfo.com:5180/artifactory/repo"/>
+    <!-- 定义maven得pom -->
+    <artifact:pom file="pom.xml" id="corner"/>
+    <!-- corner 依赖的所有包 -->
+    <artifact:dependencies pathId="corner.path">
+        <pom refid="corner"/>
+        <remoteRepository refid="maxinfo.repository"/>
+    </artifact:dependencies>    
+    <!-- =================================
+	target: 编译jasper的jrxml文件
+	================================= -->
+    <target name="jrc" description="编译.jrxml文件为.jasper文件">
+        <taskdef name="jrc" classname="net.sf.jasperreports.ant.JRAntCompileTask">
+            <classpath refid="corner.path"/>
+        </taskdef>
+        <jrc>
+            <src>
+                <fileset dir="src/main/resources">
+                    <include name="**/*.jrxml"/>
+                </fileset>
+                <fileset dir="src/test/java">
+                    <include name="**/*.jrxml"/>
+                </fileset>
+            </src>
+            <classpath refid="corner.path"/>
+        </jrc>
+    </target>
+</project>

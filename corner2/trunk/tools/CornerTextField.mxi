@@ -1,0 +1,23 @@
+<macromedia-extension name="CornerTextField" version="1.0.3" type="object">
+<author name="Ghostbb" />
+<products> 
+    <product name="Dreamweaver" version="6" primary="true" />
+</products> 
+<description> 
+    <![CDATA[自动生成带有Tapestry标记的TextField]]> 
+</description> 
+
+<ui-access> 
+    <![CDATA[弹出对话框中可以设置标记名称]]> 
+</ui-access> 
+
+<files> 
+    <file name="CornerTextField.htm" destination="$dreamweaver/configuration/objects/common" /> 
+    <file name="CornerTextField.png" destination="$dreamweaver/configuration/objects/common" />
+</files> 
+
+<configuration-changes>
+<menu-insert insertAfter="DWMenu_Insert_FormObject" skipSeparator="true">
+<menuitem name="CornerTextField" key="Opt+3"  enabled="dw.getFocus() != 'browser' && dw.getDocumentDOM() != null && dw.getDocumentDOM().getParseMode() == 'html'" file="Common/CornerTextField.htm" id="CornerTextField_Name" />
+<separator id="CornerTextField_Separator" />
+</macromedia-extension>
