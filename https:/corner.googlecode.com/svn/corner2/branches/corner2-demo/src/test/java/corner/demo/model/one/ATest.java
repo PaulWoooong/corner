@@ -18,7 +18,7 @@ import corner.demo.model.BaseModelTestCase;
 /**
  * 单表尸体A的单元测试
  * 
- * @author <a href=mailto:Ghostbb@bjmaxinfo.com>Ghostbb</a>
+ * @author <a href=mailto:ghostbb88@gmail.com>Ghostbb</a>
  * @version $Revision$
  * @since 0.0.1
  */

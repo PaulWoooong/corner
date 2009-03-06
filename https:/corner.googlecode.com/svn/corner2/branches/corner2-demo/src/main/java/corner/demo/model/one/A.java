@@ -6,7 +6,7 @@ import corner.demo.model.AbstractPersistModel;
 /**
  * 单表实体，不包含任何关联
  * 
- * @author <a href=mailto:Ghostbb@bjmaxinfo.com>Ghostbb</a>
+ * @author <a href=mailto:ghostbb88@gmail.com>Ghostbb</a>
  * @version $Revision$
  * @since 0.0.1
  * @hibernate.class table="CORNER_DEMO_ONE" comment="单表实体，不包含任何关联"

@@ -18,7 +18,7 @@ import corner.orm.hibernate.IPersistModel;
  * A,B实体抽象类
  * <p>
  * 包含了A,B实体公用的属性
- * @author <a href=mailto:Ghostbb@bjmaxinfo.com>Ghostbb</a>
+ * @author <a href=mailto:ghostbb88@gmail.com>Ghostbb</a>
  * @version $Revision$
  * @since 0.0.1
  */
