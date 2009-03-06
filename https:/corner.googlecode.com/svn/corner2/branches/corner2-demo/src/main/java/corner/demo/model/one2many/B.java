@@ -5,7 +5,7 @@ import corner.demo.model.AbstractPersistModel;
 /**
  * one2many中的many实体
  * 
- * @author <a href=mailto:Ghostbb@bjmaxinfo.com>Ghostbb</a>
+ * @author <a href=mailto:ghostbb88@gmail.com>Ghostbb</a>
  * @version $Revision$
  * @since 0.0.1
  * @hibernate.class table="CORNER_DEMO_ONE2MANY_MANY" comment="one2many中的many实体"

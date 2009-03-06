@@ -15,7 +15,7 @@ import org.testng.annotations.Test;
 import corner.demo.model.BaseModelTestCase;
 
 /**
- * @author <a href=mailto:Ghostbb@bjmaxinfo.com>Ghostbb</a>
+ * @author <a href=mailto:ghostbb88@gmail.com>Ghostbb</a>
  * @version $Revision$
  * @since 0.0.1
  */
