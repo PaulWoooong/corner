@@ -1,0 +1,17 @@
+<settings>
+<servers>
+    <server>
+        <id>maxinfo-snapshot</id>
+        <username>maven</username>
+        <password>maven</password>
+    </server>
+</servers>
+<mirrors>
+    <mirror>
+      <id>bjmaxinfo</id>
+      <name>ibiblio Mirror of http://repo1.maven.org/maven2/</name>
+      <url>http://dev.bjmaxinfo.com:5180/artifactory/repo</url>
+      <mirrorOf>central</mirrorOf>
+    </mirror>
+  </mirrors>
+</settings>
