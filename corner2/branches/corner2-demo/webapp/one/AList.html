@@ -1,0 +1,51 @@
+<span jwcid="@DemoBorder">
+    <center>
+      <a listener="listener:doNewEntityAction" jwcid="@DirectLink" href="AForm.html">
+        <span key="link.add">增加</span>
+      </a>
+    </center>
+	<center>
+		<form jwcid="AQueryForm">
+			LoginName:<input type="text" name="LoginName" id="LoginNameField" jwcid="LoginNameField"/>(根据登录名查询)<br/>
+			<input name="submit" type="submit"/>
+		</form>
+	</center>
+    <hr width="100%"  color="#FF0000"/>
+      <table width="100%" border="1" bordercolor="#0099FF" jwcid="testTableView@contrib:TableView" columns="id" source="ognl:source" persist="client">
+        <tr>
+          <td>
+            <span key="LoginName">LoginName</span>
+          </td>
+          <td>
+            <span key="password">password</span>
+          </td>
+          <td>
+            <span key="link.edit">edit</span>
+          </td>
+          <td>
+            <span key="link.delete">delete</span>
+          </td>
+        </tr>
+        <tr row="ognl:entity" jwcid="@contrib:TableRows" element="tr">
+          <td>
+            <span jwcid="@Insert" value="ognl:entity.loginName">name</span>
+          </td>
+          <td>
+            <span jwcid="@Insert" value="ognl:entity.passWord">password</span>
+          </td>
+          <td>
+            <a parameters="ognl:entity" listener="listener:doEditEntityAction" jwcid="@DirectLink" href="AForm.html" id="editAction">
+              <span key="link.edit">Edit</span>
+            </a>
+          </td>
+          <td>
+            <a parameters="ognl:entity" listener="listener:doDeleteEntityAction" jwcid="@DirectLink" href="#" id="deleteAction">
+              <span key="link.delete">Delete</span>
+            </a>
+          </td>
+        </tr>
+        <tr>
+        	<td colspan="4"><span jwcid="@contrib:TablePages"/></td>
+        </tr>
+      </table>
+</span>
