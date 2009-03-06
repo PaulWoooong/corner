@@ -1,0 +1,26 @@
+<span jwcid="@DemoBorder">
+    <a listener="listener:doCancelEntityAction" jwcid="@DirectLink" href="BList.html">Return </a>
+    <form jwcid="BForm" action="BList.html">
+      <table align="center" width="60%" bordercolor="#FF0000" border="1">
+        <tr>
+          <td>
+            LoginName:<input type="text" name="LoginName" id="LoginNameField" jwcid="LoginNameField" />
+          </td>
+        </tr>
+        <tr>
+			<td>
+	         PassWord:<input type="text" name="PassWordField" id="PassWordField" jwcid="PassWordField" />
+            </td>
+        </tr>
+        <tr align="center">
+        	<td>
+                  <input jwcid="@Submit" type="Submit" value="submit"/>
+      				<input jwcid="@Any" type="Button" value="cancel" onClick="javascript:tapestry.form.cancel(this.form);"/>
+            </td>
+        </tr>
+      </table>
+      <input jwcid="@Submit" type="Submit" value="message:button.Okay"/>
+      <input jwcid="@Any" type="Button" value="message:button.Cancel" onClick="javascript:tapestry.form.cancel(this.form);"/>
+    </form>
+    <br/>
+</span>
