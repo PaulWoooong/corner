@@ -19,8 +19,5 @@
    <contribution configuration-id="tapestry.init.ApplicationInitializers" if="property enable-init">
         <command id="DataInitializer" object="service:DataInitializer" after="*"/>
     </contribution>
-    
-	<!-- state -->
-	<sub-module descriptor="corner.demo.state.xml"/>
 	
 </module>
