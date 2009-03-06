@@ -1,13 +1,3 @@
-//==============================================================================
-//file :        A.java
-//
-//last change:	date:       $Date:2006-06-21 06:18:45Z $
-//           	by:         $Author:jcai $
-//           	revision:   $Revision:1196 $
-//------------------------------------------------------------------------------
-//copyright:	Beijing Maxinfo Technology Ltd. http://www.bjmaxinfo.com
-//==============================================================================
-
 package corner.demo.model.one2many;
 
 import java.util.Set;
