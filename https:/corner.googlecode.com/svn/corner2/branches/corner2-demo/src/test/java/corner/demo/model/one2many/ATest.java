@@ -1,13 +1,3 @@
-//==============================================================================
-//file :        ATest.java
-//
-//last change:	date:       $Date$
-//           	by:         $Author$
-//           	revision:   $Revision$
-//------------------------------------------------------------------------------
-//copyright:	Beijing Maxinfo Technology Ltd. http://www.bjmaxinfo.com
-//==============================================================================
-
 package corner.demo.model.one2many;
 
 import org.testng.annotations.Test;

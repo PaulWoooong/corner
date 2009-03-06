@@ -1,10 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 
-	Copyright 2007-2008 The Beijing Maxinfo Technology Ltd. 
-	site:http://www.bjmaxinfo.com
-	file : $Id: hibernate.cfg.update.xml 8247 2008-01-04 01:44:29Z jcai $
-	created at:2007-11-01
--->
 <!DOCTYPE hibernate-configuration PUBLIC
         "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
         "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">

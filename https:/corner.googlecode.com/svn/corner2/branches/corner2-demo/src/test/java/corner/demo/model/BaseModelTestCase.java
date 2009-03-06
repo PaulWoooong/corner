@@ -26,10 +26,8 @@ import org.testng.annotations.BeforeMethod;
 import corner.orm.spring.SpringContainer;
 
 /**
- * »ù´¡²âÊÔÀà
- * 
- * @author <a href=mailto:xf@bjmaxinfo.com>xiafei</a>
- * @version $Revision: 2150 $
+ * @author <a href=mailto:Ghostbb@bjmaxinfo.com>Ghostbb</a>
+ * @version $Revision$
  * @since 0.0.1
  */
 public class BaseModelTestCase extends Assert {
@@ -47,7 +45,7 @@ public class BaseModelTestCase extends Assert {
 
 	private HibernateTransactionManager transactionManager;
 
-	// Ä¬ÈÏµÄÊÂÎï¶¨Òå
+	// Ä¬ï¿½Ïµï¿½ï¿½ï¿½ï¿½ï¶¨ï¿½ï¿½
 	private TransactionDefinition transactionDefinition = new DefaultTransactionDefinition();
 
 	private TransactionStatus status;
@@ -67,7 +65,7 @@ public class BaseModelTestCase extends Assert {
 	public void closeSessionFactory() {
 		transactionManager.commit(status);
 		end = System.currentTimeMillis();
-		logger.info("¹²ºÄÊ±£º" + (end - star) + "ºÁÃë"); //$NON-NLS-1$
+		logger.info("ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½" + (end - star) + "ï¿½ï¿½ï¿½ï¿½"); //$NON-NLS-1$
 	}
 
 	protected <T> T saveOrUpdate(T obj) {
@@ -82,7 +80,7 @@ public class BaseModelTestCase extends Assert {
 	}
 
 	/**
-	 * Çå¿ÕhibernateµÄ»º´æ¡£
+	 * ï¿½ï¿½ï¿½hibernateï¿½Ä»ï¿½ï¿½æ¡£
 	 * 
 	 */
 	protected void flushAndClearSession() {
@@ -91,9 +89,9 @@ public class BaseModelTestCase extends Assert {
 	}
 
 	/**
-	 * µÃµ½Ó³ÉäµÄÎÄ¼şÄ¿Â¼
+	 * ï¿½Ãµï¿½Ó³ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½Ä¿Â¼
 	 * 
-	 * @return ÎÄ¼şÓ³ÉäÎÄ¼şÄ¿Â¼.
+	 * @return ï¿½Ä¼ï¿½Ó³ï¿½ï¿½ï¿½Ä¼ï¿½Ä¿Â¼.
 	 */
 	protected String[] getMappingDirectoryLocations() {
 		return new String[] { "classpath:/corner/demo/model" };
@@ -118,7 +116,7 @@ public class BaseModelTestCase extends Assert {
 	}
 
 	private void initSpring() {
-		//xf »úÆ÷ÒÑ¾­¸üĞÂ£¬²ÉÓÃÍêÈ«Ä£Ê½½øĞĞ²âÊÔ
+		//xf ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½Â£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È«Ä£Ê½ï¿½ï¿½ï¿½Ğ²ï¿½ï¿½ï¿½
 		//if ("true".equals(System.getProperty("test.single"))) {
 		if(2>1){
 			transactionManager = (HibernateTransactionManager) SpringContainer.getInstance().getApplicationContext().getBean("transactionManager");

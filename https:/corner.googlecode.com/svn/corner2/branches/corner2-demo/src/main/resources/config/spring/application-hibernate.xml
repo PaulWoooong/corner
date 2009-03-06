@@ -1,10 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 
-	Copyright 2006-2008 The Beijing Maxinfo Technology Ltd. 
-	site: http://www.bjmaxinfo.com
-	file: $Id: application-hibernate.xml 10356 2008-07-01 02:52:54Z jcai $
-	created at:2006-10-31
--->
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
 	"http://www.springframework.org/dtd/spring-beans.dtd">
 <!--

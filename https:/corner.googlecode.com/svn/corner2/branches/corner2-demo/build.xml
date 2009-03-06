@@ -1,10 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-	Copyright 2006-2007 The Beijing Maxinfo Technology Ltd.
-	site:http://www.bjmaxinfo.com
-	file : $Id: build.xml 8021 2007-12-03 03:33:44Z jcai $
-	created at:2007-11-23
--->
 <project name="piano" basedir="." xmlns:artifact="urn:maven-artifact-ant">
     <import file="support/bootstrap/bootstrap.xml"/>
     <target name="init-library">
