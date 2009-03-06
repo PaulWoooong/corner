@@ -614,27 +614,27 @@
           <groups>
             <group>
               <title>模型包</title>
-              <packages>com.bjmaxinfo.hr.model*</packages>
+              <packages>corner.demo.model*</packages>
             </group>
             <group>
               <title>页面处理包</title>
-              <packages>com.bjmaxinfo.hr.page*</packages>
+              <packages>corner.demo.page*</packages>
             </group>
             <group>
               <title>后台逻辑服务包</title>
-              <packages>com.bjmaxinfo.hr.service*</packages>
+              <packages>corner.demo.service*</packages>
             </group>
             <group>
               <title>PDF打印服务包</title>
-              <packages>com.bjmaxinfo.hr.tapestry.pdf*</packages>
+              <packages>corner.demo.tapestry.pdf*</packages>
             </group>
             <group>
               <title>Tapestry扩展包</title>
-              <packages>com.bjmaxinfo.hr.tapestry*</packages>
+              <packages>corner.demo.tapestry*</packages>
             </group>
             <group>
               <title>Web处理包</title>
-              <packages>com.bjmaxinfo.hr.web*</packages>
+              <packages>corner.demo.web*</packages>
             </group>
           </groups>
         </configuration>
