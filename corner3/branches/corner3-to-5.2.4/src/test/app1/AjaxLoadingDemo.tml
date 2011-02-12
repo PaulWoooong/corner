@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+	Copyright 2009 The Ganshane Network Service Team. 
+	site: http://ganshane.net
+	file : $Id$
+	created at:2009-12-07
+-->
+<t:border xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
+	<h1>Ajax Loading Demo</h1>
+
+<t:actionlink t:id="testAjax" zone="ajaxContent">test</t:actionlink>
+<div t:type="zone" t:id="ajaxContent"></div>
+<t:block t:id="blockContent">haha</t:block>
+<span t:type="corner/AjaxLoader"/>
+</t:border>
