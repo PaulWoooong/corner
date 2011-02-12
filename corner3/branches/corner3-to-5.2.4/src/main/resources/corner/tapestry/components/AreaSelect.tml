@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+	Copyright 2009 The Ganshane Network Service Team. 
+	site: http://ganshane.net
+	file : $Id$
+	created at:2009-04-19
+-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+        "http://www.w3.org/TR/html4/strict.dtd">
+<t:container xmlns:t="http://tapestry.apache.org/schema/tapestry_5_0_0.xsd">
+    	<select t:id="provinceField"></select>
+    	<select t:id="cityField"></select>
+    	<select t:id="townField"></select>
+</t:container>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+	Copyright 2009 The Ganshane Network Service Team. 
+	site: http://ganshane.net
+	file : $Id$
+	created at:2009-12-22
+-->
+<localcache>
+    <cache name="entity" expiryInterval="100000"/>
+    <cache name="ns" expiryInterval="100000"/>
+</localcache>
