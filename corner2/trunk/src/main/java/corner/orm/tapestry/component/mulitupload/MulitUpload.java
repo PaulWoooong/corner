@@ -1,6 +1,6 @@
 // Copyright 2007 the original author or authors.
 // site: http://www.bjmaxinfo.com
-// file: $Id: MulitUpload.java 3678 2007-11-14 04:43:52Z jcai $
+// file: $Id: MulitUpload.java 4511 2009-11-19 09:58:56Z ghostbb $
 // created at:2007-06-25
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -43,7 +43,7 @@ import org.apache.tapestry.valid.ValidatorException;
 
 /**
  * @author <a href=mailto:Ghostbb@bjmaxinfo.com>Ghostbb</a>
- * @version $Revision: 3678 $
+ * @version $Revision: 4511 $
  * @since 2.3.7
  */
 public abstract class MulitUpload extends BaseComponent implements
@@ -52,6 +52,9 @@ public abstract class MulitUpload extends BaseComponent implements
 	@Asset("classpath:add.png")
 	public abstract IAsset getAddAsset();
 
+	@Asset("classpath:deleteall.png")
+	public abstract IAsset getDeleteAllAsset();
+	
 	@Asset("classpath:delete.png")
 	public abstract IAsset getDeleteAsset();
 
@@ -67,7 +70,7 @@ public abstract class MulitUpload extends BaseComponent implements
 	/**
 	 * html模版中保存上传文件个数的字段,该字段用于保存自动生成的文件的个数，同时用于组合成上传文件的名称
 	 */
-	private static final String FILE_COUNT_STR = "filecounter";
+	private static final String FILE_COUNT_STR = "filenames";
 
 	/**
 	 * 有文件上传时request中的标识
@@ -120,45 +123,12 @@ public abstract class MulitUpload extends BaseComponent implements
 			Map<String, Object> scriptParms = new HashMap<String, Object>();
 			
 			scriptParms.put("add_image", this.getAddAsset().buildURL());
-			scriptParms.put("delete_image", this.getDeleteAsset().buildURL());
+			scriptParms.put("delete_image", this.getDeleteAllAsset().buildURL());
 
 			getScript().execute(this, cycle, pageRenderSupport, scriptParms);
 
 		}
 	}
-
-	/**
-	 * 设置全部的文件
-	 * 
-	 * @param files
-	 */
-	public abstract void setValue(List<IUploadFile> files);
-
-	// /**
-	// * @see
-	// org.apache.tapestry.form.AbstractFormComponent#renderFormComponent(org.apache.tapestry.IMarkupWriter,
-	// * org.apache.tapestry.IRequestCycle)
-	// */
-	// protected void renderFormComponent(IMarkupWriter writer, IRequestCycle
-	// cycle) {
-	// // Force the form to use the correct encoding type for file uploads.
-	// IForm form = getForm();
-	//
-	//
-	// super.render(writer, cycle);
-	// // writer.beginEmpty("input type=\"button\" onclick=\"add();\"
-	// // value=\"add file\"");
-	// // writer.beginEmpty("input type=\"button\" onclick=\"removeAll();\"
-	// // value=\"delete all\"");
-	// // writer.beginEmpty("input type=\"hidden\" name=\"filecounter\"
-	// // id=\"filecounter\" value=\"0\"");
-	// // writer.beginEmpty("div id=\"files\"");
-	// Map<String, Object> scriptParms = new HashMap<String, Object>();
-	// PageRenderSupport pageRenderSupport = TapestryUtils
-	// .getPageRenderSupport(cycle, this);
-	//
-	// getScript().execute(this, cycle, pageRenderSupport, scriptParms);
-	// }
 
 	/**
 	 * @see org.apache.tapestry.form.AbstractFormComponent#rewindFormComponent(org.apache.tapestry.IMarkupWriter,
@@ -167,21 +137,20 @@ public abstract class MulitUpload extends BaseComponent implements
 	protected void rewindFormComponent(IMarkupWriter writer, IRequestCycle cycle) {
 
 		List<IUploadFile> files = null;
-
+		IMulitUploadPage page = (IMulitUploadPage)this.getPage();
 		try {
-			String fileCounterStr = cycle.getParameter(FILE_COUNT_STR);
-			int fileCounter = Integer.parseInt(fileCounterStr);
+			String fileNameStr = cycle.getParameter(FILE_COUNT_STR);
+			String[] fileNames = fileNameStr.split(","); 
 			files = new ArrayList<IUploadFile>();
-			for (int i = 1; i <= fileCounter; i++) {
-				String key = getUploadFieldBaseName() + i;
-				IUploadFile file = getDecoder().getFileUpload(key);
+			for (String s : fileNames) {
+				IUploadFile file = getDecoder().getFileUpload(s);
 				if (file != null) {
 					getValidatableFieldSupport().validate(this, writer, cycle,
 							file);
 					files.add(file);
 				}
 			}
-			this.setValue(files);
+			page.setUploadFiles(files);
 		} catch (ValidatorException e) {
 			getForm().getDelegate().record(e);
 		}
@@ -189,6 +158,18 @@ public abstract class MulitUpload extends BaseComponent implements
 
 	@InjectScript("MulitUpload.script")
 	public abstract IScript getScript();
+	
+	/**
+	 * 取得添加按钮的URL
+	 * @return
+	 */
+	public String getAddAssetURL(){
+		return this.getAddAsset().getResourceLocation().getResourceURL().getPath();
+	}
+	
+	public String getDeleteAllAssetURL(){
+		return this.getDeleteAllAsset().getResourceLocation().getResourceURL().getPath();
+	}
 
 	/**
 	 * Injected.

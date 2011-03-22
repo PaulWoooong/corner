@@ -1,6 +1,6 @@
 // Copyright 2007 the original author or authors.
 // site: http://www.bjmaxinfo.com
-// file: $Id: BaseAutocompleter.java 4188 2008-07-11 07:07:14Z ghostbb $
+// file: $Id: BaseAutocompleter.java 4527 2009-12-25 10:04:19Z xf $
 // created at:2007-07-06
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -59,7 +59,7 @@ import corner.util.StringUtils;
  * @author <a href=mailto:xf@bjmaxinfo.com>xiafei</a>
  * @author <a href="mailto:renais@bjmaxinfo.com">renais</a>
  * @author <a href="mailto:Ghostbb@bjmaxinfo.com">Ghostbb</a>
- * @version $Revision: 4188 $
+ * @version $Revision: 4527 $
  * @since 2.3.7
  */
 public abstract class BaseAutocompleter extends AbstractFormComponent implements
@@ -283,10 +283,9 @@ public abstract class BaseAutocompleter extends AbstractFormComponent implements
 	 * 
 	 * @see org.apache.tapestry.AbstractComponent#isStateful()
 	 */
-	 public boolean isStateful()
-    {
-        return true;
-    }
+	@Parameter(defaultValue = "literal:true")
+	public abstract boolean isStateful();
+	
 	/**
 	 * @see org.apache.tapestry.IDirect#trigger(org.apache.tapestry.IRequestCycle)
 	 */

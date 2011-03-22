@@ -58,6 +58,8 @@
   <component-type type="MulitUpload" specification-path="mulitupload/MulitUpload.jwc"/>
   
   <component-type type="CoolestPicker" specification-path="calendar/coolest/CoolestCalendar.jwc"/>
+  <!-- 日前组件第二版-->
+  <component-type type="CoolestPicker2" specification-path="calendar/coolest2/CoolestCalendar2.jwc"/>
   
   <component-type type="CodeAC" specification-path="prototype/autocompleter/CodeModelAutocompleter.jwc"/>
   <component-type type="AutoEva" specification-path="prototype/autocompleter/AutoEvaluateModelAutocompleter.jwc"/>
@@ -83,4 +85,8 @@
   <component-type type="AjaxPageRes" specification-path="ajax/AjaxPageResponse.jwc"/>
   
   <component-type type="PushletFrame" specification-path="pushlet/PushletFrame.jwc"/>
+  <component-type type="TafelTree" specification-path="tree/tafeltree/TafelTree.jwc"/>
+  
+  <!-- 过滤叶子节点 -->
+  <component-type type="PopTreeStrengThen" specification-path="tree/pop/PopTreeStrengThen.jwc"/>
 </library-specification>

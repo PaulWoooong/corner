@@ -1,6 +1,6 @@
 // Copyright 2007 the original author or authors.
 // site: http://www.bjmaxinfo.com
-// file: $Id: TinyMceEditor.java 3678 2007-11-14 04:43:52Z jcai $
+// file: $Id: TinyMceEditor.java 4447 2009-06-01 09:48:00Z lsq $
 // created at:2006-12-07
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -38,7 +38,7 @@ import org.apache.tapestry.annotations.Parameter;
  * 
  * @author <a href="mailto:jun.tsai@bjmaxinfo.com">Jun Tsai</a>
  * @author agilewang
- * @version $Revision: 3678 $
+ * @version $Revision: 4447 $
  * @since 2.3
  */
 public abstract class TinyMceEditor extends AbstractComponent {
@@ -100,6 +100,7 @@ public abstract class TinyMceEditor extends AbstractComponent {
 	 */
 	@Override
 	protected void renderComponent(IMarkupWriter writer, IRequestCycle cycle) {
+		if(cycle.isRewinding()) return;
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("mode", getMode());
 		map.put("elements", getElements());

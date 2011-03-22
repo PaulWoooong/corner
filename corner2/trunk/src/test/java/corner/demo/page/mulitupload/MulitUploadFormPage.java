@@ -1,10 +1,10 @@
 //==============================================================================
-// file :       $Id: MulitUploadFormPage.java 3677 2007-11-14 04:36:40Z jcai $
+// file :       $Id: MulitUploadFormPage.java 4512 2009-11-20 02:12:11Z ghostbb $
 // project:     corner
 //
-// last change: date:       $Date: 2007-11-14 12:36:40 +0800 (星期三, 14 十一月 2007) $
-//              by:         $Author: jcai $
-//              revision:   $Revision: 3677 $
+// last change: date:       $Date: 2009-11-20 10:12:11 +0800 (星期五, 20 十一月 2009) $
+//              by:         $Author: ghostbb $
+//              revision:   $Revision: 4512 $
 //------------------------------------------------------------------------------
 //copyright:	Beijing Maxinfo Technology Ltd. http://www.bjmaxinfo.com
 //License:      the Apache License, Version 2.0 (the "License")
@@ -19,6 +19,8 @@ import org.apache.tapestry.request.IUploadFile;
 
 import corner.demo.model.mulitupload.TestMany;
 import corner.demo.model.mulitupload.TestOne;
+import corner.model.IBlobModel;
+import corner.orm.tapestry.component.mulitupload.IMulitUploadPage;
 import corner.orm.tapestry.page.relative.ReflectMultiManyEntityFormPage;
 import corner.orm.tapestry.service.blob.IBlobPageDelegate;
 import corner.orm.tapestry.service.blob.SqueezeBlobPageDelegate;
@@ -27,25 +29,15 @@ import corner.orm.tapestry.service.blob.SqueezeBlobPageDelegate;
  * 对blob的处理
  * 
  * @author <a href="mailto:jun.tsai@bjmaxinfo.com">Jun Tsai</a>
- * @version $Revision: 3677 $
+ * @version $Revision: 4512 $
  * @since 2.2.1
  */
 public abstract class MulitUploadFormPage extends
-		ReflectMultiManyEntityFormPage implements IMulitUpload {
+		ReflectMultiManyEntityFormPage implements IMulitUploadPage {
+	
+	public abstract IBlobModel getBlobModel();
 
-	public abstract List<TestMany> getManys();
-
-	public abstract void setMany(List<TestMany> manys);
-
-	public boolean isSelected() {
-		return false;
-	}
-
-	public void setSelected(boolean selected) {
-		if (selected) {
-			this.getEntityService().deleteEntities(this.getBlobModel());
-		}
-	}
+	public abstract void setBlobModel(IBlobModel model);
 
 	/**
 	 * @see corner.orm.tapestry.page.AbstractEntityPage#saveOrUpdateEntity()
@@ -54,19 +46,25 @@ public abstract class MulitUploadFormPage extends
 	protected void saveOrUpdateEntity() {
 
 		super.saveOrUpdateEntity();// 保存one端实体
+		
 		TestOne one = (TestOne) this.getEntity();
-
-		if (this.getFiles() != null && this.getFiles().size() > 0) {
-			List<TestMany> list = new ArrayList<TestMany>();
-			for (IUploadFile file : this.getFiles()) {
+		List<IUploadFile> fileList = this.getUploadFiles();
+		List<TestMany> list = new ArrayList<TestMany>();
+		
+		
+		if(fileList != null && fileList.size()>0){
+			for(IUploadFile f: fileList){
+				System.out.println("文件名："+f.getFileName());
+				System.out.println("ContentType："+f.getContentType());
 				TestMany many = new TestMany();
 				this.getEntityService().saveEntity(many);
 				many.setTestOne(one);
 				IBlobPageDelegate<TestMany> delegate = new SqueezeBlobPageDelegate<TestMany>(
-						TestMany.class, file, many, this.getEntityService());
+						TestMany.class, f, many, this.getEntityService());
 
 				delegate.save();
 				list.add(many);
+				
 			}
 		}
 	}

@@ -1,7 +1,8 @@
 <span jwcid="$content$">
-		<img src="/assets/static/corner/orm/tapestry/component/mulitupload/add.png" onclick="add();" alt="add" border="0" id="mulitupload_add"/>
-		<img src="/assets/static/corner/orm/tapestry/component/mulitupload/deleteall.png" onclick="removeAll();" alt="delete all" border="0" id="mulitupload_deleteall"/>
+		<img jwcid="@Any" src="ognl:getAddAsset()" onclick="add();" alt="add" border="0" id="mulitupload_add"/>
+		<img jwcid="@Any" src="ognl:getDeleteAllAsset()" onclick="removeAll();" alt="delete all" border="0" id="mulitupload_deleteall"/>
 		<input type="hidden" name="filecounter" id="filecounter" value="0"/>
+		<input type="hidden" name="filenames" id="filenames" value=""/>
 		<div id="files"/>
 		<span jwcid="@RenderBody"/>
 </span>

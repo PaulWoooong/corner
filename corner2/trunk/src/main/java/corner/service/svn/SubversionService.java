@@ -1,6 +1,6 @@
 // Copyright 2007 the original author or authors.
 // site: http://www.bjmaxinfo.com
-// file: $Id: SubversionService.java 4221 2008-07-30 07:16:06Z jcai $
+// file: $Id: SubversionService.java 4671 2010-08-18 06:41:19Z xf $
 // created at:2007-10-31
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,7 +21,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -31,6 +30,8 @@ import org.tmatesoft.svn.core.ISVNLogEntryHandler;
 import org.tmatesoft.svn.core.SVNException;
 import org.tmatesoft.svn.core.SVNLogEntry;
 import org.tmatesoft.svn.core.SVNNodeKind;
+import org.tmatesoft.svn.core.SVNProperties;
+import org.tmatesoft.svn.core.SVNPropertyValue;
 import org.tmatesoft.svn.core.SVNRevisionProperty;
 import org.tmatesoft.svn.core.SVNURL;
 import org.tmatesoft.svn.core.auth.ISVNAuthenticationManager;
@@ -50,7 +51,7 @@ import corner.util.BeanUtils;
  * Subversion服务包，提供了和subversion交互操作.
  * @author <a href=mailto:xf@bjmaxinfo.com>xiafei</a>
  * @author <a href="mailto:jun.tsai@bjmaxinfo.com">Jun Tsai</a>
- * @version $Revision: 4221 $
+ * @version $Revision: 4671 $
  * @since 2.5
  */
 public class SubversionService  implements IVersionService,InitializingBean{
@@ -58,7 +59,7 @@ public class SubversionService  implements IVersionService,InitializingBean{
 	/**
 	 * 供repository回掉使用.
 	 * @author <a href="mailto:jun.tsai@bjmaxinfo.com">Jun Tsai</a>
-	 * @version $Revision: 4221 $
+	 * @version $Revision: 4671 $
 	 * @since 2.5
 	 */
 	public interface ISvnCallback {
@@ -82,8 +83,6 @@ public class SubversionService  implements IVersionService,InitializingBean{
 	private String url;
 	private String username;
 	private String password;
-	
-	
 
 	/**
 	 * @throws SVNException 
@@ -165,7 +164,8 @@ public class SubversionService  implements IVersionService,InitializingBean{
 			         */
 			        
 			        if(versionableObject.getSvnAuthor()!=null){
-			        	repository.setRevisionPropertyValue(SVNRevision,SVNRevisionProperty.AUTHOR, versionableObject.getSvnAuthor());
+			        	SVNPropertyValue propertyValue = SVNPropertyValue.create(versionableObject.getSvnAuthor());
+			        	repository.setRevisionPropertyValue(SVNRevision,SVNRevisionProperty.AUTHOR, propertyValue);
 			        }
 			        return SVNRevision;
 				
@@ -182,12 +182,8 @@ public class SubversionService  implements IVersionService,InitializingBean{
 		}catch (SVNException e) {
 			throw new RuntimeException(e);
 		}finally{
-			try {
-				if(repository!=null){
-					repository.closeSession();
-				}
-			} catch (SVNException e) {
-				logger.warn(e.getMessage());
+			if(repository!=null){
+				repository.closeSession();
 			}
 		}
 	}
@@ -231,10 +227,9 @@ public class SubversionService  implements IVersionService,InitializingBean{
 		        if (nodeKind == SVNNodeKind.NONE || nodeKind == SVNNodeKind.DIR) {
 		        	logger.debug("未发现文件");
 		        	return null;
-//		        	throw new RuntimeException("未发现文件");
 		        }
 		        
-		        repository.getFile(filePath, revision, new HashMap(), baos);
+		        repository.getFile(filePath, revision, new SVNProperties(), baos);
 		        
 		        return null;
 			}});
@@ -320,7 +315,8 @@ public class SubversionService  implements IVersionService,InitializingBean{
 				
 				//修改作者信息
 				 if(versionableObject.getSvnAuthor()!=null){
-			        	repository.setRevisionPropertyValue(SVNRevision,SVNRevisionProperty.AUTHOR, versionableObject.getSvnAuthor());
+					 	SVNPropertyValue propertyValue = SVNPropertyValue.create(versionableObject.getSvnAuthor());
+			        	repository.setRevisionPropertyValue(SVNRevision,SVNRevisionProperty.AUTHOR, propertyValue);
 			       }
 				return null;
 			}});
@@ -368,11 +364,11 @@ public class SubversionService  implements IVersionService,InitializingBean{
         	/*
         	 * 获得svnurl
         	 */
-            repository = SVNRepositoryFactory.create(SVNURL.parseURIEncoded(url));
+            repository = SVNRepositoryFactory.create(SVNURL.parseURIEncoded(getUrl()));
             /*
              * 设置用户和密码
              */
-            ISVNAuthenticationManager authManager = SVNWCUtil.createDefaultAuthenticationManager(username, password);
+            ISVNAuthenticationManager authManager = SVNWCUtil.createDefaultAuthenticationManager(getUsername(), getPassword());
             repository.setAuthenticationManager(authManager);
             repository.testConnection(); 
         } catch (SVNException e) {
@@ -422,9 +418,32 @@ public class SubversionService  implements IVersionService,InitializingBean{
 	public void setUsername(String username) {
 		this.username = username;
 	}
+	
+	/**
+	 * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
+	 */
 	public void afterPropertiesSet() throws Exception {
 		setupLibrary();
-		
 	}
-	
+
+	/**
+	 * @return Returns the url.
+	 */
+	protected String getUrl() {
+		return url;
+	}
+
+	/**
+	 * @return Returns the username.
+	 */
+	protected String getUsername() {
+		return username;
+	}
+
+	/**
+	 * @return Returns the password.
+	 */
+	protected String getPassword() {
+		return password;
+	}
 }

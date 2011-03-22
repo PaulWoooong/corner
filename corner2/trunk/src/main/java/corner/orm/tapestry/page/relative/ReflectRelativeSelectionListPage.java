@@ -1,6 +1,6 @@
 // Copyright 2007 the original author or authors.
 // site: http://www.bjmaxinfo.com
-// file: $Id: ReflectRelativeSelectionListPage.java 3988 2008-03-13 07:59:30Z renais $
+// file: $Id: ReflectRelativeSelectionListPage.java 4535 2010-03-23 02:15:54Z ghostbb $
 // created at:2006-06-22
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -41,7 +41,7 @@ import corner.util.EntityConverter;
  *      否则 返回 bs
  *      	  
  * @author Jun Tsai
- * @version $Revision: 3988 $
+ * @version $Revision: 4535 $
  * @since 2.0.5
  */
 public abstract class ReflectRelativeSelectionListPage extends
@@ -102,7 +102,7 @@ public abstract class ReflectRelativeSelectionListPage extends
 	 * @param select
 	 */
 	@SuppressWarnings("unchecked")
-	private void doSelectCheckbox(Object obj,Object objInversed,boolean select){
+	protected void doSelectCheckbox(Object obj,Object objInversed,boolean select){
 		Collection c=this.getRelationshipCollection(obj);
 		if(select){
 			if(!c.contains(objInversed)){

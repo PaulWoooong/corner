@@ -27,6 +27,7 @@ import org.apache.tapestry.IBinding;
 import org.apache.tapestry.IComponent;
 import org.apache.tapestry.binding.AbstractBindingFactory;
 
+import corner.orm.tapestry.translator.EnglishDateTranslator;
 import corner.orm.tapestry.translator.ExactDateTranslator;
 import corner.orm.tapestry.translator.MonthDayTranslator;
 import corner.orm.tapestry.translator.MonthYearTranslator;
@@ -105,6 +106,12 @@ public class DateBindingFactory extends AbstractBindingFactory {
 		 * MM-dd
 		 */
 		FORMAT_CLAZZ.put("monthday", MonthDayTranslator.DATE_FORMAT);
+		
+		/** 
+		 * 显示月份和日
+		 * MM/dd/yyyy
+		 */
+		FORMAT_CLAZZ.put("endate", EnglishDateTranslator.DATE_FORMAT);
 	}
 
 	/**

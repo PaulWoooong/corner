@@ -1,6 +1,6 @@
 // Copyright 2007 the original author or authors.
 // site: http://www.bjmaxinfo.com
-// file: $Id: IBlobModel.java 3791 2007-12-17 04:45:58Z jetty $
+// file: $Id: IBlobModel.java 4469 2009-09-08 04:44:16Z jcai $
 // created at:2006-08-26
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,7 +20,7 @@ package corner.model;
 /**
  * blob模型的接口
  * @author Jun Tsai
- * @version $Revision: 3791 $
+ * @version $Revision: 4469 $
  * @since 2.1
  */
 public interface IBlobModel {
@@ -28,6 +28,7 @@ public interface IBlobModel {
 	public static final String BLOB_DATA_PRO_NAME="blobData";
 	public static final String BLOB_NAME_PRO_NAME="blobName";
 	public static final String CONTENT_TYPE_PRO_NAME="contentType";
+	public static final String FILE_PATH_PRO_NAME="filePath";
 
 	public abstract byte[] getBlobData();
 
@@ -44,5 +45,7 @@ public interface IBlobModel {
 	public abstract void setBlobName(String blobName);
 	
 	public abstract String getBlobName();
+	public abstract String  getFilePath();
+	public void setFilePath(String filePath);
 
 }

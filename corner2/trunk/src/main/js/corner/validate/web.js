@@ -7,6 +7,45 @@ dojo.provide("corner.validate.web");
 
 dojo.require("dojo.validate.common");
 
+corner.validate.isFileSizeOverrun = function(/*String*/value, /*Object?*/flags){
+// summary:
+// 将flags传进来的最大上传文件大小进行效验，如果小于最大允许上传数返回true
+	dojo.debug("value :" + value);
+	dojo.debug("maxSize :" + flags.maxSize);
+	
+	var Browser = { 
+		'isIE' : (navigator.userAgent.indexOf('MSIE') >= 0) && (navigator.userAgent.indexOf('Opera') < 0),
+		'isIE6' : (navigator.userAgent.indexOf('MSIE 6.0') >= 0) && (navigator.userAgent.indexOf('Opera') < 0),
+		'isIE7' : (navigator.userAgent.indexOf('MSIE 7.0') >= 0) && (navigator.userAgent.indexOf('Opera') < 0),
+		'isFirefox' : navigator.userAgent.indexOf('Firefox') >= 0, 
+		'isOpera' : navigator.userAgent.indexOf('Opera') >= 0 
+	};
+	
+	dojo.debug("Browser.isIE6 :" + Browser.isIE6);
+	
+	//如果不是ie就直接返回
+	if(!Browser.isIE6){
+		return true;
+	}
+	
+	var image = new Image();
+	image.dynsrc = value;
+	
+	var fileSizeBytes = image.fileSize;
+	
+	dojo.debug("fileSizeBytes :" + fileSizeBytes);
+	
+	var maxSizeBytes = flags.maxSize * 1024 * 1024;
+	
+	dojo.debug("maxSizeBytes :" + maxSizeBytes);
+	
+	if(fileSizeBytes > maxSizeBytes){
+		return false;
+	}else{
+		return true;
+	}
+}
+
 corner.validate.isGainPointRequired = function(/*String*/value, /*Object?*/flags){
 // summary:
 // 验证GainPoint中元素至少选中一个
@@ -101,7 +140,7 @@ corner.validate.isPictureSize = function(/*String*/value, /*Object?*/flags){
     
 	    var fileext = filepath.substring(filepath.length-4,filepath.length);;
 	    
-	    fileext = fileext.toLowerCase();//转为小写
+	    fileext = fileext.toLowerCase();// 转为小写
 	    
 	    dojo.debug("fileext value" + fileext);
 	    
@@ -114,7 +153,7 @@ corner.validate.isPictureSize = function(/*String*/value, /*Object?*/flags){
 		var width = dojo.byId('ImageField').width;
 		var height = dojo.byId('ImageField').height;
 		
-		//判断
+		// 判断
 		if(width>flags['width']||height>flags['height']){
 			dojo.debug("width || height error{" + "width = " + width +",height = " +  height +"}");
 			return false;
@@ -162,23 +201,23 @@ corner.validate.isReletiveFieldNotNull = function(/*String*/value, /*Object?*/fl
 	var tValue;
 	
 	dojo.debug("flags:"+flags);
-//	for (var i in flags.fields){
-//		tVCalue = dojo.byId(flags.fields[i]).value; 
-//		dojo.debug(tVCalue);
-//		dojo.debug("i:"+i);
-//		if( tVCalue!= null && tVCalue!=""){ 
-//			if(i!=(flags.fields.length-1)){
-//				continue;
-//			}else{
-//				dojo.debug("return true");
-//				return true;
-//			}
+// for (var i in flags.fields){
+// tVCalue = dojo.byId(flags.fields[i]).value;
+// dojo.debug(tVCalue);
+// dojo.debug("i:"+i);
+// if( tVCalue!= null && tVCalue!=""){
+// if(i!=(flags.fields.length-1)){
+// continue;
+// }else{
+// dojo.debug("return true");
+// return true;
+// }
 //			
-//		}else{
-//			dojo.debug("return false");
-//				return false;	
-//		}
-//	}
+// }else{
+// dojo.debug("return false");
+// return false;
+// }
+// }
 	for (var i = 0;i<flags.fields.length;i++){
 		tVCalue = dojo.byId(flags.fields[i]).value; 
 		dojo.debug(tVCalue);
@@ -205,16 +244,16 @@ corner.validate.isUpLoadFileSize = function(/*String*/value, /*Object?*/flags){
 	var maxUpLoad;
 	dojo.debug("flags:"+flags);
 	var fileImgTmp = document.createElement("img");
-//	var fileImgTmp = dojo.byId("fileTemp");
+// var fileImgTmp = dojo.byId("fileTemp");
 	maxUpLoad = flags.maxUpLoad;
 	
-	//image load method!
-//	var loops = 0;
-//	fileImgTmp.onload = function ()
-//	{
-//		 dojo.debug(loops);
-//   		 loops ++;
-//	}
+	// image load method!
+// var loops = 0;
+// fileImgTmp.onload = function ()
+// {
+// dojo.debug(loops);
+// loops ++;
+// }
 //	
 	fieldId = flags.fieldId;
 	
@@ -225,23 +264,23 @@ corner.validate.isUpLoadFileSize = function(/*String*/value, /*Object?*/flags){
 	var fileSize = fileImgTmp.fileSize;
 	dojo.debug("fileSize:"+fileSize);
 
-//	if(dojo.byId(fieldId).type == "file"){
-//		parseInt(maxUpload)
-//	}
-//	var fso = new ActiveXObject('Scripting.FileSystemObject');
-//	var fso;
-//	var fileSize;
-//	if(document.all){
-//		dojo.debug("is IE!");
-//		fso = new ActiveXObject('Scripting.FileSystemObject');
-//		var file = fso.GetFile(fieldId.value);
-//		fileSize = file.Size;
-//	}else{
-//		dojo.debug("the browser upload File Operator support is disabled! try IE!");
-//		return false;
-//	}
+// if(dojo.byId(fieldId).type == "file"){
+// parseInt(maxUpload)
+// }
+// var fso = new ActiveXObject('Scripting.FileSystemObject');
+// var fso;
+// var fileSize;
+// if(document.all){
+// dojo.debug("is IE!");
+// fso = new ActiveXObject('Scripting.FileSystemObject');
+// var file = fso.GetFile(fieldId.value);
+// fileSize = file.Size;
+// }else{
+// dojo.debug("the browser upload File Operator support is disabled! try IE!");
+// return false;
+// }
 	
-//	var file = fso.GetFile(fieldId.value); 
+// var file = fso.GetFile(fieldId.value);
 	if(fileSize <= maxUpLoad && fileSize > 0){
 		return true;
 	}
@@ -275,7 +314,7 @@ corner.validate.isInRange = function(/*String*/value, /*Object?*/flags){
 	}
 	dojo.debug("get max value :"+rFlags.max);
 	rFlags.decimal=flags.decimal;
-	//return false;
+	// return false;
 	return dojo.validate.isInRange(value,rFlags);
 }
 /**
@@ -285,18 +324,18 @@ corner.validate.isPersonID = function(/*String*/value, /*Object?*/flags){
 // summary:
 //	验证公民身份证号码是否正确。
 //
-// value  A string.
-// flags  An object. 	
+// value A string.
+// flags An object.
 
 	if (value == "") return;
 	
-	//身份证号码校验,并从中拆分出出生年月日和性别
+	// 身份证号码校验,并从中拆分出出生年月日和性别
 	var yyyy;
 	var mm;
 	var dd;
 	var birthday;
 	var sex;
-	//15位转18位中,计算校验位即最后一位
+	// 15位转18位中,计算校验位即最后一位
 	var GetVerifyBit=function GetVerifyBit(id){
 		var result;
 		var nNum=eval(id.charAt(0)*7+id.charAt(1)*9+id.charAt(2)*10+id.charAt(3)*5+id.charAt(4)*8+id.charAt(5)*4+id.charAt(6)*2+id.charAt(7)*1+id.charAt(8)*6+id.charAt(9)*3+id.charAt(10)*7+id.charAt(11)*9+id.charAt(12)*10+id.charAt(13)*5+id.charAt(14)*8+id.charAt(15)*4+id.charAt(16)*2);
@@ -425,5 +464,31 @@ corner.validate.isPersonID = function(/*String*/value, /*Object?*/flags){
 
 	return true;// Boolean
 	
+}
+
+/**
+ * 判断给定的值只否在指定的一个集合中
+ * value:录入的值
+ * flags:给定的集合
+ */
+corner.validate.isInEnum = function(/*String*/value, /*Object?*/flags){
+	
+	dojo.debug("value is:"+value);	
+	if(flags && eval(flags.nullAble)){
+		if(value == null || value==''){
+			return true;
+		}
+	}
+	
+	if(flags && flags.values && flags.values.length>0){
+		var values = flags.values;
+		dojo.debug("values.length:" + values.length);
+		for(var i=0;i<values.length;i++){
+			if(value==values[i]){
+				return true;
+			}
+		}
+	}
+	return false;
 }
 

@@ -1,6 +1,6 @@
 // Copyright 2007 the original author or authors.
 // site: http://www.bjmaxinfo.com
-// file: $Id: CoolestCalendar.java 4283 2008-09-27 06:24:08Z xf $
+// file: $Id: CoolestCalendar.java 4916 2011-03-14 03:56:29Z gy $
 // created at:2007-07-06
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -36,7 +36,7 @@ import corner.orm.tapestry.component.textfield.TextField;
 /**
  * Coolest时间控件
  * @author <a href=mailto:xf@bjmaxinfo.com>xiafei</a>
- * @version $Revision: 4283 $
+ * @version $Revision: 4916 $
  * @since 0.8.5.1
  */
 public abstract class CoolestCalendar extends TextField{
@@ -63,15 +63,18 @@ public abstract class CoolestCalendar extends TextField{
 			lang.append("-").append(locale.getCountry().toLowerCase());
 		}
 		
-		String jsFileName = "";
-		
-		if(lang.toString().equals("zh-tw")){
-			jsFileName = "calendar-big5-utf8.js";
-		}else if(lang.toString().equals("zh-cn")){
-			jsFileName = "calendar-zh.js";
-		}else{
-			jsFileName = "calendar-" + lang + ".js";
+		String jsFileName = "calendar-en.js";
+		//
+		if(getIsShowZh()){
+			if(lang.toString().equals("zh-tw")){
+				jsFileName = "calendar-big5-utf8.js";
+			}else if(lang.toString().equals("zh-cn")){
+				jsFileName = "calendar-zh.js";
+			}else{
+				jsFileName = "calendar-" + lang + ".js";
+			}
 		}
+		
 		
 		scriptParms.put("baseUrl",		  getWebRequest().getContextPath());
 		
@@ -105,6 +108,7 @@ public abstract class CoolestCalendar extends TextField{
 		scriptParms.put("cache",          getCache());
 		scriptParms.put("showOthers",     getShowOthers());
 		scriptParms.put("multiple",       getMultiple());
+		scriptParms.put("isShowZh",       getIsShowZh());
 
 		
 //		scriptParms.put("dateStatusFunc", params["disableFunc"]);	// takes precedence if both are defined
@@ -276,5 +280,11 @@ public abstract class CoolestCalendar extends TextField{
 	 */
 	@Parameter
 	public abstract String getMultiple();
+	
+	/**日期组件显示国际化，是否显示汉语，默认为 true，以汉语显示
+	 * @return
+	 */
+	@Parameter(defaultValue = "ognl:true")
+	public abstract boolean getIsShowZh();
 }
 

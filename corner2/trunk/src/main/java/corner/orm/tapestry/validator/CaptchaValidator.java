@@ -1,6 +1,6 @@
 // Copyright 2007 the original author or authors.
 // site: http://www.bjmaxinfo.com
-// file: $Id: CaptchaValidator.java 3678 2007-11-14 04:43:52Z jcai $
+// file: $Id: CaptchaValidator.java 4919 2011-03-17 07:31:09Z xf $
 // created at:2006-12-10
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,11 +24,12 @@ import org.apache.tapestry.valid.ValidatorException;
 
 import corner.orm.tapestry.service.captcha.CaptchaService;
 import corner.orm.tapestry.service.captcha.RandomUtil;
+import corner.orm.tapestry.valid.ValidationStrings;
 
 /**
  * 对输入的验证码进行校验
  * @author jcai
- * @version $Revision: 3678 $
+ * @version $Revision: 4919 $
  * @since 2.3
  */
 public class CaptchaValidator extends BaseValidator{
@@ -57,14 +58,18 @@ public class CaptchaValidator extends BaseValidator{
 		}
 		
 	}
-//	构建message
+	
+	/**
+	 * 构建message
+	 * @param messages
+	 * @param field
+	 * @return
+	 */
 	private String buildMessage(ValidationMessages messages,
 			IFormComponent field) {
-		return messages.formatValidationMessage("输入的验证码不正确.",
-				null, new Object[] { field
-						.getDisplayName() });
+		return ValidationStrings.formatValidationMessage(field,messages.getLocale(),
+                getMessage(),
+                ValidationStrings.IDENTIFYING_CODE_ENTER_ERROR,
+                new Object[] { field.getDisplayName()});
 	}
-
-	
-
 }

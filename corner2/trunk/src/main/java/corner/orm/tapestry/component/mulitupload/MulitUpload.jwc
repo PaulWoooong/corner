@@ -10,12 +10,6 @@ copyright:	Beijing Maxinfo Technology Ltd. http://www.bjmaxinfo.com
     <description>
         Allows a file to be uploaded as part of a form.
     </description>
-    <parameter name="value" required="yes">
-        <description>
-            Parameter updated with the information (filename and content) of the file
-            when the form is submitted.
-        </description>
-    </parameter>
     <parameter name="disabled"/>
     <parameter name="displayName"/>
     <parameter name="validators"/>

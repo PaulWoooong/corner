@@ -1,6 +1,6 @@
 // Copyright 2007 the original author or authors.
 // site: http://www.bjmaxinfo.com
-// file: $Id: AbstractEntityPage.java 4346 2009-01-19 09:06:11Z xf $
+// file: $Id: AbstractEntityPage.java 4494 2009-09-25 03:43:07Z renais $
 // created at:2006-03-05
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -34,9 +34,7 @@ import org.apache.tapestry.engine.ILink;
 import org.apache.tapestry.html.BasePage;
 import org.apache.tapestry.link.ILinkRenderer;
 import org.apache.tapestry.services.DataSqueezer;
-
 import corner.model.IBlobModel;
-import corner.orm.hibernate.v3.HibernateObjectRelativeUtils;
 import corner.orm.tapestry.RawURLLinkRenderer;
 import corner.orm.tapestry.page.relative.IPageRooted;
 import corner.orm.tapestry.service.blob.BlobAsset;

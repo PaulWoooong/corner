@@ -1,6 +1,6 @@
 // Copyright 2007 the original author or authors.
 // site: http://www.bjmaxinfo.com
-// file: $Id: RawURLLinkRenderer.java 3678 2007-11-14 04:43:52Z jcai $
+// file: $Id: RawURLLinkRenderer.java 4542 2010-07-05 07:11:46Z zwl $
 // created at:2006-05-11
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -29,7 +29,7 @@ import org.apache.tapestry.link.ILinkRenderer;
  * @version $Revision:3677 $
  * @since 2006-4-18
  */
-public class RawURLLinkRenderer implements ILinkRenderer {
+public class  RawURLLinkRenderer implements ILinkRenderer {
 	
 	public void renderLink(IMarkupWriter writer, IRequestCycle cycle,
 			ILinkComponent linkComponent) {

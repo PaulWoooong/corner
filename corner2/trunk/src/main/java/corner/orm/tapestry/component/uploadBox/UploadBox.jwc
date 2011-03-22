@@ -30,6 +30,12 @@
     </description>
   </parameter>
   
+  <parameter name="size">
+      <description>
+         	上传框的size,用来控制FF下上传框的宽度. IE会忽略掉此属性,FF会忽略掉width属性.
+      </description>
+  </parameter>
+  
   <parameter name="imgInputClass">
     <description>图片的样式</description>
   </parameter>

@@ -1,0 +1,40 @@
+<span jwcid="@DemoBorder">
+
+	<form jwcid="AForm">
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" jwcid="DateTestOne" class="input datepicker" style="width:100px" /><br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" jwcid="DateTestTwo" class="input datepicker" style="width:100px"/><br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" jwcid="DateTestThree" class="input datepicker" style="width:100px"/><br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" jwcid="DateTestFour" class="input datepicker" style="width:100px"/><br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" jwcid="DateTestFive" class="input datepicker" style="width:100px"/><br/>
+		
+		<input type="submit" />&nbsp;&nbsp;<input type="reset"/>
+	</form>
+	
+	<script language="javascript">
+	   
+	   // 选择日期后的callback方法,在组件进行配置
+	   function dateSelect(cal){
+	     //推荐的取值方法
+	     alert(document.getElementById("DateTestFive").value);
+	     
+	     /*
+	     //其它取值方法  使用了组件引入的js.
+	     selectDateNum = cal.selection.get(0); //返回数字类型的date   20091111
+	     selectDate = cal.selection.getDates()[0];//返回 javaScript的Date类型
+	     formatDateStr = Calendar.printDate(selectDate,'%Y-%m-%d'); //将Date格式化 只能到 年,月,日;没有时,分,秒.
+	     
+	     alert(formatDateStr);
+	    */
+	   }
+	</script>
+</span>

@@ -2,7 +2,7 @@
 // file :       $Id: OnePageWithBlob.java 3419 2007-09-20 09:45:36Z jcai $
 // project:     corner
 //
-// last change: date:       $Date: 2007-09-20 17:45:36 +0800 (星期四, 20 九月 2007) $
+// last change: date:       $Date: 2007-09-20 17:45:36 +0800 (星期四, 20 9月 2007) $
 //              by:         $Author: jcai $
 //              revision:   $Revision: 3419 $
 //------------------------------------------------------------------------------

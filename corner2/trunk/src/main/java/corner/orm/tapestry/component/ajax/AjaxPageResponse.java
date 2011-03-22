@@ -26,6 +26,7 @@ import org.apache.tapestry.PageRenderSupport;
 import org.apache.tapestry.TapestryUtils;
 import org.apache.tapestry.annotations.InjectObject;
 import org.apache.tapestry.annotations.InjectScript;
+import org.apache.tapestry.annotations.Parameter;
 import org.apache.tapestry.engine.DirectServiceParameter;
 import org.apache.tapestry.engine.IEngineService;
 import org.apache.tapestry.engine.ILink;
@@ -106,10 +107,8 @@ public abstract class AjaxPageResponse extends BaseComponent implements IDirect{
 	/**
 	 * @see org.apache.tapestry.AbstractComponent#isStateful()
 	 */
-	@Override
-	public boolean isStateful() {
-		return true;
-	}
+	@Parameter(defaultValue = "literal:true")
+	public abstract boolean isStateful();
 
 	/**
 	 * Injected.

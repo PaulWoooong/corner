@@ -1,6 +1,6 @@
 // Copyright 2007 the original author or authors.
 // site: http://www.bjmaxinfo.com
-// file: $Id: CornerOptionRenderer.java 4153 2008-07-03 08:39:49Z lsq $
+// file: $Id: CornerOptionRenderer.java 4497 2009-11-05 09:31:07Z renais $
 // created at:2007-06-29
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -26,7 +26,7 @@ import org.apache.tapestry.form.IPropertySelectionModel;
  * 实现了{@link IOptionRenderer}接口，并增加了全选的选项
  * 
  * @author <a href=mailto:Ghostbb@bjmaxinfo.com>Ghostbb</a>
- * @version $Revision: 4153 $
+ * @version $Revision: 4497 $
  * @since 2.3.7
  */
 public class CornerOptionRenderer implements IOptionRenderer{
@@ -124,6 +124,10 @@ public class CornerOptionRenderer implements IOptionRenderer{
         
         if (left == null || right == null)
             return false;
+        
+        if(left instanceof Enum){
+        	return left.toString().equals(right);
+        }
         
         // Both non-null; use standard comparison.
         

@@ -16,5 +16,6 @@
 		<validator name="relationAss" class="RelationAss" configurable="false"/>
 		<validator name="GPRequired" class="GainPointRequired" configurable="false"/>
 		<validator name="upLoadFileSize" class="UpLoadFileSize"/>
+		<validator name="fileSizeOverrun" class="FileSizeOverrun"/>
 	</contribution>
 </module>
