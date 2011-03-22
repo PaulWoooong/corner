@@ -1,4 +1,9 @@
-@import url("coolestCalendar/aqua/theme.css");
+/*@import url("coolestCalendar/aqua/theme.css"); */
+/** 日期的css**/
+@import url("coolestCalendar2/default.css");
+@import url("coolestCalendar2/jscal2.css");
+@import url("coolestCalendar2/border-radius.css");
+@import url("coolestCalendar2/gold/gold.css");
 /** 自动完成 **/
 @import url("autocompleter.css");
 
@@ -7,6 +12,7 @@
 
 @import url("svn.css");
 @import url("tree/default.css");
+@import url("tree/tafeltree/tree.css");
 
 @import url("ajaxio.css");
 @import url("preview.css");

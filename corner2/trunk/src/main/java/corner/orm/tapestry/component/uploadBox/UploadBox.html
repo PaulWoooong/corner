@@ -3,7 +3,7 @@
 		<tr>
 			<td width="5%"><input type="checkbox" name="Input" jwcid="isEditBlobField" /></td>
 			<td>
-				<input type="file" name="blobData" jwcid="blobDataField_update"  />
+				<input type="file" name="blobData" jwcid="blobDataField_update" contenteditable="false" size="ognl:size"/>
 			</td>
 			<td width="5%"><span jwcid="@If" condition="ognl:ImageFile eq false" renderTag="ognl:false">
 					<span jwcid="@If" condition="ognl:blobEntity.blobData != null" renderTag="ognl:false">

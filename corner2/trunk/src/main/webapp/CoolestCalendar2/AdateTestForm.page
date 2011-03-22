@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE page-specification PUBLIC "-//Apache Software Foundation//Tapestry Specification 4.0//EN" "http://jakarta.apache.org/tapestry/dtd/Tapestry_4_0.dtd">
+
+<page-specification class="corner.orm.tapestry.page.PoFormPage">
+  <description>corner.demo.model.one.A Form Page</description>
+  <bean class="org.apache.tapestry.valid.ValidationDelegate" name="delegate"/>
+  <property persist="entity" initial-value="new corner.demo.model.one.A()" name="entity"/>
+  <component type="Form" id="AForm">
+    <binding value="ognl:beans.delegate" name="delegate"/>
+    <binding value="ognl:true" name="clientValidationEnabled"/>
+    <binding value="listener:doSaveEntityAction" name="success"/>
+  </component>
+  <property name="dateTwo"/>
+  <property name="dateThree"/>
+  <property name="dateFour"/>
+  
+  <!-- 带默认值-->
+  <component type="corner:CoolestPicker2" id="DateTestOne">
+    <binding name="displayName" value="message:applyDate"/>
+    <binding value="ognl:getDateFormat().format(new java.util.Date())" name="defaultValue"/>
+    <binding name="translator" value="translator:stringdate"/>
+    <binding name="value" value="ognl:entity.birthday"/>
+  </component>
+  <!-- 自定义格式-->
+  <component type="corner:CoolestPicker2" id="DateTestTwo">
+    <binding name="displayName" value="message:applyDate"/>
+    <binding name="dateFormat" value="literal:%Y-%m-%d %H:%M:%S"/>
+    <binding name="translator" value="translator:stringdate"/>
+    <binding name="value" value="ognl:dateTwo"/>
+  </component>
+  <!--    自定义格式  显示时间24小时格式-->
+  <component type="corner:CoolestPicker2" id="DateTestThree">
+    <binding name="displayName" value="message:applyDate"/>
+    <binding name="dateFormat" value="literal:%H:%M:%S"/>
+    <binding name="showTime" value="ognl:true"/>
+    <binding name="translator" value="translator:stringdate"/>
+    <binding name="value" value="ognl:dateThree"/>
+  </component>
+  <!-- 自定义格式  显示时间12小时格式-->
+  <component type="corner:CoolestPicker2" id="DateTestFour">
+    <binding name="displayName" value="message:applyDate"/>
+    <binding name="dateFormat" value="literal:%Y-%m-%d %H:%M:%S"/>
+    <binding name="showTime" value="literal:12"/>
+    <binding name="translator" value="translator:stringdate"/>
+    <binding name="value" value="ognl:dateFour"/>
+  </component>
+  <!-- onSelectFunc 回调-->
+  <component type="corner:CoolestPicker2" id="DateTestFive">
+    <binding name="displayName" value="message:applyDate"/>
+    <binding name="dateFormat" value="literal:%Y-%m-%d %H:%M:%S"/>
+    <binding name="showTime" value="literal:12"/>
+    <binding name="onSelectFunc" value="literal:dateSelect"/>
+    <binding name="translator" value="translator:stringdate"/>
+    <binding name="value" value="ognl:dateFour"/>
+  </component>
+</page-specification>

@@ -1,6 +1,6 @@
 // Copyright 2007 the original author or authors.
 // site: http://www.bjmaxinfo.com
-// file: $Id: MatrixRowField.java 4198 2008-07-17 10:39:44Z ghostbb $
+// file: $Id: MatrixRowField.java 4520 2009-11-26 02:39:12Z lsq $
 // created at:2006-10-19
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,8 +16,6 @@
 // limitations under the License.
 
 package corner.orm.tapestry.component.matrix;
-
-import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.tapestry.BaseComponent;
 import org.apache.tapestry.IForm;
@@ -43,21 +41,19 @@ import corner.orm.hibernate.v3.MatrixRow;
  * 行组件，来产生组件.
  * 
  * @author <a href="mailto:jun.tsai@bjmaxinfo.com">Jun Tsai</a>
- * @version $Revision: 4198 $
+ * @version $Revision: 4520 $
  * @since 2.2.2
  */
 public abstract class MatrixRowField extends BaseComponent implements
 		IFormComponent, ValidatableField {
 
 	@Parameter(required = true)
-	public abstract MatrixRow getValue();
+	public abstract MatrixRow<Object> getValue();
 
-	public abstract void setValue(MatrixRow value);
-
-	private AtomicInteger star = new AtomicInteger(0);
+	public abstract void setValue(MatrixRow<Object> value);
 
 	@Parameter(required = true)
-	public abstract MatrixRow getRefVector();
+	public abstract MatrixRow<Object> getRefVector();
 
 	@Parameter
 	public abstract Object getDefaultValue();
@@ -67,12 +63,18 @@ public abstract class MatrixRowField extends BaseComponent implements
 	
 	@Parameter(defaultValue = "translator:string")
 	public abstract Translator getTranslator();
+	
+	/**
+	 * 取得当前for循环的位置的索引
+	 * @return int
+	 */
+	public abstract int getIndex();
 
 	@Component(type = "MatrixRowTextField", bindings = { "displayName=displayName",
 			"class=inputClass", "value=elementValue", "translator=translator","defaultValue=defaultValue","onlyRead=onlyRead" })
 	public abstract MatrixRowTextField getElementTextField();
 	
-	@Component(type="For",bindings = {"source=refVector","value=tmpObj"})
+	@Component(type="For",bindings = {"source=refVector","value=tmpObj","index=index"})
 	public abstract ForBean getForComponentField();
 	
 	@Component(type="Any",bindings={"class=tdClass"})
@@ -96,10 +98,11 @@ public abstract class MatrixRowField extends BaseComponent implements
 	 *             当错误验证的时候.
 	 */
 	public Object getElementValue() throws ValidatorException {
-		if (getValue().size() > star.intValue()) {
+		
+		if (getValue().size() > getIndex()) {
 			ValidationMessages messages = new ValidationMessagesImpl(this, this
 					.getPage().getLocale());
-			Object obj=getValue().get(star.getAndIncrement());
+			Object obj=getValue().get(getIndex());
 			
 			return obj==null?null:this.getTranslator().parse(this, messages,obj.toString());
 			// return getValue().get(star++);
@@ -107,17 +110,13 @@ public abstract class MatrixRowField extends BaseComponent implements
 			return null;
 		}
 	}
-
-	@SuppressWarnings("unchecked")
+	
 	public void setElementValue(Object value) {
 		if (this.getPage().getRequestCycle().isRewinding()) {
-			if (star.intValue() == 0) {
-				setValue(new MatrixRow());
+			if (getIndex() == 0) {
+				setValue(new MatrixRow<Object>());
 			}
-//			if (value != null) {
-//			getValue().add(star++, value==null?"":value);
-			getValue().add(star.getAndIncrement(), value);
-//			}
+			getValue().add(getIndex(), value);
 		}
 	}
 
@@ -136,26 +135,15 @@ public abstract class MatrixRowField extends BaseComponent implements
 	 */
 	@Override
 	protected void prepareForRender(IRequestCycle arg0) {
-		star.set(0);
 		if (this.getValue() == null) {
-			setValue(new MatrixRow());
+			setValue(new MatrixRow<Object>());
 		}
-	}
-
-	/**
-	 * @see org.apache.tapestry.AbstractComponent#cleanupAfterRender(org.apache.tapestry.IRequestCycle)
-	 */
-	@Override
-	protected void cleanupAfterRender(IRequestCycle cycle) {
-		star.set(0);
-		super.cleanupAfterRender(cycle);
 	}
 
 	/**
 	 * @see org.apache.tapestry.BaseComponent#renderComponent(org.apache.tapestry.IMarkupWriter,
 	 *      org.apache.tapestry.IRequestCycle)
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	protected void renderComponent(IMarkupWriter writer, IRequestCycle cycle) {
 		IForm form = TapestryUtils.getForm(cycle, this);
@@ -178,7 +166,7 @@ public abstract class MatrixRowField extends BaseComponent implements
 			try {
 
 				getValidatableFieldSupport().validate(this, writer, cycle,
-						((MatrixRow)this.getValue()).getRowSum());
+						((MatrixRow<Object>)this.getValue()).getRowSum());
 
 			} catch (ValidatorException e) {
 				getForm().getDelegate().record(e);

@@ -1,6 +1,6 @@
 // Copyright 2007 the original author or authors.
 // site: http://www.bjmaxinfo.com
-// file: $Id: RadioGroup.java 3678 2007-11-14 04:43:52Z jcai $
+// file: $Id: RadioGroup.java 4483 2009-09-22 01:42:59Z zsl $
 // created at:2006-09-27
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,11 +19,12 @@ package corner.orm.tapestry.component.radio;
 
 import org.apache.tapestry.IMarkupWriter;
 import org.apache.tapestry.IRequestCycle;
+import org.apache.tapestry.annotations.Parameter;
 
 /**
  * 扩展了Tapestry中的RadioGroup,实现了指定默认选中某个Radio的功能
  * @author Ghost
- * @version $Revision: 3678 $
+ * @version $Revision: 4483 $
  * @since 2.2.1
  */
 public abstract class RadioGroup extends org.apache.tapestry.form.RadioGroup {
@@ -58,7 +59,11 @@ public abstract class RadioGroup extends org.apache.tapestry.form.RadioGroup {
 	@Override
 	protected void renderFormComponent(IMarkupWriter writer, IRequestCycle cycle) {
 		_selection = getBinding("selected").getObject();
-		getBinding("selected").setObject(_selection==null?null:_selection.toString().trim());
+		
+		if(!isObjectValue()){//是否作为对象处理，例：枚举.toString() 会报错， 
+			getBinding("selected").setObject(_selection==null?null:_selection.toString().trim());
+		}
+		
 		super.renderFormComponent(writer, cycle);
 	}
 	
@@ -77,4 +82,11 @@ public abstract class RadioGroup extends org.apache.tapestry.form.RadioGroup {
      * @return 索引有效值,从 1开始.
      */
     public abstract int getDefaultIndex();
+    
+    /**
+     * 是否作为对象处理，默认flase
+     * @return
+     */
+    @Parameter(defaultValue="false")
+    public abstract boolean isObjectValue();
 }

@@ -3,6 +3,8 @@
 <html>
 	<head><title>这里是title</title></head>
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+<SCRIPT LANGUAGE="JavaScript" src="../../../../main/js/dojo/dojo.js"></script>
+<SCRIPT LANGUAGE="JavaScript" src="mulitupload.js"></script>
 	<SCRIPT LANGUAGE="JavaScript">
 		<!--
 		
@@ -10,15 +12,15 @@
 		          };
 		
 		//-->
+		dojo.require("dojo.string.common");
 	</SCRIPT>
-<SCRIPT LANGUAGE="JavaScript" src="../../../../main/js/dojo/dojo.js"></script>
-<SCRIPT LANGUAGE="JavaScript" src="mulitupload.js"></script>
 
 	<body>
 		<form>
 			<input type="button" onclick="add();" value="add file"/>&nbsp;&nbsp;
 			<input type="button" onclick="removeAll();" value="delete all"/><br/>
 			<input type="hidden" name="filecounter" id="filecounter" value="0"/>
+			<input type="hidden" name="filenames" id="filenames" value=""/>
 			<div id="files"><div>
 		</form>
 	</body>

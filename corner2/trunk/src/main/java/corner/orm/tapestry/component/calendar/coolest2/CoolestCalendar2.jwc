@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+	Copyright 2006-2007 The Beijing Maxinfo Technology Ltd. 
+	site:http://www.bjmaxinfo.com
+	file : $Id: CoolestCalendar.jwc 4047 2008-05-27 10:35:48Z xf $
+	created at:2007-06-12
+-->
+
+<!DOCTYPE component-specification PUBLIC 
+  "-//Apache Software Foundation//Tapestry Specification 4.0//EN" 
+  "http://tapestry.apache.org/dtd/Tapestry_4_0.dtd">
+	
+<component-specification class="corner.orm.tapestry.component.calendar.coolest2.CoolestCalendar2" allow-body="no">
+
+  <description>
+    A text input field.
+  </description>
+ 
+  <parameter name="value" required="yes">
+    <description>
+      The text string to be read and updated.
+    </description>
+  </parameter>
+  
+  <parameter name="disabled">
+    <description>
+      If true, then the disabled attribute will be written on render, and the
+      TextField will not update its value parameter when the form is submitted.
+    </description>
+  </parameter>
+
+  <parameter name="displayName">
+    <description>
+      The name of the field, which may be used by a FieldLabel.
+    </description>
+  </parameter>
+    
+  <parameter name="hidden">
+    <description>
+      If true, then the TextField will render itself as a password field (that hides the
+      content entered by the user).
+    </description>
+  </parameter>
+  
+  <parameter name="translator" default-value="translator:string"/>
+  <parameter name="validators"/>
+  <parameter name="id" property="idParameter" default-value="id"/>
+  		  
+  <reserved-parameter name="name"/>
+  <reserved-parameter name="type"/>
+  <reserved-parameter name="value"/>
+
+  <inject property="validatableFieldSupport" object="service:tapestry.form.ValidatableFieldSupport"/>
+  <inject property="translatedFieldSupport" object="service:tapestry.form.TranslatedFieldSupport"/>
+    
+</component-specification>

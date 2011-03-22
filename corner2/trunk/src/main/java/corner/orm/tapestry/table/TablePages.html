@@ -15,8 +15,8 @@
 </span>
 <li jwcid="@Any" class="ognl:lastLinkClass"><a jwcid="linkFwd">&gt;</a></li>
 <li jwcid="@Any" class="ognl:lastLinkClass"><a jwcid="linkLast"><span jwcid="@Insert" value="ognl:getPageCount()"/></a></li>
-<li>&nbsp;<form jwcid="queryPageForm"><div style="display:none"><input jwcid="@TextField"  defaultValue="ognl:getDefaultComponentAddress()" value="ognl:componentAddress"/></div><input jwcid="PageNumField"/>&nbsp;<input type="submit"  class="pagesubmit" value="GO"/></form></li>
-<li><span jwcid="@Insert" value="ognl:getRowCountMessage()"/></li>
+<li>&nbsp;<form jwcid="queryPageForm"><div style="display:none"><input jwcid="@TextField"  defaultValue="ognl:getDefaultComponentAddress()" value="ognl:componentAddress"/></div><input jwcid="PageNumField"/>&nbsp;<input type="submit" id="pagesubmit"  class="pagesubmit" value="Go"/></form></li>
+<li>&nbsp;<span jwcid="@Insert" value="ognl:tablePagesPrefix"/>&nbsp;<span class="page_count"><span jwcid="page_count@Insert" value="ognl:getRowCountMessage()"/></span>&nbsp;<span jwcid="@Insert" value="ognl:tablePagesSuffix"/></li>
 </ul>
 </div>
 </span>

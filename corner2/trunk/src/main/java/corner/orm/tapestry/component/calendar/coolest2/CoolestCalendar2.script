@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE script PUBLIC
+	"-//Apache Software Foundation//Tapestry Script Specification 3.0//EN"
+	"http://jakarta.apache.org/tapestry/dtd/Script_3_0.dtd">
+<script>
+<include-script resource-path="/corner/orm/tapestry/component/calendar/coolest2/jscal2.js" />
+<include-script resource-path="/corner/orm/tapestry/component/calendar/coolest2/lang/cn.js" />
+<include-script resource-path="/corner/orm/tapestry/component/calendar/coolest2/lang/en.js" />
+<include-script resource-path="/corner/orm/tapestry/component/calendar/coolest2/calendar2.js"/>
+
+<input-symbol key="language"    required="yes" />
+<input-symbol key="inputField"  required="yes" />
+<input-symbol key="dateFormat"  required="no" />
+<input-symbol key="showTime"    required="no" />
+<input-symbol key="min"         required="no" />
+<input-symbol key="max"         required="no" />
+<input-symbol key="weekNumbers" required="no" />
+<input-symbol key="onSelectFunc" required="no"/>
+<input-symbol key="minuteStep" required="no"/>
+<initialization>
+	
+	new Calendar2(${min},${max},"${inputField}","${inputField}","${dateFormat}",${showTime},${weekNumbers},"${language}",${onSelectFunc},${minuteStep});
+	//dojo.byId("${inputField}").setAttribute('readonly','true');
+</initialization>
+</script>

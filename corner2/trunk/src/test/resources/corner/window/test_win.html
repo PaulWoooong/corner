@@ -159,7 +159,7 @@ function aaa(){
 -->
 
 <br/>
-<span>Version:0.0.1  $Revision: 4349 $ $Date: 2009-02-03 09:15:53 +0800 (星期二, 03 二月 2009) $ </span>
+<span>Version:0.0.1  $Revision: 4412 $ $Date: 2009-04-10 10:43:41 +0800 (星期五, 10 四月 2009) $ </span>
 <script type="text/javascript"><!--
 	
 	new WindowQueryDialogAction($("pwin_winDialog_button"),{"className":"alphacube","title":"google",
@@ -169,7 +169,11 @@ function aaa(){
 									   "draggable":"true","showEffectOptions":"none","hideEffectOptions":"none","effectOptions":"none",
 									   "opacity":1,"recenterAuto":"true","gridX":1,"gridY":1,"wiredDrag":"false",
 									   "destroyOnClose":"false","all callbacks":"none"},"selectRecord","queryDialogLoad",true,"test","aaa");
-	
+
+//test closeCallback
+var closeCallback = function(){
+	dojo.debug('i am callback');
+}	
 // --></script></body>
 </html>
 <!-- Render time: ~ 922 ms -->

@@ -1,6 +1,6 @@
 // Copyright 2007 the original author or authors.
 // site: http://www.bjmaxinfo.com
-// file: $Id: StringCheckbox.java 3678 2007-11-14 04:43:52Z jcai $
+// file: $Id: StringCheckbox.java 4514 2009-11-24 14:52:53Z ghostbb $
 // created at:2006-12-08
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,6 +19,7 @@ package corner.orm.tapestry.component.checkbox;
 
 import org.apache.tapestry.IMarkupWriter;
 import org.apache.tapestry.IRequestCycle;
+import org.apache.tapestry.annotations.Parameter;
 import org.apache.tapestry.form.AbstractFormComponent;
 import org.apache.tapestry.form.ValidatableField;
 import org.apache.tapestry.form.ValidatableFieldSupport;
@@ -34,13 +35,20 @@ import org.apache.tapestry.valid.ValidatorException;
  * 
  * 所以采用了String类型来处理.
  * @author <a href="mailto:jun.tsai@bjmaxinfo.com">Jun Tsai</a>
- * @version $Revision: 3678 $
+ * @version $Revision: 4514 $
  * @since 2.3
  */
 public abstract class StringCheckbox extends AbstractFormComponent implements ValidatableField{
 	public static final String SELECTED_STR="1";
 	public static final String UNSELECTED_STR = "0";
 	
+	/**
+	 * 默认选中
+	 * true:默认选中 false:默认不选中
+	 * @return
+	 */
+	@Parameter(defaultValue="false")
+	public abstract boolean getDefaultChecked();
 	/**
      * @see org.apache.tapestry.form.validator.AbstractRequirableField#renderRequirableFormComponent(org.apache.tapestry.IMarkupWriter,
      *      org.apache.tapestry.IRequestCycle)
@@ -57,7 +65,7 @@ public abstract class StringCheckbox extends AbstractFormComponent implements Va
         if (isDisabled())
             writer.attribute("disabled", "disabled");
 
-        if (isSelected())
+        if (isSelected() ||(!cycle.isRewinding() && getValue()==null && this.getDefaultChecked()))
             writer.attribute("checked", "checked");
 
         renderIdAttribute(writer, cycle);

@@ -20,7 +20,7 @@
   "http://jakarta.apache.org/tapestry/dtd/Tapestry_4_0.dtd">
 
 <component-specification allow-informal-parameters="no">
-	<parameter name="title" />
+	<parameter name="title" /> 
 	<component id="shell" type="Shell">
 		<binding name="stylesheets" value="ognl:{assets.stylesheet}"/>
 		<binding name="debugEnabled" value="true"/>

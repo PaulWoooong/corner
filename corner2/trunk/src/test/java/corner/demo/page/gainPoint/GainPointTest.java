@@ -2,7 +2,7 @@
 // file :       $Id: GainPointTest.java 3677 2007-11-14 04:36:40Z jcai $
 // project:     corner
 //
-// last change: date:       $Date: 2007-11-14 12:36:40 +0800 (星期三, 14 十一月 2007) $
+// last change: date:       $Date: 2007-11-14 12:36:40 +0800 (星期三, 14 11月 2007) $
 //              by:         $Author: jcai $
 //              revision:   $Revision: 3677 $
 //------------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 // Copyright 2007 the original author or authors.
 // site: http://www.bjmaxinfo.com
-// file: $Id: AbstractRelativeEntityListPage.java 3678 2007-11-14 04:43:52Z jcai $
+// file: $Id: AbstractRelativeEntityListPage.java 4781 2010-11-30 01:47:40Z lj $
 // created at:2006-08-08
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -29,7 +29,7 @@ import corner.orm.tapestry.table.RelativePersistentBasicTableModel;
  * 关联实体对象的列表，通常通过one端来得到关联对象的列表页。
  * @author jcai
  * @author Ghost
- * @version $Revision: 3678 $
+ * @version $Revision: 4781 $
  * @since 2.1
  */
 public abstract class AbstractRelativeEntityListPage<T,E> extends AbstractEntityListPage<E> implements IPageRooted<T,E>{
@@ -97,8 +97,6 @@ public abstract class AbstractRelativeEntityListPage<T,E> extends AbstractEntity
 	public IPage goRootFormPage(){
 		return this.goEntityPageByPage(this.getRootedObject(), this.getRootFormPage());
 	}
-
-	
 
 	/**
 	 * 采用注释，简化从list页面返回根页面

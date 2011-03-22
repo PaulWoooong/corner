@@ -9,5 +9,8 @@
 <body>
 </body>
 <initialization>
+        <unique>
+            dojo.require("dojo.string.common");
+        </unique>
 </initialization>
 </script>

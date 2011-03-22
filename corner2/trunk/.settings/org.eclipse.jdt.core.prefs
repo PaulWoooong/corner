@@ -1,5 +1,6 @@
-#Wed Jun 21 11:44:37 CST 2006
+#Tue Jan 25 14:05:53 CST 2011
 eclipse.preferences.version=1
+org.eclipse.jdt.core.builder.resourceCopyExclusionFilter=*.launch,*.g,*.groovy
 org.eclipse.jdt.core.compiler.codegen.inlineJsrBytecode=enabled
 org.eclipse.jdt.core.compiler.codegen.targetPlatform=1.5
 org.eclipse.jdt.core.compiler.compliance=1.5

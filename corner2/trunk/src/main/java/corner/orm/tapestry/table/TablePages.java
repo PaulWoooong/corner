@@ -1,6 +1,6 @@
 // Copyright 2007 the original author or authors.
 // site: http://www.bjmaxinfo.com
-// file: $Id: TablePages.java 3919 2008-01-16 04:36:52Z xf $
+// file: $Id: TablePages.java 4910 2011-03-03 03:17:14Z xf $
 // created at:2007-03-23
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,6 +19,7 @@ package corner.orm.tapestry.table;
 
 import org.apache.tapestry.IRequestCycle;
 import org.apache.tapestry.annotations.InjectObject;
+import org.apache.tapestry.annotations.Parameter;
 import org.apache.tapestry.services.DataSqueezer;
 import org.apache.tapestry.util.ComponentAddress;
 
@@ -27,10 +28,22 @@ import org.apache.tapestry.util.ComponentAddress;
 /**
  * 个性化设置table分页的展示
  * @author <a href="mailto:jun.tsai@bjmaxinfo.com">Jun Tsai</a>
- * @version $Revision: 3919 $
+ * @version $Revision: 4910 $
  * @since 1.0.8
  */
 public abstract class TablePages extends org.apache.tapestry.contrib.table.components.TablePages{
+	
+	/**
+	 * 
+	 */
+	@Parameter(defaultValue = "literal:共")
+	public abstract String getTablePagesPrefix();
+	
+	/**
+	 * @return
+	 */
+	@Parameter(defaultValue = "literal:条")
+	public abstract String getTablePagesSuffix();
 
 	/** 得到页数 **/
 	public int getPageCount(){
@@ -48,7 +61,7 @@ public abstract class TablePages extends org.apache.tapestry.contrib.table.compo
 	 * @return 得到行数
 	 */
 	public String getRowCountMessage(){
-		return "共"+getRowCount()+"条";
+		return getRowCount()+"";
 	}
 	int getRowCount(){
 		return this.getTableModelSource().getTableModel().getRowCount();

@@ -1,0 +1,19 @@
+.input{
+	font-size:12px;
+	BORDER-RIGHT: #A1BCA3 1px solid;
+	BORDER-TOP: #A1BCA3 1px solid;
+	BORDER-LEFT: #A1BCA3 1px solid;
+	BORDER-BOTTOM: #A1BCA3 1px solid;
+	background-color: #FeFFe8;
+	background-position: center;
+	line-height: 15px;
+	width:98%;
+}
+
+/* 选择时间的css样式 */
+.datepicker{
+	background-color: #FEEBDE; 
+	background-image:url(img/datePicker.gif) !important;
+	background-repeat:no-repeat;  
+	background-position:right;
+}

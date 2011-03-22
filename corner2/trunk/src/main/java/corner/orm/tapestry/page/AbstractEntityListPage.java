@@ -1,6 +1,6 @@
 // Copyright 2007 the original author or authors.
 // site: http://www.bjmaxinfo.com
-// file: $Id: AbstractEntityListPage.java 3678 2007-11-14 04:43:52Z jcai $
+// file: $Id: AbstractEntityListPage.java 4534 2010-02-02 06:49:48Z ghostbb $
 // created at:2006-05-24
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -33,6 +33,7 @@ import corner.orm.tapestry.HibernateConverter;
 import corner.orm.tapestry.page.relative.IRelativeObjectOperatorSupport;
 import corner.orm.tapestry.table.IPersistentQueriable;
 import corner.orm.tapestry.table.PersistentBasicTableModel;
+import corner.service.EntityService;
 
 /**
  * 抽象的基础页页面。

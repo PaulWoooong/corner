@@ -115,6 +115,7 @@ public class A extends AbstractModel implements IBlobModel {
 	 * 文件名称
 	 */
 	private String blobName;
+	private String filePath;
 
 	/**
 	 * @return Returns the blobName.
@@ -188,5 +189,19 @@ public class A extends AbstractModel implements IBlobModel {
 	 */
 	public void setBirthday(String birthday) {
 		this.birthday = birthday;
+	}
+
+	/**
+	 * @return Returns the filePath.
+	 */
+	public String getFilePath() {
+		return filePath;
+	}
+
+	/**
+	 * @param filePath The filePath to set.
+	 */
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
 	}
 }

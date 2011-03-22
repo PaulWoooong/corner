@@ -21,6 +21,5 @@
   </component>
   
   <component type="corner:MulitUpload" id="updateField">
-    <binding name="value" value="files"/>
   </component>
 </page-specification>

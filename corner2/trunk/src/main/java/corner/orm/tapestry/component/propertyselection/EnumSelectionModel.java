@@ -1,9 +1,14 @@
-/*		
- * Copyright 2008 The Fepss Pty Ltd. 
- * site: http://www.fepss.com
- * file: $Id: EnumSelectionModel.java 911 2008-06-14 06:45:46Z jcai $
- * created at:2008-06-14
- */
+//==============================================================================
+// file :       $Id$
+// project:     corner
+//
+// last change: date:       $Date$
+//              by:         $Author$
+//              revision:   $Revision$
+//------------------------------------------------------------------------------
+//copyright:	Beijing Maxinfo Technology Ltd. http://www.bjmaxinfo.com
+//License:      the Apache License, Version 2.0 (the "License")
+//==============================================================================
 
 package corner.orm.tapestry.component.propertyselection;
 
@@ -19,7 +24,7 @@ public class EnumSelectionModel<T extends Enum> implements
 		IPropertySelectionModel {
 
 	private T[] list;
-
+	
 	public EnumSelectionModel(T[] list) {
 		this.list = list;
 	}
@@ -30,7 +35,7 @@ public class EnumSelectionModel<T extends Enum> implements
 	}
 
 	public Object getOption(int index) {
-		return list[index].toString();
+		return list[index];
 	}
 
 	public int getOptionCount() {
@@ -39,10 +44,15 @@ public class EnumSelectionModel<T extends Enum> implements
 
 	public String getValue(int index) {
 		return list[index].toString();
+//		return String.valueOf(index);
 	}
 
 	public Object translateValue(String value) {
+		if(list.length > 0){
+			return Enum.valueOf(list[0].getClass(), value);
+		}
 		return value;
+//		return list[Integer.valueOf(value)];
 	}
 
 	public boolean isDisabled(int arg0) {

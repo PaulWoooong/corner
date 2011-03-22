@@ -1,6 +1,6 @@
 // Copyright 2007 the original author or authors.
 // site: http://www.bjmaxinfo.com
-// file: $Id: AbstractBlobModel.java 3678 2007-11-14 04:43:52Z jcai $
+// file: $Id: AbstractBlobModel.java 4470 2009-09-08 05:07:04Z jcai $
 // created at:2006-05-16
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -51,6 +51,10 @@ public class AbstractBlobModel implements IBlobModel {
 	 * 文件名称
 	 */
 	private String blobName;
+	/**
+	 * 文件存放路径
+	 */
+	private String filePath;
 
 	/**
 	 * @return Returns the blobName.
@@ -95,6 +99,22 @@ public class AbstractBlobModel implements IBlobModel {
 	public void setContentType(String contentType) {
 		this.contentType = contentType;
 	}
+
+	/**
+	 * @return Returns the filePath.
+	 */
+	public String getFilePath() {
+		return filePath;
+	}
+
+	/**
+	 * @param filePath The filePath to set.
+	 */
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
+	}
+
+	
 
 	
 

@@ -1,10 +1,10 @@
 //==============================================================================
-// file :       $Id: TestMany.java 3677 2007-11-14 04:36:40Z jcai $
+// file :       $Id: TestMany.java 4470 2009-09-08 05:07:04Z jcai $
 // project:     corner
 //
-// last change: date:       $Date: 2007-11-14 12:36:40 +0800 (星期三, 14 十一月 2007) $
+// last change: date:       $Date: 2009-09-08 13:07:04 +0800 (星期二, 08 9月 2009) $
 //              by:         $Author: jcai $
-//              revision:   $Revision: 3677 $
+//              revision:   $Revision: 4470 $
 //------------------------------------------------------------------------------
 //copyright:	Beijing Maxinfo Technology Ltd. http://www.bjmaxinfo.com
 //License:      the Apache License, Version 2.0 (the "License")
@@ -26,7 +26,7 @@ import corner.model.IBlobModel;
 
 /**
  * @author <a href=mailto:Ghostbb@bjmaxinfo.com>Ghostbb</a>
- * @version $Revision: 3677 $
+ * @version $Revision: 4470 $
  * @since 2.3.7
  */
 
@@ -68,6 +68,10 @@ public class TestMany extends AbstractModel implements IBlobModel {
 	 */
 	private String blobName;
 
+	/**
+	 * 文件路径
+	 */
+	private String filePath;
 	/**
 	 * @return Returns the blobName.
 	 */
@@ -111,5 +115,21 @@ public class TestMany extends AbstractModel implements IBlobModel {
 	public void setContentType(String contentType) {
 		this.contentType = contentType;
 	}
+
+	/**
+	 * @return Returns the filePath.
+	 */
+	public String getFilePath() {
+		return filePath;
+	}
+
+	/**
+	 * @param filePath The filePath to set.
+	 */
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
+	}
+
+	
 
 }

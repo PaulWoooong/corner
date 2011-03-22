@@ -2,7 +2,7 @@
 // file :       $Id: gainPointFormPage.java 4154 2008-07-04 04:03:35Z xf $
 // project:     corner
 //
-// last change: date:       $Date: 2008-07-04 12:03:35 +0800 (星期五, 04 七月 2008) $
+// last change: date:       $Date: 2008-07-04 12:03:35 +0800 (星期五, 04 7月 2008) $
 //              by:         $Author: xf $
 //              revision:   $Revision: 4154 $
 //------------------------------------------------------------------------------
