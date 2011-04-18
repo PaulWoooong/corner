@@ -1,0 +1,336 @@
+Corner探索
+
+0.0.1
+
+版权 © 2006 北京美讯信息技术开发有限公司
+
+目录
+
+1. 系统初始化
+1.1. Hibernate方面
+1.2. Tapestry方面
+1.3. Spring方面
+1.4. 辅助类
+1.5. hivemodule过滤
+2. 系统运行
+2.1. 制作OID
+3. One to One操作
+3.1. 所需文件
+3.2. 简单例子
+3.3. 所需文件
+第 1 章 系统初始化
+
+1.1. Hibernate方面
+
+包名
+
+corner.orm.hibernate.v3
+ObjectRelativeUtils接口
+
+创建ObjectRelativeUtils接口，接口定义了find/load/get/count等方法
+HibernateObjectRelativeUtils抽象类
+
+创建HibernateObjectRelativeUtils抽象类，继承HibernateDaoSupport类，实现ObjectRelativeUtils接口，
+目前理解：HibernateObjectRelativeUtils类是为了可以在以后的程序中调用ObjectRelativeUtils接口进行操作才重写的。
+重写？没有和hibernate的源码对照，无法确认。
+HibernateDaoSupport
+
+HibernateDaoSupport是spring提供的类，设置SessionFactory类，可以实现HibernateTemplate功能除了translator/flush 功能
+1.2. Tapestry方面
+
+包名
+
+corner.orm.tapestry.data
+DataSqueezerFilter接口
+
+创建DataSqueezerFilter接口，中定义String squeeze、String[] squeeze、Object unsqueeze、Object[] unsqueeze方法
+AbstractDataSqueezerFilter抽象类
+
+创建AbstractDataSqueezerFilter抽象类，实现DataSqueezerFilter接口，加入String[] squeeze、Object[] unsqueeze功能，
+功能中调用String squeeze、Object unsqueeze方法。
+HibernateSqueezerFilter类
+
+使用HB: + 类名 + :: ＋ DataSqueezer.squeeze序列化方法再次序列化从hibernate.session.Identifier方法得到的序列化字符串。 来确保显示的序列化编码唯一。
+创建HibernateSqueezerFilter类，继承AbstractDataSqueezerFilter类，加入String squeeze、Object unsqueeze方法，
+调用EntityService类的获得类名，通过DataSqueezer类中的squeeze方法加上EntityService类中Identifier方法获得类到
+String的转换。unsqueeze为解码。通过setEntityService获得EntityService。
+1.3. Spring方面
+
+Xml文件
+
+配置使用HibernateObjectRelativeUtils类作为sessionFactory，配置使用entityService时使用HibernateObjectRelativeUtils类。
+SpringContainer类
+
+创建SpringContainer类，初始化类。因为类中设置静态初始化方法，所以在框架运行时就加载各种配置文件。
+1.4. 辅助类
+
+EntityService
+
+EntityService，所以功能的操作类，关系通过ObjectRelativeUtils接口调用操作。
+1.5. hivemodule过滤
+
+hivemodule.xml的子文件corner.squeezer.xml
+
+
+hivemodule.xml文件
+
+<module id="corner.squeezer" version="1.0.0" package="corner.orm.tapestry.data">
+	
+	<!-- 过滤器调用完后执行Terminator使用DataSqueezer接口解释 -->
+	<service-point id="DataSqueezerTerminator" visibility="private"
+		interface="org.apache.tapestry.services.DataSqueezer">
+		<invoke-factory>
+			<!-- DataSqueezerImpl类实现将类转换为字符串格式或将字符串转换成类 -->
+			<construct class="org.apache.tapestry.util.io.DataSqueezerImpl">
+				<set-configuration property="squeezeAdaptors"
+					configuration-id="tapestry.data.SqueezeAdaptors"/>
+					<!-- squeezeAdaptors属性表示使用DataSqueezerImpl类的setSqueezeAdaptors方法,
+						SqueezeAdaptors接口支持将类转换为字符串格式或将字符串转换成类 -->
+			</construct>
+		</invoke-factory>
+	</service-point>
+	
+	<!-- 程序调用的服务 -->
+	<implementation service-id="tapestry.data.DataSqueezer">
+		<!-- 使用hivemind.lib.PipelineFactory -->
+		<invoke-factory service-id="hivemind.lib.PipelineFactory">
+			<create-pipeline filter-interface="DataSqueezerFilter"
+				configuration-id="DataSqueezerFilters"
+				terminator="service:DataSqueezerTerminator"/>
+				<!-- DataSqueezerFilter过滤接口，DataSqueezerFilters过滤调用的类，DataSqueezerTerminator终结者 -->
+		</invoke-factory>
+	</implementation>
+	
+	<!-- 定义DataSqueezerFilters使用Pipeline -->
+	<configuration-point id="DataSqueezerFilters"
+		schema-id="hivemind.lib.Pipeline"> Allows you to plug in your own custom data
+		squeezers in front of the default Tapestry data squeezer. </configuration-point>
+	
+	<!-- 定义HibernateSqueezerFilter作为过滤器 -->
+	<contribution configuration-id="DataSqueezerFilters">
+		<filter name="HibernateSqueezerFilter"
+			object="service:HibernateSqueezerFilter"/>
+	</contribution>
+	
+	<!-- 定义HibernateSqueezerFilter为一个服务调用DataSqueezerFilter接口 -->
+	<service-point id="HibernateSqueezerFilter" interface="DataSqueezerFilter">
+		<invoke-factory>
+			<construct class="HibernateSqueezerFilter">
+				<set-object property="entityService"
+					value="spring:entityService"/>
+			</construct>
+		</invoke-factory>
+	</service-point>
+	
+</module>
+第 2 章 系统运行
+
+2.1. 制作OID
+
+包名
+
+corner.orm.hibernate.v3
+AbstractDateTimeIDGenerator抽象类
+
+创建AbstractDateTimeIDGenerator抽象类，访问本类需要线程同步，也就是说方法返回的ID要求唯一，方法如果方法同时被访问，
+线程休眠千分之1秒。线程醒来后再在重新获得ID。
+DateTimeIDGenerator类
+
+创建DateTimeIDGenerator类，继承AbstractDateTimeIDGenerator抽象类，实现IdentifierGenerator、Configurable接口，
+IdentifierGenerator中的generate方法是生成ID的样式。因为需要在配置文件中加载一些用户定义的参数所以需要实现，
+Configurable接口的configure方法。
+可以参考Hibernate扩展_自定义OID生成器
+
+http://gocom.primeton.com/blog_37.htm
+第 3 章 One to One操作
+
+3.1. 所需文件
+
+命名规则
+
+单个提交的页面都是用XXForm.html表示，操作使用的列表页面使用XXList.html表示
+3.2. 简单例子
+
+AList.html文件
+
+<span jwcid="@DemoBorder">
+	<center>
+		<a jwcid="@PageLink" page="xf/one/AForm"><span key="Add" /></a><br>
+	</center>
+	<center>
+		<form jwcid="AQueryForm">
+			name:<input jwcid="nameField"/>
+			<input type="submit"/>
+		</form>
+	</center>
+    <div jwcid="@contrib:TableView" columns="shortName" element="div" source="ognl:source" persist="client">
+      <table>
+        <tr>
+          <td>
+            <span key="color">color</span>
+          </td>
+          <td>
+            <span key="weight"></span>
+          </td>
+          <td>
+            <span key="link.edit">edit</span>
+          </td>
+          <td>
+            <span key="link.delete">delete</span>
+          </td>
+        </tr>
+        <tr row="ognl:entity" jwcid="@contrib:TableRows" element="tr">
+          <td>
+            <span jwcid="@Insert" value="ognl:entity.color">color</span>
+          </td>
+          <td>
+            <span jwcid="@Insert" value="ognl:entity.weight">weight</span>
+          </td>
+          <td>
+            <a parameters="ognl:entity" listener="listener:doEditEntityAction" jwcid="@DirectLink" href="AForm.html" id="editAction">
+              <span key="link.edit">Edit</span>
+            </a>
+          </td>
+          <td>
+            <a parameters="ognl:entity" listener="listener:doDeleteEntityAction" jwcid="@DirectLink" href="#" id="deleteAction">
+              <span key="link.delete">Delete</span>
+            </a>
+          </td>
+        </tr>
+      </table>
+      <div jwcid="@contrib:TablePages" element="div"/>
+    </div>
+</span>
+
+AList.page文件
+
+<page-specification class="corner.orm.tapestry.page.PoListPage">
+  <description>corner.demo.model.one.A Form Page</description>
+  <bean class="org.apache.tapestry.valid.ValidationDelegate" name="delegate"/>
+  <!-- entity模板，使用自动生成get/setEntity方法 -->
+  <property initial-value="new corner.demo.model.xf.one.apple()" name="entity"/>
+  <!-- 查询时使用的queryEntity -->
+  <property persist="client" initial-value="new corner.demo.model.xf.one.apple()" name="queryEntity"/>
+  
+  <component type="Form" id="AQueryForm">
+    <binding value="listener:doQueryEntityAction" name="listener"/>
+    <binding value="ognl:beans.delegate" name="delegate"/>
+  </component>
+  <component type="TextField" id="nameField">
+    <binding value="message:Color" name="displayName"/>
+    <binding value="translator:string" name="translator"/>
+    <binding value="ognl:queryEntity.color" name="value"/>
+  </component>
+</page-specification>
+AForm.html文件
+
+<span jwcid="@DemoBorder" title="xfAForm">
+	<a listener="listener:doCancelEntityAction" jwcid="@DirectLink" href="AList.html">Return A List</a>
+	<form jwcid="AForm" action="AList.html">
+      <table>
+        <tr>
+          <td>
+            <span key="color">color</span>
+          </td>
+          <td>
+            <input jwcid="colorField" /><input jwcid="weightField"/>
+          </td>
+		</tr>
+		
+      </table>
+      <input jwcid="@Submit" type="Submit" value="message:Okay"/>
+      <input jwcid="@Any" type="Button" value="message:button.Cancle" onClick="javascript:tapestry.form.cancel(this.form);"/>
+    </form>
+</span>
+AForm.page文件
+
+如果有特殊操作可以继承AbstractEntityFormPage类，重写类中方法。
+<page-specification class="corner.orm.tapestry.page.AbstractEntityFormPage">
+  <description>corner.demo.model.one.A Form Page</description>
+  <bean class="org.apache.tapestry.valid.ValidationDelegate" name="delegate"/>
+  <!-- 创建entity模型，以便在页面中传递类 -->
+  <property persist="entity" initial-value="new corner.demo.model.xf.one.apple()" name="entity"/>
+  <component type="Form" id="AForm">
+    <binding value="ognl:beans.delegate" name="delegate"/>
+    <binding value="ognl:true" name="clientValidationEnabled"/>
+    <!-- doSaveEntityAction是corner提供的保存方法 -->
+    <binding value="listener:doSaveEntityAction" name="success"/>
+    <!-- doCancelEntityAction是corner提供的取消方法 -->
+    <binding value="listener:doCancelEntityAction" name="cancel"/>
+  </component>
+  <component type="TextField" id="colorField">
+    <binding value="message:Color" name="displayName"/>
+    <binding value="translator:string" name="translator"/>
+    <binding value="ognl:entity.color" name="value"/>
+    <binding name="validators" value="validators:required"/>    
+  </component>
+    <component type="TextField" id="weightField">
+    <binding value="message:Weight" name="displayName"/>
+    <binding value="translator:string" name="translator"/>
+    <binding value="ognl:entity.weight" name="value"/>
+  </component>
+</page-specification>
+AbstractModel.java文件
+
+包：corner.demo.model.xf.one；spring配置文件中将corner.demo.model包及其子包设置成为注释配置hibernate表结构的目标包
+@MappedSuperclass
+public class AbstractModel extends AbstractPersistDomain implements Serializable {
+
+	private static final long serialVersionUID = 772729287261953568L;
+	
+	/**
+	 * @hibernate.id generator-class="uuid"
+	 */
+	private String id;
+	
+	/**
+	 * @hibernate.property
+	 */
+	private String name;
+	
+	/**
+	 * @return 获得id
+	 */
+	@Id @GeneratedValue(generator="system-uuid")
+	@GenericGenerator(name="system-uuid", strategy = "uuid")
+	@Column(columnDefinition="char(32)")
+	public String getId() {
+		return id;
+	}
+	
+	/**
+	 * @param id 设置id
+	 */
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+}
+继承AbstractPersistDomain抽象类，AbstractPersistDomain类是实例操作的基础类，实现了对单一记录操作的save、update、saveOrUpdate、delete方法，和从spring获得Entity的getEntityService方法
+apple.java文件
+
+继承AbstractModel类，@Entity(name = "apple")表示使用apple作为表名，继承的属性和方法不能重复
+@Entity(name = "apple")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+public class apple extends AbstractModel {
+
+	private static final long serialVersionUID = 8533936694005181003L;
+
+	private String color;
+
+	private double weight;
+
+	//geter和seter略
+}
+3.3. 所需文件
+
+命名规则
+
+单个提交的页面都是用XXForm.html表示，操作使用的列表页面使用XXList.html表示
