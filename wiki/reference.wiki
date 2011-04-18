@@ -1,0 +1,2429 @@
+CORNER - 快速开发的J2EE框架
+
+CORNER参考文档
+
+2.2.1
+
+版权 © 2006 北京美讯信息技术开发有限公司
+
+本书使用创作共用署名许可证，可以通过访问http://creativecommons.org/licenses/by/2.0/ 或者发送邮件到Creative Commons, 559 Nathan Abbott Way, Stanford, California 94305, USA来查看本许可证的内容。
+
+目录
+
+前言
+1. 快速开始
+1.1. 构建corner的开发环境
+1.2. 了解corner
+1.3. step by step
+1.3.1. 单实体操作
+1.3.2. 一对多关联。A-->B
+1.3.3. 多对多关联。
+2. Corner针对List和Form处理的机制
+2.1. 针对表单页面的处理.
+2.2. 针对列表页面的操作
+3. 组件
+3.1. Selector
+3.2. 显示向量头的组件(MatrixHead)
+4. 系统初始化
+4.1. Hibernate方面
+4.2. Tapestry方面
+4.3. Spring方面
+4.4. 辅助类
+4.5. hivemodule过滤
+5. 系统运行
+5.1. 制作OID
+6. One操作
+6.1. 所需文件
+6.2. 简单例子
+6.3. 背后隐藏的操作
+6.3.1. 抽象Model文件 － AbstractPersistDomain.java
+6.3.2. page文件 － AbstractEntityPage.java和AbstractEntityFormPage.java
+6.3.2.1. Entity增改功能
+6.3.2.2. 页面跳转
+6.4. List页面
+6.4.1. 数据是怎样显示的？
+6.4.2. 编辑记录及删除
+6.5. 记录查询功能
+7. One to Many操作
+7.1. 基础代码
+7.1.1. 建立Model
+7.1.2. One端操作需要的文件
+7.1.3. Many端操作需要的文件
+7.2. One端代码分析
+7.3. Many端代码分析
+7.3.1. 添加Many
+7.3.2. 显示关联关系
+7.3.3. Many修改与删除
+7.3.3.1. many的修改
+7.3.3.2. many的删除
+8. Many to Many
+8.1. 基础代码
+8.1.1. 建立Model
+8.1.2. A端操作需要的文件
+8.1.3. B端操作需要的文件
+8.2. 两表增加关系
+8.2.1. 从A表建立与B表的关联
+8.2.1.1. 从AForm传递需要添加的entity
+8.2.1.2. 初始化ABList页面信息
+8.2.1.3. 更新A与B的关联
+8.2.1.4. 删除关联
+8.2.2. 从B表建立与A表的关联
+前言
+
+Corner采用Spring Hibernate Tapestry JDK1.5等技术开发,旨在提高J2EE应用程序的开发速度，功能上包含了：
+
+Corner基础应用框架,提供了核心的组件以及基础类。
+
+Eclipse的插件。更新地址为:http://dev.bjmaxinfo.com/sites/corner-eclipse/
+
+Xdoclet的插件,主要是提供了自动生成tapestry的配置文件(.page）。
+
+表 1.  Corner基础功能
+
+序号	扩展框架	功能	人员
+#1	Spring	 实现属性文件的包含,见spring.CornerPropertiesPersister	jcai
+#2	hivemind	 实现hivemind和spring的结合,见hivemind.SpringBeanFactoryHolderImpl	jcai
+#3	tapestry	 扩展了tapestry.data,实现了对持久化对象的"序列化",见corner.tapestry.data.*	jcai
+#4	tapestry	 扩展了tapestry.filter,实现了OpenSessionInView模式,见corner.tapestry.filter.*	jcai
+#5	tapestry	 扩展了tapestry.record,实现了在页面进行对象的传递,见corner.tapestry.record.*	jcai
+#6	tapestry	 扩展了tapestry.page,实现了对各种模型对象的处理,见corner.tapestry.page.*	jcai
+#7	tapestry	 扩展了tapestry.service,实现了blob部分的处理,见corner.tapestry.service.blob.*	jcai
+#8	tapestry	 扩展了tapestry.translator,实现了向量数据类型的处理,见corner.tapestry.service.blob.*	jcai
+#9	hibernate	 提供了向量数据类型。见：corner.hibernate.v3.VectorType	jcai
+#10	hibernate	 提供了基于表达式的查询方式。见：corner.hibernate.expression.*	jcai
+#11	tapestry	 扩展tapestry组件，利用dojo和tapestry实现widget。见：corner.tapestry.components.*	jcai,ghostbb
+表 2.  Corner开发人员（包含文档编写人员)
+
+序号	姓名	ID	角色	单位
+#1	蔡君	jcai	Leader,Developer,Documentor	美讯
+#2	赵鑫	ghostbb	Developer,Documentor	美讯
+#3	冯雪松	fxs	Developer,Documentor	美讯
+#2	夏飞	xf	Developer,Documentor	美讯
+第 1 章 快速开始
+
+摘要
+
+本章描述:快速使用corner.
+
+1.1. 构建corner的开发环境
+
+下载corner:
+
+过程 1.1. 构建corner的开发环境
+
+安装eclipse plugin:取得168.168.168.205上的addons-3.2 eclipse plugin ,
+
+下载corner:打开svn资源库视图,新建一个资源库位置,填入corner的url地址:http://dev.bjmaxinfo.com/svn/corner,在turck目录下 检索出corner工程.
+
+下载jetty，并解压缩。
+
+运行corner
+
+点击eclipse run，在jetty web 上new 一个工程运行环境，配置如图：
+
+
+这个demo演示了开发中,单表,一对多,多对多的增,删,改,查,的操作.
+
+1.2. 了解corner
+
+corner在 hibernate,spring,tapestry 的基础上构建.
+
+实现了对基本数据的封装,和对tapestry的扩展.使程序员减少编码,更多的关注业务. eg: xxxForm.page对应的类为　class="corner.orm.tapestry.page.PoFormPage" 　　xxxList.page对应的类为　class="corner.orm.tapestry.page.PoListPage"
+
+实现了页面之间数据传递的对象化,只需关注对象,而不必关系对象的细节． 例如:在corner中,修改页面中一个实体的属性时，不需要传递这个对象的id，而只需传递一个entity 即可 　eg:
+
+<a parameters="ognl:entity" listener="listener:doEditEntityAction" jwcid="@DirectLink" href="AForm.html" 
+	id="editAction">
+在corner中，严格限定 html,page文件的命名规则．　用于显示数据的页面需为　xxxList.html 对应page为　xxxList.page 用于修改，添加数据的页面为　xxxForm.html　对应page为　xxxForm.page
+
+1.3. step by step
+
+按照通常实体关系有单一，一对多，多对多等关系，下面分别讲述了单表，一对多，多对多
+
+1.3.1. 单实体操作
+
+参考corner下的 src/main/webapp/one
+
+AList 功能，　显示数据，查询数据，删除数据，导向编辑的链接．
+
+使用tableview 显示数据 eg:
+
+<div jwcid="@contrib:TableView" columns="shortName" element="div" source="ognl:source" persist="client">
+查询数据 　eg:
+
+<form jwcid="AQueryForm">
+对应组件
+
+<component type="Form" id="AQueryForm">
+	<binding value="listener:doQueryEntityAction" name="listener"/>
+	<binding value="ognl:beans.delegate" name="delegate"/>
+</component>
+删除数据 eg:
+
+<a parameters="ognl:entity" listener="listener:doDeleteEntityAction" jwcid="@DirectLink" href="#" id="deleteAction">
+  <span key="link.delete">Delete</span>
+</a>
+导向编辑的链接 eg:
+
+<a parameters="ognl:entity" listener="listener:doEditEntityAction" jwcid="@DirectLink" href="AForm.html" 
+	id="editAction">
+  <span key="link.edit">Edit</span>
+</a>
+AForm　功能：编辑或添加数据．
+
+eg:
+
+<form jwcid="AForm" action="AList.html">
+	<input jwcid="@Submit" type="Submit" value="message:button.Okay"/>
+</form>
+　
+
+　对应组件　
+
+<component type="Form" id="AForm">
+	<binding value="ognl:beans.delegate" name="delegate"/>
+	<binding value="ognl:true" name="clientValidationEnabled"/>
+	<binding value="listener:doSaveEntityAction" name="success"/>
+	<binding value="listener:doCancelEntityAction" name="cancel"/>
+</component>
+1.3.2. 一对多关联。A-->B
+
+参考corner下的 src/main/webapp/one2many
+
+AList 功能，　显示数据，查询数据，删除数据，导向编辑的链接．
+
+AForm　功能：编辑或添加数据．导向BFrom添加关联关系,显示A与B关联关系.
+
+AForm 对应的corner中的类为:
+
+<page-specification class="corner.orm.tapestry.page.relative.ReflectMultiManyEntityFormPage">
+Add A to B
+
+<a parameters="ognl:{entity,'one2many/BForm'}" listener="listener:doNewRelativeAction" jwcid="@DirectLink" 
+	href="BForm.html">Add A to B</a>
+显示与A所关联的B的列表．
+
+<tr jwcid="@contrib:TableRows" element="tr" row="ognl:relativeObject">
+	<td><span jwcid="@Insert" value="ognl:relativeObject.name" /><td>
+	......	
+修改与A关联的B的数据：
+
+<a href="#" jwcid="@DirectLink" parameters="ognl:{entity,relativeObject,'one2many/BForm'}" 
+	listener="listener:doEditRelativeEntityAction"></a>
+删除与B的关联关系：
+
+<a href="#" jwcid="@DirectLink" parameters="ognl:{relativeObject}" 
+	listener="listener:doDeleteRelativeEntityAction"></a>
+BForm　功能：添加B,并保存与A的关联．
+
+BForm对应corner中的类　
+
+<page-specification class="corner.orm.tapestry.page.relative.ReflectRelativeEntityFormPage">
+注入上级页面的地址
+
+<inject property="rootFormPage" type="page" object="one2many/AForm"/>
+返回到AForm
+
+<a listener="listener:doCancelEntityAction" jwcid="@DirectLink" href="BList.html">Return </a>
+1.3.3. 多对多关联。
+
+多对多的关联,A--AB--B，没有中间表（即中间表中不需要操作其自己表的数据）
+
+参考corner下的 src/main/webapp/many2many
+
+AList功能：显示数据，查询数据，删除数据，导向编辑的链接，导向BList．
+
+AForm　功能：编辑或添加数据．导向ABList添加关联关系,显示A与B关联关系.
+
+AForm 对应的corner中的类为:
+
+<page-specification class="corner.orm.tapestry.page.relative.ReflectMultiManyEntityFormPage">
+ABList 功能: 添加A,B关联关系.
+
+ABList对应corner中的类为:
+
+<page-specification class="corner.orm.tapestry.page.relative.ReflectRelativeSelectionListPage">
+添加A与B的关联
+
+<component id="ABForm" type="Form">
+   	<binding name="listener" value="listener:doNewRelativeAction"/>
+</component>
+在多对多的关联中，既可从A端添加B,也可从B端添加A
+
+第 2 章 Corner针对List和Form处理的机制
+
+摘要
+
+本章描述了corner对List和Form页面进行处理时候的机制.
+
+注意
+
+Corner大部分的功能主要集中在ListPage和Form两种情况,而不论是单一表格还是关联表格处理的机制都是大同小异.
+
+2.1. 针对表单页面的处理.
+
+Form页面通常是用来保存/更新实体的页面.而该页面所对应的实体则是由.page配置文件指定.
+
+<property persist="entity" initial-value="new corner.demo.model.one.A()" name="entity"/>
+再点击保存之后响应的方法为:doSaveEntityAction,具体实现见corner.orm.tapestry.AbstractEntityForm#doSaveEntityAction.
+
+public IPage doSaveEntityAction() { // 保存操作。
+	saveOrUpdateEntity();
+	return getEntityListPage();
+}
+在Form页面提交表单之后,需要做两件事情.
+
+保存或者更新页面操作的实体.
+
+跳转页面,保存完毕之后需要跳转的页面(默认为跳转到对应的List页面).
+
+所以如果对表单提交需要个性化的实现,只需要关注这两个方法就可以了
+
+protected void saveOrUpdateEntity() {
+	getEntityService().saveOrUpdateEntity(getEntity());
+
+}
+
+.....
+
+protected IPage getEntityListPage(){
+	return this.getRequestCycle().getPage(
+			this.getPageName().substring(0,
+					this.getPageName().lastIndexOf("Form"))
+					+ "List");
+}
+可以在自己需要重写的子类里面重载这两个方法.譬如,如果想在保存实体前进行特殊的操作.
+
+public class XxxFormPage extends AbstractEntityForm<Xxx>{		
+	protected void saveOrUpdateEntity() {
+		getEntity().xxxx();
+		.....
+		.....
+		super.saveOrUpdateEntity();
+
+
+	}
+}
+2.2. 针对列表页面的操作
+
+列表页面包含了查询,列表分页显示.corner里面处理查询的时候,根据页面传过来的QueryEntity进行查询. 譬如:
+
+<property persist="client" initial-value="new corner.demo.model.one.A()" name="queryEntity"/>
+那么在corner.orm.tapestry.AbstractEntityListPage类里面是这样操作的
+
+/**
+ * @see corner.orm.tapestry.table.IPersistentQueriable#appendCriteria(Criteria)
+ */
+public void appendCriteria(Criteria criteria) {
+	if (this.getQueryEntity() != null)
+		criteria.add(NewExpressionExample.create(getQueryEntity()).enableLike().excludeZeroes()
+				.ignoreCase());
+}
+
+/**
+ * @see corner.orm.tapestry.table.IPersistentQueriable#createCriteria(Session)
+ */
+public Criteria createCriteria(Session session) {
+
+	return session.createCriteria(this.getEntity().getClass());
+}
+利用了hibernate的Criteria查询方式进行对对象的查询.如果需要进行特别的查询操作,可以重载这两个方法.
+
+第 3 章 组件
+
+摘要
+
+本章描述Corner里面集成的组件。
+
+注意
+
+概述
+
+3.1. Selector
+
+提供了页面自动完成的功能,自动完成分为一下几种：
+
+选取一个字段，并保存选取的值，
+
+使用为：
+
+<component type="corner:Selector" id="nameField">
+    <binding value="message:name" name="displayName"/>
+    <binding value="translator:string" name="translator"/>
+    <binding value="ognl:entity.name" name="value"/>
+	<binding name="queryClassName" value="literal:corner.demo.model.one.A"/>                (1)
+	<binding name="labelField" value="literal:password"/>                                   (2)
+</component>
+(1)	
+queryClassName待查询的实体类的名称.
+
+(2)	
+labelField待查询的实体名称的属性名称。
+
+选取一个字段，并保存实体之间的关联
+
+使用为：
+
+<component type="corner:Selector" id="BField">
+	<binding value="message:name" name="displayName"/>
+	<binding value="ognl:entity.b" name="value"/>
+	<binding name="queryClassName" value="literal:corner.demo.model.many2many2.B"/>         (1)
+	<binding name="labelField" value="literal:cnName"/>                                     (2)
+	<binding name="returnValueFields" value="literal:this"/>                                (3)
+</component>
+
+(1)	
+queryClassName待查询的实体类的名称.
+
+(2)	
+labelField待查询的实体名称的属性名称。
+
+(3)	
+returnValueFields待查询的实体名称的属性名称,该名称如果为this,则返回的即为当前查询的实体对象。
+
+选取一个字段，查询的时候带有自定义的查询条件
+
+选取一个字段,保存关联,同时填写其他字段
+
+3.2. 显示向量头的组件(MatrixHead)
+
+给定一个参考向量展示出向量的表头文字
+
+<component type="corner:MatrixHead" id="colorsHeadField">
+    <binding name="refVector" value="ognl:refVector"/>                                   (1)
+    <binding name="tdClass" value="literal:black"/>                                      (2)
+</component>		
+		
+		
+		
+(1)	
+refVector参考向量.
+
+(2)	
+tdClass显示向量的每格的时候所用到的样式class。
+
+第 4 章 系统初始化
+
+4.1. Hibernate方面
+
+包名
+
+corner.orm.hibernate.v3
+ObjectRelativeUtils接口
+
+创建ObjectRelativeUtils接口，接口定义了find/load/get/count等方法
+HibernateObjectRelativeUtils抽象类
+
+创建HibernateObjectRelativeUtils抽象类，继承HibernateDaoSupport类，实现ObjectRelativeUtils接口。
+HibernateDaoSupport
+
+HibernateDaoSupport是spring提供的类，设置SessionFactory类，可以实现HibernateTemplate功能除了translator/flush 功能
+4.2. Tapestry方面
+
+包名
+
+corner.orm.tapestry.data
+DataSqueezerFilter接口
+
+创建DataSqueezerFilter接口，中定义String squeeze、String[] squeeze、Object unsqueeze、Object[] unsqueeze方法
+AbstractDataSqueezerFilter抽象类
+
+创建AbstractDataSqueezerFilter抽象类，实现DataSqueezerFilter接口，加入String[] squeeze、Object[] unsqueeze功能，
+功能中调用String squeeze、Object unsqueeze方法。
+HibernateSqueezerFilter类
+
+使用HB: + 类名 + :: ＋ DataSqueezer.squeeze序列化方法再次序列化从hibernate.session.Identifier方法得到的序列化字符串。 来确保显示的序列化编码唯一。
+
+创建HibernateSqueezerFilter类，继承AbstractDataSqueezerFilter类，加入String squeeze、Object unsqueeze方法，
+调用EntityService类的获得类名，通过DataSqueezer类中的squeeze方法加上EntityService类中Identifier方法获得类到
+String的转换。unsqueeze为解码。通过setEntityService获得EntityService。
+4.3. Spring方面
+
+Xml文件
+
+配置使用HibernateObjectRelativeUtils类作为sessionFactory，配置使用entityService时使用HibernateObjectRelativeUtils类。application-base-service.xml
+
+<beans>
+	<!-- transaction interceptor -->
+	<bean id="transactionInterceptor" class="org.springframework.transaction.interceptor.TransactionInterceptor">
+    	<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="transactionAttributes">
+			<props> 
+				<prop key="save*">PROPAGATION_REQUIRED</prop>
+				<prop key="add*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="index*">PROPAGATION_REQUIRED</prop>
+				<!--<prop key="*">PROPAGATION_REQUIRED,readOnly</prop>-->
+			</props>
+		</property>
+	</bean>
+	<!-- base service object -->
+	<bean id="baseServiceObject" class="org.springframework.aop.framework.ProxyFactoryBean" abstract="true">
+      <property name="interceptorNames">
+         <list>
+            <!--<idref local="securityInterceptor"/> -->
+            <idref bean="transactionInterceptor"/>
+         </list>
+      </property>
+   </bean>
+
+	<!--
+	  - corner's central data access object: Hibernate implementation.
+    -->
+	<bean id="objectRelativeUtils" 
+		class="corner.orm.hibernate.v3.HibernateObjectRelativeUtils">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/>
+		</property>
+	</bean>
+	<!-- entity service -->
+	<bean id="entityService" parent="baseServiceObject">
+		<property name="target">
+			<bean class="corner.service.EntityService">
+				<property name="objectRelativeUtils">
+					<ref bean="objectRelativeUtils"/>
+				</property>
+			</bean>
+		</property>
+	</bean>
+</beans>
+SpringContainer类
+
+创建SpringContainer类，初始化类。因为类中设置静态初始化方法，所以在框架运行时就加载各种配置文件。
+4.4. 辅助类
+
+EntityService
+
+EntityService，所以功能的操作类，关系通过ObjectRelativeUtils接口调用操作。
+4.5. hivemodule过滤
+
+hivemodule.xml的子文件corner.squeezer.xml
+
+<module id="corner.squeezer" version="1.0.0" package="corner.orm.tapestry.data">
+	
+	<!-- 过滤器调用完后执行Terminator使用DataSqueezer接口解释 -->
+	<service-point id="DataSqueezerTerminator" visibility="private"
+		interface="org.apache.tapestry.services.DataSqueezer">
+		<invoke-factory>
+			<!-- DataSqueezerImpl类实现将类转换为字符串格式或将字符串转换成类 -->
+			<construct class="org.apache.tapestry.util.io.DataSqueezerImpl">
+				<set-configuration property="squeezeAdaptors"
+					configuration-id="tapestry.data.SqueezeAdaptors"/>
+					<!-- squeezeAdaptors属性表示使用DataSqueezerImpl类的setSqueezeAdaptors方法,
+						SqueezeAdaptors接口支持将类转换为字符串格式或将字符串转换成类 -->
+			</construct>
+		</invoke-factory>
+	</service-point>
+	
+	<!-- 程序调用的服务 -->
+	<implementation service-id="tapestry.data.DataSqueezer">
+		<!-- 使用hivemind.lib.PipelineFactory -->
+		<invoke-factory service-id="hivemind.lib.PipelineFactory">
+			<create-pipeline filter-interface="DataSqueezerFilter"
+				configuration-id="DataSqueezerFilters"
+				terminator="service:DataSqueezerTerminator"/>
+				<!-- DataSqueezerFilter过滤接口，DataSqueezerFilters过滤调用的类，
+					DataSqueezerTerminator终结者 -->
+		</invoke-factory>
+	</implementation>
+	
+	<!-- 定义DataSqueezerFilters使用Pipeline -->
+	<configuration-point id="DataSqueezerFilters"
+		schema-id="hivemind.lib.Pipeline"> Allows you to plug in your own custom data
+		squeezers in front of the default Tapestry data squeezer. </configuration-point>
+	
+	<!-- 定义HibernateSqueezerFilter作为过滤器 -->
+	<contribution configuration-id="DataSqueezerFilters">
+		<filter name="HibernateSqueezerFilter"
+			object="service:HibernateSqueezerFilter"/>
+	</contribution>
+	
+	<!-- 定义HibernateSqueezerFilter为一个服务调用DataSqueezerFilter接口 -->
+	<service-point id="HibernateSqueezerFilter" interface="DataSqueezerFilter">
+		<invoke-factory>
+			<construct class="HibernateSqueezerFilter">
+				<set-object property="entityService"
+					value="spring:entityService"/>
+			</construct>
+		</invoke-factory>
+	</service-point>
+	
+</module>
+第 5 章 系统运行
+
+5.1. 制作OID
+
+包名
+
+corner.orm.hibernate.v3
+AbstractDateTimeIDGenerator抽象类
+
+创建AbstractDateTimeIDGenerator抽象类，访问本类需要线程同步，也就是说方法返回的ID要求唯一，方法如果方法同时被访问，
+线程休眠千分之1秒。线程醒来后再在重新获得ID。
+DateTimeIDGenerator类
+
+创建DateTimeIDGenerator类，继承AbstractDateTimeIDGenerator抽象类，实现IdentifierGenerator、Configurable接口，
+IdentifierGenerator中的generate方法是生成ID的样式。因为需要在配置文件中加载一些用户定义的参数所以需要实现，
+Configurable接口的configure方法。
+可以参考Hibernate扩展_自定义OID生成器
+
+http://gocom.primeton.com/blog_37.htm
+第 6 章 One操作
+
+6.1. 所需文件
+
+命名规则
+
+单个提交的页面都是用XXForm.html表示，操作使用的列表页面使用XXList.html表示
+6.2. 简单例子
+
+AList.html文件
+
+<span jwcid="@DemoBorder">
+	<center>
+		<a jwcid="@PageLink" page="one/AForm"><span key="Add" /></a><br>
+	</center>
+	<center>
+		<form jwcid="AQueryForm">
+			name:<input jwcid="nameField"/>
+			<input type="submit"/>
+		</form>
+	</center>
+	<!-- 调用getSource方法获得记录集corner.orm.tapestry.page.AbstractEntityListPage.getSource(),
+		PoListPage是AbstractEntityListPage的子类 -->
+    <div jwcid="@contrib:TableView" columns="shortName" element="div" source="ognl:source" persist="client">
+      <table>
+        <tr>
+          <td>
+            <span key="color">color</span>
+          </td>
+          <td>
+            <span key="weight"></span>
+          </td>
+          <td>
+            <span key="link.edit">edit</span>
+          </td>
+          <td>
+            <span key="link.delete">delete</span>
+          </td>
+        </tr>
+        <tr row="ognl:entity" jwcid="@contrib:TableRows" element="tr">
+          <td>
+            <span jwcid="@Insert" value="ognl:entity.color">color</span>
+          </td>
+          <td>
+            <span jwcid="@Insert" value="ognl:entity.weight">weight</span>
+          </td>
+          <td>
+          <!-- 加入编辑功能doEditEntityAction为corner实现的功能 -->
+            <a parameters="ognl:entity" listener="listener:doEditEntityAction" jwcid="@DirectLink" 
+            	href="AForm.html" id="editAction">
+              <span key="link.edit">Edit</span>
+            </a>
+          </td>
+          <td>
+          <!-- 加入删除功能doDeleteEntityAction为corner实现的功能 -->
+            <a parameters="ognl:entity" listener="listener:doDeleteEntityAction" jwcid="@DirectLink" 
+            	href="#" id="deleteAction">
+              <span key="link.delete">Delete</span>
+            </a>
+          </td>
+        </tr>
+      </table>
+      <div jwcid="@contrib:TablePages" element="div"/>
+    </div>
+</span>
+
+AList.page文件
+
+<page-specification class="corner.orm.tapestry.page.PoListPage">  <!-- PoListPage查询功能 -->
+  <description>corner.demo.model.one.A Form Page</description>
+  <bean class="org.apache.tapestry.valid.ValidationDelegate" name="delegate"/>
+  <!-- entity模板，使用自动生成get/setEntity方法 -->
+  <property initial-value="new corner.demo.model.one.apple()" name="entity"/>
+  <!-- 查询时使用的queryEntity -->
+  <property persist="client" initial-value="new corner.demo.model.one.apple()" name="queryEntity"/>
+  
+  <component type="Form" id="AQueryForm">
+    <binding value="listener:doQueryEntityAction" name="listener"/>
+    <binding value="ognl:beans.delegate" name="delegate"/>
+  </component>
+  <component type="TextField" id="nameField">
+    <binding value="message:Color" name="displayName"/>
+    <binding value="translator:string" name="translator"/>
+    <binding value="ognl:queryEntity.color" name="value"/>
+  </component>
+</page-specification>
+AForm.html文件
+
+<span jwcid="@DemoBorder" title="AForm">
+	<a listener="listener:doCancelEntityAction" jwcid="@DirectLink" href="AList.html">Return A List</a>
+	<form jwcid="AForm" action="AList.html">
+      <table>
+        <tr>
+          <td>
+            <span key="color">color</span>
+          </td>
+          <td>
+            <input jwcid="colorField" /><input jwcid="weightField"/>
+          </td>
+		</tr>
+		
+      </table>
+      <input jwcid="@Submit" type="Submit" value="message:Okay"/>
+      <input jwcid="@Any" type="Button" value="message:button.Cancle"
+      	 onClick="javascript:tapestry.form.cancel(this.form);"/>
+    </form>
+</span>
+AForm.page文件
+
+如果有特殊操作可以继承AbstractEntityFormPage类，重写类中方法。
+
+<page-specification class="corner.orm.tapestry.page.AbstractEntityFormPage">
+  <description>corner.demo.model.one.Apple Form Page</description>
+  <bean class="org.apache.tapestry.valid.ValidationDelegate" name="delegate"/>
+  <!-- 创建entity模型，以便在页面中传递类 -->
+  <property persist="entity" initial-value="new corner.demo.model.one.apple()" name="entity"/>
+  <component type="Form" id="AForm">
+    <binding value="ognl:beans.delegate" name="delegate"/>
+    <binding value="ognl:true" name="clientValidationEnabled"/>
+    <!-- doSaveEntityAction是corner提供的保存方法 -->
+    <binding value="listener:doSaveEntityAction" name="success"/>
+    <!-- doCancelEntityAction是corner提供的取消方法 -->
+    <binding value="listener:doCancelEntityAction" name="cancel"/>
+  </component>
+  <component type="TextField" id="colorField">
+    <binding value="message:Color" name="displayName"/>
+    <binding value="translator:string" name="translator"/>
+    <binding value="ognl:entity.color" name="value"/>
+    <binding name="validators" value="validators:required"/>
+  </component>
+    <component type="TextField" id="weightField">
+    <binding value="message:Weight" name="displayName"/>
+    <binding value="translator:string" name="translator"/>
+    <binding value="ognl:entity.weight" name="value"/>
+  </component>
+</page-specification>
+AbstractModel.java文件
+
+包：corner.demo.model.one；spring配置文件中将corner.demo.model包及其子包设置成为注释配置hibernate表结构的目标包
+
+@MappedSuperclass
+public class AbstractModel extends AbstractPersistDomain implements Serializable {
+
+	private static final long serialVersionUID = 772729287261953568L;
+	
+	/**
+	 * @hibernate.id generator-class="uuid"
+	 */
+	private String id;
+	
+	/**
+	 * @hibernate.property
+	 */
+	private String name;
+	
+	/**
+	 * @return 获得id
+	 */
+	@Id @GeneratedValue(generator="system-uuid")
+	@GenericGenerator(name="system-uuid", strategy = "uuid")
+	@Column(columnDefinition="char(32)")
+	public String getId() {
+		return id;
+	}
+	
+	/**
+	 * @param id 设置id
+	 */
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+}
+继承AbstractPersistDomain抽象类，AbstractPersistDomain类是实例操作的基础类，实现了对单一记录操作的save、update、saveOrUpdate、delete方法，和从spring获得Entity的getEntityService方法
+
+apple.java文件
+
+继承AbstractModel类，@Entity(name = "apple")表示使用apple作为表名，继承的属性和方法不能重复
+
+@Entity(name = "apple")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+public class apple extends AbstractModel {
+
+	private static final long serialVersionUID = 8533936694005181003L;
+
+	private String color;
+
+	private double weight;
+
+	//geter和seter略
+}
+添加完以上文件最基本的增删改功能就可是实现了。
+
+6.3. 背后隐藏的操作
+
+6.3.1. 抽象Model文件 － AbstractPersistDomain.java
+
+在这里将调用前面spring初始化中设置的entityService,corner.squeezer.xml中hivemind配置将过滤entityService
+
+public abstract class AbstractPersistDomain {
+	/**
+	 * 从Spring中得到entity service
+	 * @return entity service
+	 */
+	protected EntityService getEntityService(){
+		return (EntityService) SpringContainer.getInstance().getApplicationContext().getBean("entityService");
+	}
+	/**
+	 * 通过EntityService进行增删改
+	 */
+	public void save(){
+		this.getEntityService().saveEntity(this);
+	}
+	public void update(){
+		this.getEntityService().updateEntity(this);
+	}
+	public void saveOrUpdate(){
+		this.getEntityService().saveOrUpdateEntity(this);
+	}
+	public void delete(){
+		this.getEntityService().deleteEntities(this);
+	}
+}
+6.3.2. page文件 － AbstractEntityPage.java和AbstractEntityFormPage.java
+
+AbstractEntityPage是AbstractEntityFormPage父类继承了org.apache.tapestry.html.BasePage实现EntityPage接口IBlobPage接口
+
+corner.orm.tapestry.page.AbstractEntityPage
+corner.orm.tapestry.page.AbstractEntityFormPage <T> extends AbstractEntityPage<T>
+AbstractEntityFormPage继承AbstractEntityPage，提供从Form页提交来的用户操作，如果需要实现特殊的对Form页的支持可以继承AbstractEntityFormPage后重写或增加功能
+
+corner.orm.tapestry.page.AbstractEntityFormPage
+6.3.2.1. Entity增改功能
+
+AbstractEntityPage通过getEntityService方法获得过滤的entity，用getEntity方法获得当前实体后用EntityService中的方法对数据进行增删改，而EntityService中调用的方法实际上就是model中所实现的功能。
+
+接口 - EntityPage
+
+读取在corner.squeezer.xml中配置的spring:entityService，此处已经经过了反过滤
+
+/**
+ * 得到EntityService.
+ * 提供基本的操作.
+ * @return entityService 实体服务类
+ */
+@InjectObject("spring:entityService")
+public abstract EntityService getEntityService();
+Page - AbstractEntityPage
+
+使用getEntity()获得实体调用saveOrUpdateEntity更新
+
+protected void saveOrUpdateEntity() {
+	getEntityService().saveOrUpdateEntity(getEntity());
+}
+继承了AbstractPersistDomain的AbstractModel类
+
+前面已经提到过此类，这个类用来配置Hibernate的ID生成器，使用EJB3.0注释或xdoclet都可以
+
+@MappedSuperclass
+public class AbstractModel extends AbstractPersistDomain implements Serializable {
+
+	private static final long serialVersionUID = 772729287261953568L;
+	
+	/**
+	 * @hibernate.id generator-class="uuid"
+	 */
+	private String id;
+	
+	@Id @GeneratedValue(generator="system-uuid")
+	@GenericGenerator(name="system-uuid", strategy = "uuid")
+	@Column(columnDefinition="char(32)")
+	public String getId() {
+		return id;
+	}
+	
+	public void setId(String id) {
+		this.id = id;
+	}
+
+}
+继承了AbstractModel的apple
+
+用Entity标签设置一下存储的表名
+
+@Entity(name = "apple")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+public class apple extends AbstractModel {
+
+	private static final long serialVersionUID = 8533936694005181003L;
+
+	private String color;
+
+	private double weight;
+	
+	//geter和seter
+
+}
+Model - AbstractPersistDomain
+
+corner.model.AbstractPersistDomain
+
+真正的工作在这里呢，前面的配置、调用都是为了对数据库操作。别急接着往下看！
+
+还记得前面提点的在spring的xml中的配置吗？对就是config.spring.application-base-service.xml文件，我们已经重新配置了sessionFactory要他使用时调用corner.orm.hibernate.v3.HibernateObjectRelativeUtils，而HibernateObjectRelativeUtils继承了实现了HibernateDaoSupport类ObjectRelativeUtils接口，EntityService对数据操作时也洽洽是调用了ObjectRelativeUtils接口的方法。java基础好的朋友大概已经兴奋起来了，我们不就是等于在调用spring提供给我们的HibernateTemplate吗！
+
+/**
+ * 得到entity service
+ * @return entity service
+ */
+protected EntityService getEntityService(){
+	return (EntityService) SpringContainer.getInstance().getApplicationContext().getBean("entityService");
+}
+/**
+ * 保存或者更新
+ */
+public void saveOrUpdate(){
+	this.getEntityService().saveOrUpdateEntity(this); //this只的是任何继承了AbstractPersistDomain的类
+}
+6.3.2.2. 页面跳转
+
+在前面提到的增加和修改功能中的返回值是IPage接口，所以只有我没返回一个IPage就可以实现跳转功能
+
+protected IPage getEntityListPage(){
+	return this.getRequestCycle().getPage(
+			this.getPageName().substring(0,this.getPageName().lastIndexOf("Form")) + "List");
+			//调用自己的getPageName()方法得到页面名称然后将Form改成List，然后在跳转，就可以回到XXList页面了
+}
+使用goEntityPage方法
+
+/**
+ * 提供entity页面的跳转
+ */
+@SuppressWarnings("unchecked")
+public <E> EntityPage<E> goEntityPage(E e,String pageName){
+	EntityPage<E> page=(EntityPage<E>) this.getRequestCycle().getPage(pageName);
+	return this.goEntityPageByPage(e, page);
+}
+/**
+ * 提供entity页面的跳转
+ */
+public <E> EntityPage<E> goEntityPageByPage(E e, EntityPage<E> page) {
+	if(page==null){
+		throw new IllegalArgumentException("待跳转的页面为空!");
+	}
+	page.setEntity(e);
+	return page;
+}
+6.4. List页面
+
+6.4.1. 数据是怎样显示的？
+
+xxList.html
+
+一句source="ognl:source"就可以获得记录集
+
+<!-- corner.orm.tapestry.page.AbstractEntityListPage实现getSource方法 -->
+<div jwcid="@contrib:TableView" columns="shortName" element="div" source="ognl:source" persist="client">
+  <table>
+    <tr>
+      <td><span key="color">color</span></td>
+      <td><span key="weight">weight</span></td>
+    </tr>
+    <!-- 使用page文件中定义的entity -->
+    <tr row="ognl:entity" jwcid="@contrib:TableRows" element="tr">
+    	<!-- entity的属性 -->
+      <td><span jwcid="@Insert" value="ognl:entity.color">color</span></td>
+      <td><span jwcid="@Insert" value="ognl:entity.weight">weight</span></td>
+    </tr>
+  </table>
+  <div jwcid="@contrib:TablePages" element="div"/>
+</div>
+xxList.page
+
+<page-specification class="corner.orm.tapestry.page.AbstractEntityListPage">
+  <bean class="org.apache.tapestry.valid.ValidationDelegate" name="delegate"/>
+  <!-- 使用的实例 -->
+  <property initial-value="new corner.demo.model.one.apple()" name="entity"/>
+</page-specification>
+抽象类AbstractEntityListPage
+
+AbstractEntityListPage继承了AbstractEntityPage类实现了IListablePage、IPersistentQueriable、 IRelativeObjectOperatorSupport接口
+
+/**
+ * IPersistentQueriable接口的createCriteria方法
+ */
+public Criteria createCriteria(Session session) {
+	return session.createCriteria(this.getEntity().getClass());
+}
+/**
+ * 得到列表的source
+ * @return table model
+ */
+public  IBasicTableModel getSource(){
+	//getEntityService为在page中定义的Entity
+	return new PersistentBasicTableModel(this.getEntityService(),this,this.getRequestCycle().isRewinding());
+}
+PersistentBasicTableModel类
+
+PersistentBasicTableModel类实现了IBasicTableModel接口，重写了getRowCount()和getCurrentPageRows()方法。在tapestry调用中自动显示记录。
+
+public Iterator getCurrentPageRows(final int nFirst, final int nPageSize,
+		final ITableColumn column, final boolean sort) {
+	if(isRewinding){
+		if (logger.isDebugEnabled()) {
+			logger
+					.debug("is rewinding ,return false;");
+		}
+
+		return null;
+	}
+		return((Iterator) ((HibernateObjectRelativeUtils) this.entityService
+			.getObjectRelativeUtils()).getHibernateTemplate()
+			.execute(new HibernateCallback(){	//定义HibernateCallback接口中doInHibernate方法
+
+				public Object doInHibernate(Session session) throws HibernateException, SQLException {
+					//callback就是IPersistentQueriable接口，
+					//使用createCriteria方法相当于调用实现此方法本身的类
+					Criteria criteria=callback.createCriteria(session);
+					callback.appendCriteria(criteria);
+
+					if (column != null) {
+						criteria.addOrder(sort ? Order.asc(column.getColumnName()) : Order
+								.desc(column.getColumnName()));
+					}
+
+					criteria.setFirstResult(nFirst);
+					criteria.setMaxResults(nPageSize);
+
+					return criteria.list().iterator();
+				}}));
+
+}
+6.4.2. 编辑记录及删除
+
+xxList.html
+
+<div jwcid="@contrib:TableView" columns="shortName" element="div" source="ognl:source" persist="client">
+  <table>
+    <tr>
+      <td><span key="color">color</span></td>
+      <td><span key="weight">weight</span></td>
+      <td><span key="link.edit">edit</span></td>
+      <td><span key="link.delete">delete</span></td>
+    </tr>
+    <!-- 使用page文件中定义的entity -->
+    <tr row="ognl:entity" jwcid="@contrib:TableRows" element="tr">
+    	<!-- entity的属性 -->
+      <td><span jwcid="@Insert" value="ognl:entity.color">color</span></td>
+      <td><span jwcid="@Insert" value="ognl:entity.weight">weight</span></td>
+      <td>
+      <!-- 直接传入entity，doEditEntityAction是corner中提供的编辑方法 -->
+        <a parameters="ognl:entity" listener="listener:doEditEntityAction" jwcid="@DirectLink" 
+        	href="#" id="editAction">
+          <span key="link.edit">Edit</span>
+        </a>
+      </td>
+      <td>
+      <!-- 直接传入entity，doDeleteEntityAction是corner中提供的删除方法 -->
+        <a parameters="ognl:entity" listener="listener:doDeleteEntityAction" jwcid="@DirectLink" 
+        	href="#" id="deleteAction">
+          <span key="link.delete">Delete</span>
+        </a>
+      </td>
+    </tr>
+  </table>
+  <div jwcid="@contrib:TablePages" element="div"/>
+</div>
+
+抽象类AbstractEntityListPage － 编辑
+
+/**
+ * 编辑实体的连接
+ */
+@Component(type="DirectLink",bindings={"listener=listener:doEditEntityAction","parameters=entity"})
+public abstract IComponent getEditEntityLink();
+
+/**
+ * 得到实体表单页面的名称.
+ * @return 实体表单页面的名称。
+ */
+protected String getEntityFormPageStr(){
+	//设置返回页面
+	return 	this.getPageName().substring(0,this.getPageName().lastIndexOf("List")) + "Form";
+}
+
+@SuppressWarnings("unchecked")
+public EntityPage<T> getEntityFormPage() {
+	//将得到的页面page转换成EntityPage，EntityPage实现了IPage接口
+	return (EntityPage<T>) this.getRequestCycle().getPage(getEntityFormPageStr());
+}
+
+/**
+ * 编辑实体操作.
+ *
+ * @param entity
+ *            实体.
+ * @return 返回编辑页面.
+ * @since 2.0
+ */
+public IPage doEditEntityAction(T entity) { // entity就是从html页传过来的entity，不过已经进行了过滤处理
+	EntityPage<T> page = this.getEntityFormPage();
+	page.setEntity(entity);
+	return page;	//跳转到Form进行处理
+}
+
+
+抽象类AbstractEntityListPage － 删除
+
+/**
+ * 删除实体的连接
+ */
+@Component(type="DirectLink",bindings={"listener=listener:doDeleteEntityAction","parameters=entity"})
+public abstract IComponent getDeleteEntityLink();
+
+@SuppressWarnings("unchecked")
+public IPage doDeleteEntityAction(T entity) { // 删除操作
+	this.getEntityService().deleteEntities(entity);
+	return this;
+}
+
+6.5. 记录查询功能
+
+xxList.html
+
+<form jwcid="AQueryForm">
+	name:<input jwcid="nameField"/>
+	<input type="submit"/>
+</form>
+xxList.page
+
+<page-specification class="corner.orm.tapestry.page.AbstractEntityListPage">
+  <bean class="org.apache.tapestry.valid.ValidationDelegate" name="delegate"/>
+  <property persist="client" initial-value="new corner.demo.model.one.apple()" name="queryEntity"/>
+  
+  <component type="Form" id="AQueryForm">
+  	<!-- 监听doQueryEntityAction -->
+    <binding value="listener:doQueryEntityAction" name="listener"/>
+    <binding value="ognl:beans.delegate" name="delegate"/>
+  </component>
+  <component type="TextField" id="nameField">
+    <binding value="message:Color" name="displayName"/>
+    <binding value="translator:string" name="translator"/>
+    <!-- 传入color -->
+    <binding value="ognl:queryEntity.color" name="value"/>
+  </component>
+</page-specification>
+抽象类AbstractEntityListPage － 查询
+
+/**
+ * @see corner.orm.tapestry.table.IPersistentQueriable#appendCriteria(Session)
+ * IListablePage接口中的getQueryEntity方法
+ */
+public void appendCriteria(Criteria criteria) {
+	if (this.getQueryEntity() != null)
+		criteria.add(NewExpressionExample.create(getQueryEntity()).enableLike().excludeZeroes()
+				.ignoreCase());
+}
+
+/**
+ * @see corner.orm.tapestry.table.IPersistentQueriable#createCriteria(Session)
+ */
+public Criteria createCriteria(Session session) {
+
+	return session.createCriteria(this.getEntity().getClass());
+}
+/**
+ * 响应查询的操作.
+ * IListablePage接口中的setQueryEntity方法
+ * @return 当前页
+ */
+public IPage doQueryEntityAction(){
+	this.setQueryEntity(this.getQueryEntity()); 
+	return this;
+}
+当页面doQueryEntityAction方法返回自己后tapestry使页面重新载入，在@contrib:TableView处获得source时又在次从AbstractEntityListPage中查找getSource方法 再次建立PersistentBasicTableModel类
+
+NewExpressionExample类
+
+public class NewExpressionExample extends Example {
+	//....
+	protected NewExpressionExample(Object entity, PropertySelector selector) {
+		super(entity, selector);
+		this.selector=selector;
+		this.entity=entity;
+		// 首先分析出来类多对应的所有的特列查询
+		worker = new QueryTypeWorker(EntityService.getEntityClass(entity));	//次方法再其他章节中详细描述
+
+	}
+	public static Example create(Object entity) {
+		if (entity==null) throw new NullPointerException("null example");
+		return new NewExpressionExample(entity, NOT_NULL);
+	}
+	//....
+}
+抽象类AbstractEntityListPage － 查询
+
+public Iterator getCurrentPageRows(final int nFirst, final int nPageSize,
+			final ITableColumn column, final boolean sort) {
+	//...
+	Criteria criteria=callback.createCriteria(session);	//调用AbstractEntityListPage类中的createCriteria方法
+	callback.appendCriteria(criteria);		//调用AbstractEntityListPage类中的appendCriteria方法
+	//...
+}
+返回Iterator后查询结束。
+
+第 7 章 One to Many操作
+
+7.1. 基础代码
+
+7.1.1. 建立Model
+
+One.java
+
+One继承AbstractModel类，AbstractModel在上一章中已经详细描述过
+
+@Entity(name="oneTomany_one")	//使用ejb3.0定义表名oneTomany_one
+@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
+public class One extends AbstractModel{
+
+	private static final long serialVersionUID = 6695491838389725803L;
+	
+	/**
+	 * @hibernate.set cascade="none"  lazy="true"
+	 * @hibernate.key column="oneTomany_one"
+	 * @hibernate.one-to-many class="corner.demo.model.one2many.B"
+	 */
+	private List<Many> bs;
+
+	public void setBs(List<Many> bs) {	//存储One和Many的关系
+		this.bs = bs;
+	}
+	
+	@OneToMany(mappedBy="one")	//与Many中的one属性对应建立关系
+	@JoinColumn(name="oneTomany_one")	//使用oneTomany_one外键与Many相连，此时为双向1：n，可以删除变成单项1：n
+	@OnDelete(action=OnDeleteAction.CASCADE)
+	public List<Many> getBs() {
+		return bs;
+	}
+	
+}
+Many.java
+
+@Entity(name="oneTomany_Many")	//定义表名，可以不定义
+@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
+public class Many extends AbstractModel {
+
+	private static final long serialVersionUID = -1476529924068741195L;
+	
+	private One one;	//与One类中定义的OneToMany(mappedBy="one")对应的属性
+
+	@ManyToOne
+	@JoinColumn(name="oneTomany_one")	//定义外键
+	public One getOne() {
+		return one;
+	}
+
+	public void setOne(One one) {
+		this.one = one;
+	}
+
+}
+7.1.2. One端操作需要的文件
+
+oneList.html
+
+<span jwcid="@DemoBorder">
+    <center>
+      <a listener="listener:doNewEntityAction" jwcid="@DirectLink" href="oneForm.html">
+        <span key="link.add">add</span>
+      </a>
+    </center>
+    <div jwcid="@contrib:TableView" columns="shortName" element="div" source="ognl:source" persist="client">
+      <table>
+        <tr>
+          <td><span key="name">name</span></td>
+          <td><span key="link.edit">edit</span></td>
+          <td><span key="link.delete">delete</span></td>
+        </tr>
+        <tr row="ognl:entity" jwcid="@contrib:TableRows" element="tr">
+          <td><span jwcid="@Insert" value="ognl:entity.name">name</span></td>
+          <td>
+            <a parameters="ognl:entity" listener="listener:doEditEntityAction" jwcid="@DirectLink" href="AForm.html">
+              <span key="link.edit">Edit</span>
+            </a>
+          </td>
+          <td>
+            <a parameters="ognl:entity" listener="listener:doDeleteEntityAction" jwcid="@DirectLink" href="#">
+              <span key="link.delete">Delete</span>
+            </a>
+          </td>
+        </tr>
+      </table>
+      <div jwcid="@contrib:TablePages" element="div"/>
+    </div>
+</span>
+oneList.page
+
+<page-specification class="corner.orm.tapestry.page.PoListPage">
+  <description>corner.demo.model.one2many.One Form Page</description>
+  <bean class="org.apache.tapestry.valid.ValidationDelegate" name="delegate"/>
+  <property initial-value="new corner.demo.model.one2many.One()" name="entity"/>
+  <property persist="client" initial-value="new corner.demo.model.one2many.One()" name="queryEntity"/>
+  <component type="Form" id="AQueryForm">
+    <binding value="listener:doQueryEntityAction" name="listener"/>
+    <binding value="ognl:beans.delegate" name="delegate"/>
+  </component>
+  <component type="TextField" id="nameField">
+    <binding value="message:name" name="displayName"/>
+    <binding value="translator:string" name="translator"/>
+    <binding value="ognl:queryEntity.name" name="value"/>
+  </component>
+</page-specification>
+oneForm.html
+
+<span jwcid="@DemoBorder">
+	<center>
+      <a listener="listener:doCancelEntityAction" jwcid="@DirectLink" href="oneList.html">Return One List</a>
+    </center>
+    <form jwcid="oneForm" action="oneList.html">
+      <table>
+        <tr>
+          <td><span key="name">name</span></td>
+          <td><input jwcid="nameField" id="name" name="name"/></td>
+        </tr>
+      </table>
+      <input jwcid="@Submit" type="Submit" value="message:button.Okay"/>
+      <input jwcid="@Any" type="Button" value="message:button.Cancle" 
+      onClick="javascript:tapestry.form.cancel(this.form);"/>
+    </form>
+    <br/>
+    
+    <div jwcid="@contrib:TableView" element="span" columns="name,!EditRelative,!DeleteRelative"
+     source="ognl:getSource('bs')" pageSize="5" persist="client">
+   <fieldset>
+   <legend>
+	   A-B one-to-many,A关联的B列表 
+	   <a parameters="ognl:{entity,'one2many/manyForm'}" listener="listener:doNewRelativeAction" 
+	   jwcid="@DirectLink" href="manyForm.html">Add One to Many</a>
+	   &nbsp;&nbsp;<a href="" jwcid="@DirectLink" listener="listener:doViewRelativeEntityListAction" 
+	   parameters="ognl:{entity,'one2many/manyList'}">View Many list</a>
+   </legend> 
+   
+	<table width="100%" align="center" border="1">
+		<tr><span jwcid="@contrib:TableColumns" element="th"/></tr>
+		<tr jwcid="@contrib:TableRows" element="tr" row="ognl:relativeObject">
+			<td><span jwcid="@Insert" value="ognl:relativeObject.name" /></td>
+			<td>
+				<a href="#" jwcid="@DirectLink" 
+				parameters="ognl:{entity,relativeObject,'one2many/manyForm'}" 
+				listener="listener:doEditRelativeEntityAction">
+				<span key="doEditRelativeAction" /></a></td>
+			<td>
+				<a href="#" jwcid="@DirectLink" parameters="ognl:{relativeObject}" 
+				listener="listener:doDeleteRelativeEntityAction">
+				<span key="doDeleteRelativeAction" /></a></td>
+		</tr>
+	</table>
+    </fieldset>
+</div>
+</span>
+oneForm.page
+
+<page-specification class="corner.orm.tapestry.page.relative.ReflectMultiManyEntityFormPage">
+  <description>corner.demo.model.one2many.One Form Page</description>
+  <bean class="org.apache.tapestry.valid.ValidationDelegate" name="delegate"/>
+  <property persist="entity" initial-value="new corner.demo.model.one2many.One()" name="entity"/>
+  <component type="Form" id="oneForm">
+    <binding value="ognl:beans.delegate" name="delegate"/>
+    <binding value="ognl:true" name="clientValidationEnabled"/>
+    <binding value="listener:doSaveEntityAction" name="success"/>
+    <binding value="listener:doCancelEntityAction" name="cancel"/>
+    <binding value="listener:false" name="focus"/>
+  </component>
+  <component type="TextField" id="nameField">
+    <binding value="message:name" name="displayName"/>
+    <binding value="translator:string" name="translator"/>
+    <binding value="ognl:entity.name" name="value"/>
+  </component>
+</page-specification>
+7.1.3. Many端操作需要的文件
+
+manyList.html
+
+<span jwcid="@DemoBorder">
+    <center>
+      <a listener="listener:doNewEntityAction" jwcid="@DirectLink" href="oneForm.html">
+        <span key="link.add">add</span>
+      </a>
+      <a listener="listener:doReturnRootedFormAction" jwcid="@DirectLink" href="oneForm.html">
+		返回
+      </a>
+      <a jwcid="@DirectLink" listener="listener:doViewRelativeEntityListAction" 
+      parameters="ognl:{rootedObject,'one2many/manyList'}">返回B列表</a>
+    </center>
+    <div jwcid="@contrib:TableView" columns="shortName" element="div" source="ognl:getSource('bs')" 
+    persist="client">
+      <table>
+        <tr>
+          <td><span key="name">name</span></td>
+          <td><span key="link.edit">edit</span></td>
+          <td><span key="link.delete">delete</span></td>
+        </tr>
+        <tr row="ognl:entity" jwcid="@contrib:TableRows" element="tr">
+          <td><span jwcid="@Insert" value="ognl:entity.name">name</span></td>
+          <td>
+            <a parameters="ognl:entity" listener="listener:doEditEntityAction" jwcid="@DirectLink" 
+            	href="oneForm.html">
+              <span key="link.edit">Edit</span>
+            </a>
+          </td>
+          <td>
+            <a parameters="ognl:entity" listener="listener:doDeleteEntityAction" jwcid="@DirectLink" href="#">
+              <span key="link.delete">Delete</span>
+            </a>
+          </td>
+        </tr>
+      </table>
+      <div jwcid="@contrib:TablePages" element="div"/>
+    </div>
+</span>
+manyList.page
+
+<page-specification class="corner.orm.tapestry.page.relative.ReflectRelativeEntityListPage">
+  <description>corner.demo.model.one2many.One Form Page</description>
+  <bean class="org.apache.tapestry.valid.ValidationDelegate" name="delegate"/>
+  <inject property="rootFormPage" type="page" object="one2many/oneForm"/>
+  <property initial-value="new corner.demo.model.one2many.One()" name="entity"/>
+  <property persist="client" initial-value="new corner.demo.model.one2many.One()" name="queryEntity"/>
+</page-specification>
+manyForm.html
+
+<span jwcid="@DemoBorder">
+    <a listener="listener:doCancelEntityAction" jwcid="@DirectLink" href="manyList.html">Return </a>
+    <form jwcid="ManyForm" action="manyList.html">
+      <table>
+        <tr>
+          <td><span key="name">name</span></td>
+          <td><input jwcid="nameField" id="name" name="name"/></td>
+        </tr>
+      </table>
+      <input jwcid="@Submit" type="Submit" value="message:button.Okay"/>
+      <input jwcid="@Any" type="Button" value="message:button.Cancel" 
+      onClick="javascript:tapestry.form.cancel(this.form);"/>
+    </form>
+    <br/>
+</span>
+manyForm.page
+
+<page-specification class="corner.orm.tapestry.page.relative.ReflectRelativeEntityFormPage">
+  <description>Form Page</description>
+  <!-- 设定返回的根页面 -->
+  <inject property="rootFormPage" type="page" object="one2many/manyList"/>
+  <bean class="org.apache.tapestry.valid.ValidationDelegate" name="delegate"/>
+  <property persist="entity" initial-value="new corner.demo.model.one2many.Many()" name="entity"/>
+  <component type="Form" id="ManyForm">
+    <binding value="ognl:beans.delegate" name="delegate"/>
+    <binding value="ognl:true" name="clientValidationEnabled"/>
+    <binding value="listener:doSaveEntityAction" name="success"/>
+    <binding value="listener:doCancelEntityAction" name="cancel"/>
+    <binding value="listener:false" name="focus"/>
+  </component>
+  <component type="TextField" id="nameField">
+    <binding value="message:name" name="displayName"/>
+    <binding value="translator:string" name="translator"/>
+    <binding value="ognl:entity.name" name="value"/>
+  </component>
+</page-specification>
+7.2. One端代码分析
+
+One端增加：由于ReflectRelativeEntityFormPage类在他的父类中继承了AbstractEntityFormPage类所以One在增加时 所调用的类和方法同上一章一样，所以本章中不在说明
+
+One端删除、修改、查询：使用的同样是PoListPage类所以oneList.html、onelist.page略过
+
+7.3. Many端代码分析
+
+7.3.1. 添加Many
+
+进入one端的修改后可以在单击“Add One to Many”添加Many，我们就从此处说起
+
+oneForm.html
+
+<legend>
+	   A-B one-to-many,A关联的B列表 
+	   <!-- 当进入修改页面时，ognl将需要加入关系的entity和要跳转的页面加入到连接。
+	   		doNewRelativeAction是corner实现的方法 -->
+	   <a parameters="ognl:{entity,'one2many/manyForm'}" listener="listener:doNewRelativeAction" 
+	   jwcid="@DirectLink" href="manyForm.html">Add One to Many</a> &nbsp;&nbsp;
+	   <!-- 和添加关系一样将跳转的页面和entity加入连接并使用监听doViewRelativeEntityListAction方法准备进入显示页面 -->
+	   <a href="" jwcid="@DirectLink" listener="listener:doViewRelativeEntityListAction" 
+	   parameters="ognl:{entity,'one2many/manyList'}">View Many list</a>
+</legend> 
+抽象类AbstractManyEntityFormPage
+
+从ReflectRelativeEntityFormPage开始查找doNewRelativeAction方法，经过几次向上操作我们在 corner.orm.tapestry.page.relative包中找到了父类AbstractManyEntityFormPage。 他继承了我们熟悉的抽象类AbstractEntityFormPage并且实现了IRelativeObjectOperatorSupport接口。
+
+@SuppressWarnings("unchecked")
+public IPage doNewRelativeAction(T obj,String pageName){
+	return this.getRelativeObjectOperator().doNewRelativeAction(obj, pageName);
+}
+IRelativeObjectOperatorSupport接口
+
+IRelativeObjectOperatorSupport接口只有一个方法，方法调用服务service:corner.orm.relativeOperator， 并返回一个实现了IRelativeObjectOperator接口的类
+
+public interface IRelativeObjectOperatorSupport {
+	/**
+	 * 得到关联对象操作者.
+	 * @return 关联对象操作者。
+	 */
+	@InjectObject("service:corner.orm.relativeOperator")
+	public abstract IRelativeObjectOperator getRelativeObjectOperator();
+}
+service:corner.orm.relativeOperator
+
+relativeOperator在hivemodule.xml中配置，serviceID可以和serviceID相组合。将model与model直接的关系作为服务使用时直接调用
+
+<service-point id="relativeOperator"
+	interface="corner.orm.tapestry.page.relative.support.IRelativeObjectOperator">
+	<invoke-factory>
+		<construct
+			class="corner.orm.tapestry.page.relative.support.RelativeObjectOperator">
+			<!-- 使用RelativeObjectOperator类 -->
+			<set-object property="requestCycle"
+				value="infrastructure:requestCycle"/>
+		</construct>
+	</invoke-factory>
+</service-point>
+RelativeObjectOperator类
+
+RelativeObjectOperator类实现IRelativeObjectOperator接口，IPageRooted接口继承IPage接口
+
+public class RelativeObjectOperator implements IRelativeObjectOperator<Object, Object>  {
+	private IRequestCycle cycle;
+	
+	@SuppressWarnings("unchecked")
+	public IPage doNewRelativeAction(Object obj,String pageName){
+		//传入的entity和要进入的页面
+		IPageRooted<Object,Object> page= (IPageRooted<Object,Object>) this.cycle.getPage(pageName);
+		page.setRootedObject(obj);	//调用IPageRooted的setRootedObject方法保存entity，就是one端页面中的的值
+		return page;	//准备跳转
+	}
+	@SuppressWarnings("unchecked")
+	public IPage doEditRelativeEntityAction(Object obj,Object e,String pageName){
+		IPageRooted<Object,Object> page= (IPageRooted<Object,Object>) this.cycle.getPage(pageName);
+		page.setRootedObject(obj);
+		page.setEntity(e);
+		
+		return page;
+	}
+	public void setRequestCycle(IRequestCycle cycle){
+		this.cycle=cycle;
+	}
+}
+manyForm.page
+
+I
+
+<page-specification class="corner.orm.tapestry.page.relative.ReflectRelativeEntityFormPage">
+  <description>Form Page</description>
+  <!-- 设定返回的根页面 -->
+  <inject property="rootFormPage" type="page" object="one2many/manyList"/>
+  
+  <bean class="org.apache.tapestry.valid.ValidationDelegate" name="delegate"/>
+  <property persist="entity" initial-value="new corner.demo.model.one2many.Many()" name="entity"/>
+  <component type="Form" id="ManyForm">
+    <binding value="ognl:beans.delegate" name="delegate"/>
+    <binding value="ognl:true" name="clientValidationEnabled"/>
+    <!--我们属性的doSaveEntityAction和doCancelEntityAction-->
+    <binding value="listener:doSaveEntityAction" name="success"/>
+    <binding value="listener:doCancelEntityAction" name="cancel"/>
+    <binding value="listener:false" name="focus"/>
+  </component>
+  <component type="TextField" id="nameField">
+    <binding value="message:name" name="displayName"/>
+    <binding value="translator:string" name="translator"/>
+    <!-- 表示此处将对entity操作，如果修改则显示 -->
+    <binding value="ognl:entity.name" name="value"/>
+  </component>
+</page-specification>
+抽象类AbstractRelativeEntityFormPage
+
+AbstractRelativeEntityFormPage是ReflectRelativeEntityFormPage的父类AbstractEntityFormPage的子类并实现了IPageRooted接口
+
+public abstract class AbstractRelativeEntityFormPage<T, E> extends AbstractEntityFormPage<E> 
+		implements IPageRooted<T,E>{
+	/**
+	 * @see corner.orm.tapestry.page.AbstractEntityFormPage#getEntityListPage()
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	protected IPage getEntityListPage() {	//重写了AbstractEntityFormPage的getEntityListPage方法
+		EntityPage<T> page= (EntityPage<T>) getRootFormPage();	//获得根页面，在page中配置的
+		if(page instanceof IPageRooted){	//如果是新添加的，也就是说中间保存着one端entity的
+			((IPageRooted<T,E>) page).setRootedObject(this.getRootedObject());	//传递entity给新page
+		}else{
+			page.setEntity(this.getRootedObject());	//？？？？？？
+		}
+		return page;
+	}
+}
+返回manyList.html
+
+7.3.2. 显示关联关系
+
+oneForm.html
+
+<div jwcid="@contrib:TableView" element="span" columns="name,!EditRelative,!DeleteRelative"
+     source="ognl:getSource('bs')" pageSize="5" persist="client">
+   <fieldset>
+	<table width="100%" align="center" border="1">
+		<tr>
+			<span jwcid="@contrib:TableColumns" element="th"/>
+		</tr>
+		<tr jwcid="@contrib:TableRows" element="tr" row="ognl:relativeObject">
+			<td><span jwcid="@Insert" value="ognl:relativeObject.name" /></td>
+			<td><a href="#" jwcid="@DirectLink" 
+				parameters="ognl:{entity,relativeObject,'one2many/manyForm'}" 
+				listener="listener:doEditRelativeEntityAction">
+				<span key="doEditRelativeAction" /></a></td>
+			<td><a href="#" jwcid="@DirectLink" parameters="ognl:{relativeObject}" 
+				listener="listener:doDeleteRelativeEntityAction">
+				<span key="doDeleteRelativeAction" /></a></td>
+		</tr>
+		
+	</table>
+    </fieldset>
+</div>
+抽象类AbstractManyEntityFormPage
+
+/**
+ * 得到关联对象。
+ * 此对象用来在对关联对象循环的时候使用的临时变量。
+ * @return 关联的对象
+ */
+public abstract E getRelativeObject();
+public abstract void setRelativeObject(E obj);
+/**
+ * 得到列表的source,得到和当前实体关联的对象的列表。
+ * @param relativePropertyName 关联的属性名字，通常为复数，譬如：groups,users等。
+ * @return table model
+ */
+public  IBasicTableModel getSource(String relativePropertyName){
+	//实体服务类，根对象，关联的属性（String类型的），是否为rewinding
+	return new RelativePersistentBasicTableModel<T>
+	(this.getEntityService(),this.getEntity(),relativePropertyName,this.getRequestCycle().isRewinding());
+}
+RelativePersistentBasicTableModel类
+
+RelativePersistentBasicTableModel类同上一章讲的PersistentBasicTableModel一样都是为了显示而创建的类， 他同样实现了IBasicTableModel接口
+
+public class RelativePersistentBasicTableModel<T> implements IBasicTableModel {
+	/**
+	 * 根据isRewinding来产生一个列表
+	 * @param entityService 实体服务类
+	 * @param rootedObj 根对象.
+	 * @param relativeProName 关联的属性.
+	 * @param isRewinding 是否为rewinding
+	 */
+	public RelativePersistentBasicTableModel(EntityService entityService,
+			T rootedObj, String relativeProName, boolean isRewinding) {
+		this.rootedObj = rootedObj;
+		this.relativeProName = relativeProName;
+		this.entityService = entityService;
+		this.isRewinding=isRewinding;
+	}
+	//...
+	private Collection getRelativeCollection() {	//通过反射创建集合，此时集合中无元素
+		return (Collection) BeanUtils.getProperty(rootedObj, relativeProName);
+	}
+	
+	/**
+	 * 获得相关联记录
+	 */
+	public Iterator getCurrentPageRows(final int nFirst, final int nPageSize,
+			final ITableColumn column, final boolean sort) {
+		if(isRewinding){
+			return null;
+		}
+		
+		final Collection c = this.getRelativeCollection();
+		if (c == null) {
+			return Collections.EMPTY_LIST.iterator();
+		}
+
+		return ((Iterator) ((HibernateObjectRelativeUtils) this.entityService
+				.getObjectRelativeUtils()).getHibernateTemplate().execute(
+				new HibernateCallback() {
+
+					public Object doInHibernate(Session session)
+							throws HibernateException, SQLException {
+						String orderStr = "";
+
+						if (column != null) {
+							orderStr = "order by " + column.getColumnName()
+									+ (sort ? " " : " desc");
+						}
+						Query query = createQuery(session,c,null,orderStr);
+
+						query.setFirstResult(nFirst);
+						query.setMaxResults(nPageSize);
+
+						return query.iterate();
+					}
+				}));
+	}
+	//提供对关联列表的查询
+	private Query  createQuery(Session session,Collection c,String selectStr,String orderStr){
+		//TODO 考虑缓存，创建尽可能少的对象
+		
+		
+		StringBuffer sb=new StringBuffer();
+		if(selectStr!=null){
+			sb.append(selectStr).append(" ");
+		}
+			
+		Query query;
+		if(callback!=null){
+			//========  考虑此处采用Example方式查询.
+			Criteria criteria=callback.createCriteria(session);
+			
+			//附加查询条件
+			callback.appendCriteria(criteria);
+			String rootEntityName = ((CriteriaImpl) criteria).getEntityOrClassName();
+			CriteriaQueryTranslator criteriaQuery = new CriteriaQueryTranslator(
+					(SessionFactoryImplementor)session.getSessionFactory(), 
+					( CriteriaImpl)criteria, 
+					rootEntityName, 
+					Criteria.ROOT_ALIAS
+				);
+			String where = criteriaQuery.getWhereCondition();
+			QueryParameters qps=criteriaQuery.getQueryParameters();
+			
+			//当Criteria里面的值不为空时，则增加where条件语句
+			if(where != null && where.length()>0){
+				sb.append("where ").append(where).append(" ");
+			}
+			if(orderStr!=null){
+				sb.append(orderStr);
+			}
+			query = session.createFilter(c,sb.toString()).setParameters
+				(qps.getPositionalParameterValues(),qps.getPositionalParameterTypes());
+		}else{
+			if(orderStr!=null){
+				sb.append(orderStr);
+			}
+			query = session.createFilter(c,
+					sb.toString());
+				
+		}
+		
+		return query;
+		
+	}
+}
+BeanUtils类
+
+通过beanutils.PropertyUtils.getProperty获得ognl中的model与model的关系
+
+public class BeanUtils {
+	static {
+
+		//only for opensymphony oscore
+		System.setProperty("bean.provider", "ognl");
+
+	}
+	//...
+	/**
+	 * 得到bean的属性值。
+	 * @param bean bean.
+	 * @param pro 属性的名称.
+	 * @return 属性值.
+	 */
+	public static Object getProperty(Object bean, String pro) {
+		try {
+			return org.apache.commons.beanutils.PropertyUtils.getProperty(bean,pro);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	//...
+}
+记录显示时，通过getRelativeObject将many显示出来
+
+7.3.3. Many修改与删除
+
+7.3.3.1. many的修改
+
+从oneForm进入修改页面
+
+使用DirectLink组建，用ognl将one、要修改的many和路径加入属性中，监听doEditRelativeEntityAction方法
+
+<td><a href="#" jwcid="@DirectLink" parameters="ognl:{entity,relativeObject,'one2many/manyForm'}" 
+listener="listener:doEditRelativeEntityAction"><span key="doEditRelativeAction" /></a></td>
+抽象类AbstractManyEntityFormPage
+
+使用RelativeObjectOperator类实现IRelativeObjectOperator接口，同添加many的流程(doNewRelativeAction)
+
+/**
+ * 编辑一个关联对象的操作。
+ * <p>适用于one-to-many的操作。
+ * @param obj 供操作的对象。
+ * @param e 关联的对象。
+ * @param pageName 转向的页面名称。
+ * @return 操作后返回的页面。
+ * @since 2.0.5
+ */
+@SuppressWarnings("unchecked")
+public IPage doEditRelativeEntityAction(T obj,E e,String pageName){
+	return this.getRelativeObjectOperator().doEditRelativeEntityAction(obj, e, pageName);
+}
+从manyList进入修改页面
+
+<a parameters="ognl:entity" listener="listener:doEditEntityAction" jwcid="@DirectLink" 
+	href="oneForm.html"><span key="link.edit">Edit</span>
+</a>
+抽象类AbstractRelativeEntityListPage
+
+/**
+ * @see corner.orm.tapestry.page.AbstractEntityListPage#doEditEntityAction(java.lang.Object)
+ */
+@SuppressWarnings("unchecked")
+@Override
+public IPage doEditEntityAction(E entity) {		//同AbstractManyEntityFormPage.doEditRelativeEntityAction
+	return this.getRelativeObjectOperator().doEditRelativeEntityAction
+			(this.getRootedObject(),entity,this.getEntityFormPageStr());
+}
+7.3.3.2. many的删除
+
+从oneForm删除
+
+<td><a href="#" jwcid="@DirectLink" parameters="ognl:{relativeObject}" 
+	listener="listener:doDeleteRelativeEntityAction"><span key="doDeleteRelativeAction" /></a></td>
+抽象类AbstractManyEntityFormPage
+
+/**
+ * 删除的关联对象。
+ * <p>通常用于在one-to-many的时候删除many端的对象。
+ * @param e 关联的对象。
+ * @return 当前页面。
+ */
+@SuppressWarnings("unchecked")
+public IPage doDeleteRelativeEntityAction(E e){
+	this.getEntityService().deleteEntities(e);
+	return this;
+}
+从manyList删除
+
+调用父类AbstractEntityListPage的doDeleteEntityAction，同one删除
+
+<a parameters="ognl:entity" listener="listener:doDeleteEntityAction" jwcid="@DirectLink" href="#">
+  <span key="link.delete">Delete</span>
+</a>
+第 8 章 Many to Many
+
+8.1. 基础代码
+
+注意
+
+本章介绍Many to Many操作，由于不像前两章容易区分，所以用一个many用A表示另一个many用B表示。
+
+8.1.1. 建立Model
+
+A.java
+
+A继承AbstractModel类(one模式中创建的)
+
+@Entity(name="many2manyAA")		//表名设定为many2manyAA
+@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
+public class A extends AbstractModel{
+	private static final long serialVersionUID = -4521820026127298625L;
+	/**
+	 * 和B对象之间的many-2-many的关联
+	 * @hibernate.set cascade="none" table="AB" lazy="true"
+	 * @hibernate.key column="A"
+	 * @hibernate.many-to-many class="corner.demo.model.many2many.B" column="B"
+	 */
+	
+	private List<B> bs;		//存储与A相关联的B关系
+
+	/**
+	 * @return Returns the bs.
+	 */
+	@ManyToMany		//设置表关系
+	@JoinTable(name="AA_BB",joinColumns={@JoinColumn(name="A_ID")},	//中间表设置为AA_BB
+	        inverseJoinColumns={@JoinColumn(name="B_ID")})	//连接列名为A_ID，第二个列名为B_ID
+	
+	public List<B> getBs() {
+		return bs;
+	}
+
+	public void setBs(List<B> bs) {
+		this.bs = bs;
+	}
+}
+B.java
+
+B同样继承AbstractModel类
+
+@Entity(name="many2manyBB")	//表名设定为many2manyAA
+@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
+public class B extends AbstractModel{
+	private static final long serialVersionUID = -1109811268307875945L;
+	/**
+	 * 和A对象之间的many-2-many的关联
+	 * @hibernate.set cascade="none" table="AB" lazy="true"
+	 * @hibernate.key column="B"
+	 * @hibernate.many-to-many class="corner.demo.model.many2many.A" column="A"
+	 */
+	
+	private List<A> as;		//存储与B相关联的A关系
+
+	/**
+	 * @return Returns the as.
+	 */
+	@ManyToMany
+	@JoinTable(name="AA_BB",joinColumns={@JoinColumn(name="B_ID")},	//中间表设置为AA_BB
+	        inverseJoinColumns={@JoinColumn(name="A_ID")})	//连接列名为B_ID，第二个列名为A_ID
+	public List<A> getAs() {
+		return as;
+	}
+	public void setAs(List<A> as) {
+		this.as = as;
+	}
+}
+8.1.2. A端操作需要的文件
+
+index.html
+
+<a jwcid="@PageLink" page="many2many/AList">对A的操作</a><br/>
+<a jwcid="@PageLink" page="many2many/BList">对B的操作</a><br/>
+AList.html
+
+<span jwcid="@DemoBorder">
+    <center>
+      <a listener="listener:doNewEntityAction" jwcid="@DirectLink" href="AForm.html">
+      	<span key="link.add">add</span></a>
+	  &nbsp;&nbsp;
+	  <a href="#" jwcid="@PageLink" page="many2many/BList"><span>Goto BList</span></a>
+    </center>
+    <div jwcid="@contrib:TableView" columns="shortName" element="div" source="ognl:source" persist="client">
+      <table>
+        <tr>
+          <td><span key="name">name</span></td>
+          <td><span key="link.edit">edit</span></td>
+          <td><span key="link.delete">delete</span></td>
+        </tr>
+        <tr row="ognl:entity" jwcid="@contrib:TableRows" element="tr">
+          <td><span jwcid="@Insert" value="ognl:entity.name">name</span></td>
+          <td>
+            <a parameters="ognl:entity" listener="listener:doEditEntityAction" 
+            		jwcid="@DirectLink" href="AForm.html">
+              <span key="link.edit">Edit</span>
+            </a>
+          </td>
+          <td>
+            <a parameters="ognl:entity" listener="listener:doDeleteEntityAction" jwcid="@DirectLink" href="#">
+              <span key="link.delete">Delete</span>
+            </a>
+          </td>
+        </tr>
+      </table>
+      <div jwcid="@contrib:TablePages" element="div"/>
+    </div>
+</span>
+AList.page
+
+<page-specification class="corner.orm.tapestry.page.PoListPage">
+  <description>corner.demo.model.many2many.A Form Page</description>
+  <bean class="org.apache.tapestry.valid.ValidationDelegate" name="delegate"/>
+  <property initial-value="new corner.demo.model.many2many.A()" name="entity"/>
+</page-specification>
+AForm.html
+
+<span jwcid="@DemoBorder">
+	<a jwcid="@PageLink" page="many2many/AList">Return A List</a>
+
+    <form jwcid="AForm" action="AList.html">
+      <table>
+        <tr>
+          <td><span key="name">name</span></td>
+          <td><input jwcid="nameField" id="name" name="name"/></td>
+        </tr>
+      </table>
+      <input jwcid="@Submit" type="Submit" value="message:button.Okay"/>
+      <input jwcid="@Any" type="Button" value="message:button.Cancle" 
+      		onClick="javascript:tapestry.form.cancel(this.form);"/>
+    </form>
+    <br/>
+    <div jwcid="@contrib:TableView" element="span" columns="name,!DeleteRelative"
+     	source="ognl:getSource('bs')" pageSize="5" persist="client">
+   <fieldset>
+   <legend>A-B many-to-many,A关联的B列表
+   		<a parameters="ognl:{entity,'many2many/ABList'}" 
+   		listener="listener:doNewRelativeAction" jwcid="@DirectLink" href="BForm.html">Add A to B</a>
+   	</legend> 
+	<table width="100%" align="center" border="1">
+		<tr><span jwcid="@contrib:TableColumns" element="th"/></tr>
+		<tr jwcid="@contrib:TableRows" element="tr" row="ognl:relativeObject">
+			<td><span jwcid="@Insert" value="ognl:relativeObject.name" /></td>
+			<td><a href="#" jwcid="@DirectLink" parameters="ognl:{entity,relativeObject}" 
+				listener="listener:doDeleteRelativeAction"><span key="doDeleteRelativeAction" />
+				</a></td>
+		</tr>
+	</table>
+    </fieldset>
+</div>
+</span>
+AForm.page
+
+<page-specification class="corner.orm.tapestry.page.relative.ReflectMultiManyEntityFormPage">
+  <description>corner.demo.model.many2many.A Form Page</description>
+  <bean class="org.apache.tapestry.valid.ValidationDelegate" name="delegate"/>
+  <property persist="entity" initial-value="new corner.demo.model.many2many.A()" name="entity"/>
+  <component type="Form" id="AForm">
+    <binding value="ognl:beans.delegate" name="delegate"/>
+    <binding value="ognl:true" name="clientValidationEnabled"/>
+    <binding value="listener:doSaveEntityAction" name="success"/>
+    <binding value="listener:doCancelEntityAction" name="cancel"/>
+    <binding value="listener:false" name="focus"/>
+  </component>
+  <component type="TextField" id="nameField">
+    <binding value="message:name" name="displayName"/>
+    <binding value="translator:string" name="translator"/>
+    <binding value="ognl:entity.name" name="value"/>
+  </component>
+</page-specification>
+ABList.html
+
+<span jwcid="@DemoBorder">
+	<form jwcid="ABForm">
+		<div jwcid="@contrib:TableView" columns="!checkbox,name" element="div"
+	        persist="client" source="ognl:source" pageSize="5">
+			<table width="200" border="1" align="center">
+			  <tr><span jwcid="@contrib:TableColumns" element="th"/></tr>
+			  <tr jwcid="@contrib:TableRows" elment="tr" row="ognl:entity" converter="ognl:converter">
+			  	<th align="center"><input jwcid="@Checkbox" value="ognl:checkboxSelected" /></th>
+				<td align="center"><span jwcid="@Insert" value="ognl:entity.name" /></td>
+			  </tr>
+			  <tr><td colspan="6" align="center"><div jwcid="@contrib:TablePages" /></td></tr>
+			  <tr><td colspan="6" align="center"><input type="submit" value="Submit"></td></tr>
+			</table>
+		</div>
+	</form>
+</span>
+ABList.page
+
+<page-specification class="corner.orm.tapestry.page.relative.ReflectRelativeSelectionListPage">
+	<!-- 设定返回的根页面 -->
+    <inject property="rootFormPage" type="page" object="many2many/AForm"/>
+    <property initial-value="new corner.demo.model.many2many.B()" name="entity"/>
+    <component id="ABForm" type="Form">
+    	<binding name="listener" value="listener:doNewRelativeAction"/>
+	</component>
+</page-specification>
+8.1.3. B端操作需要的文件
+
+BList.html
+
+<span jwcid="@DemoBorder">
+    <center>
+      <a listener="listener:doNewEntityAction" jwcid="@DirectLink" href="BForm.html">
+      	<span key="link.add">add</span></a>
+		&nbsp;&nbsp;
+	  <a href="#" jwcid="@PageLink" page="many2many/AList"><span>Goto AList</span></a>
+    </center>
+    <div jwcid="@contrib:TableView" columns="shortName" element="div" source="ognl:source" persist="client">
+      <table>
+        <tr>
+          <td><span key="name">name</span></td>
+          <td><span key="link.edit">edit</span></td>
+          <td><span key="link.delete">delete</span></td>
+        </tr>
+        <tr row="ognl:entity" jwcid="@contrib:TableRows" element="tr">
+          <td><span jwcid="@Insert" value="ognl:entity.name">name</span></td>
+          <td>
+            <a parameters="ognl:entity" listener="listener:doEditEntityAction" 
+            	jwcid="@DirectLink" href="BForm.html"><span key="link.edit">Edit</span>
+            </a>
+          </td>
+          <td>
+            <a parameters="ognl:entity" listener="listener:doDeleteEntityAction" 
+            	jwcid="@DirectLink" href="#"><span key="link.delete">Delete</span>
+            </a>
+          </td>
+        </tr>
+      </table>
+      <div jwcid="@contrib:TablePages" element="div"/>
+    </div>
+</span>
+BList.page
+
+<page-specification class="corner.orm.tapestry.page.PoListPage">
+  <description>corner.demo.model.many2many.B Form Page</description>
+  <bean class="org.apache.tapestry.valid.ValidationDelegate" name="delegate"/>
+  <property initial-value="new corner.demo.model.many2many.B()" name="entity"/>
+  <property persist="client" initial-value="new corner.demo.model.many2many.B()" name="queryEntity"/>
+</page-specification>
+BForm.html
+
+<span jwcid="@DemoBorder">
+    <a listener="listener:doCancelEntityAction" jwcid="@DirectLink" href="BList.html">Return B List</a>
+    <form jwcid="BForm" action="BList.html">
+      <table>
+        <tr>
+          <td><span key="name">name</span></td>
+          <td><input jwcid="nameField" id="name" name="name"/></td>
+        </tr>
+      </table>
+      <input jwcid="@Submit" type="Submit" value="message:button.Okay"/>
+      <input jwcid="@Any" type="Button" value="message:button.Cancle" 
+      		onClick="javascript:tapestry.form.cancel(this.form);"/>
+    </form>
+    <br/>
+    <div jwcid="@contrib:TableView" element="span" columns="name,!DeleteRelative"
+     	source="ognl:getSource('as')" pageSize="5" persist="client">
+   <fieldset>
+   <legend>B-A many-to-many,B关联的A列表 
+   		<a parameters="ognl:{entity,'many2many/BAList'}" listener="listener:doNewRelativeAction" 
+   		jwcid="@DirectLink" href="BForm.html">Add B to A</a></legend> 
+   
+	<table width="100%" align="center" border="1">
+		<tr>
+			<span jwcid="@contrib:TableColumns" element="th"/>
+		</tr>
+		<tr jwcid="@contrib:TableRows" element="tr" row="ognl:relativeObject">
+			<td><span jwcid="@Insert" value="ognl:relativeObject.name" /></td>
+			<td><a href="#" jwcid="@DirectLink" parameters="ognl:{entity,relativeObject}" 
+				listener="listener:doDeleteRelativeAction"><span key="doDeleteRelativeAction" />
+				</a></td>
+		</tr>
+	</table>
+    </fieldset>
+</div>
+</span>
+
+BForm.page
+
+<page-specification class="corner.orm.tapestry.page.relative.ReflectMultiManyEntityFormPage">
+  <description>corner.demo.model.many2many.B Form Page</description>
+  <bean class="org.apache.tapestry.valid.ValidationDelegate" name="delegate"/>
+  <property persist="entity" initial-value="new corner.demo.model.many2many.B()" name="entity"/>
+  <component type="Form" id="BForm">
+    <binding value="ognl:beans.delegate" name="delegate"/>
+    <binding value="ognl:true" name="clientValidationEnabled"/>
+    <binding value="listener:doSaveEntityAction" name="success"/>
+    <binding value="listener:doCancelEntityAction" name="cancel"/>
+    <binding value="listener:false" name="focus"/>
+  </component>
+  <component type="TextField" id="nameField">
+    <binding value="message:name" name="displayName"/>
+    <binding value="translator:string" name="translator"/>
+    <binding value="ognl:entity.name" name="value"/>
+  </component>
+</page-specification>
+</page-specification>
+BAList.html
+
+<span jwcid="@DemoBorder">
+	<form jwcid="BAForm">
+		<div jwcid="@contrib:TableView" columns="!checkbox,name" element="div"
+	        persist="client" source="ognl:source" pageSize="5">
+			<table width="200" border="1" align="center">
+			  <tr><span jwcid="@contrib:TableColumns" element="th"/></tr>
+			  <tr jwcid="@contrib:TableRows" elment="tr" row="ognl:entity" converter="ognl:converter">
+			  	<th align="center"><input jwcid="@Checkbox" value="ognl:checkboxSelected" /></th>
+				<td align="center"><span jwcid="@Insert" value="ognl:entity.name" /></td>
+			  </tr>
+			  <tr><td colspan="6" align="center"><div jwcid="@contrib:TablePages" /></td></tr>
+			  <tr><td colspan="6" align="center"><input type="submit" value="Submit"></td></tr>
+			</table>
+		</div>
+	</form>
+</span>
+BAList.page
+
+<page-specification class="corner.orm.tapestry.page.relative.ReflectRelativeSelectionListPage">
+    <!-- 设定返回的根页面 -->
+    <inject property="rootFormPage" type="page" object="many2many/BForm"/>
+    <property initial-value="new corner.demo.model.many2many.A()" name="entity"/>
+	<component id="BAForm" type="Form">
+    	<binding name="listener" value="listener:doNewRelativeAction"/>
+	</component>
+</page-specification>
+8.2. 两表增加关系
+
+注意
+
+many to many中的大部分操作都是使用前两章中描述的one和one to many两种操作方法，唯一有所区别的就是增删改同时操作两张表的时候。
+
+8.2.1. 从A表建立与B表的关联
+
+8.2.1.1. 从AForm传递需要添加的entity
+
+此处使用的ReflectRelativeEntityFormPage调用父类doNewRelativeAction方法，同上一章种添加many的操作一样，这里不在过多描述。
+
+doNewRelativeAction调用后会将页面转向到ABList，准备为选中的entity加入与B的关系。
+
+<legend>A-B many-to-many,A关联的B列表 <a parameters="ognl:{entity,'many2many/ABList'}" 
+listener="listener:doNewRelativeAction" jwcid="@DirectLink" href="BForm.html">Add A to B</a></legend>
+8.2.1.2. 初始化ABList页面信息
+
+获得B数据源
+
+B的entity集合已经在ABList.page中配置好了。现在我们从ReflectRelativeSelectionListPage一路找寻getSource方法，大家可能已经发现我们熟悉的父类AbstractEntityListPage，熟悉的类实例PersistentBasicTableModel，这些都是最初one的查询中讲述过的，又是老声长谈的东西。
+
+public abstract class AbstractEntityListPage<T> extends AbstractEntityPage<T> implements
+	 IListablePage<T>,IPersistentQueriable,IRelativeObjectOperatorSupport {
+	//...
+	public  IBasicTableModel getSource(){
+		return new PersistentBasicTableModel(this.getEntityService(),this,
+			this.getRequestCycle().isRewinding());
+	}
+	//...
+}
+使用Checkbox组建
+
+通过调用checkboxSelected方法为Checkbox附值，在ReflectRelativeSelectionListPage中可以找到被重写了的checkboxSelected方法
+
+public abstract class ReflectRelativeSelectionListPage extends
+		AbstractRelativeSelectionListPage<Object,Object> {
+	//....
+	/**
+	 * 当前的本实体是否为反向控制端。
+	 * 默认为false。
+	 * @return 判断当前的根实体是否为反向控制端。
+	 */
+	public abstract boolean isInverse();
+	public abstract void setInverse(boolean inverse);
+	/**
+	 * 判断是否选中。
+	 * @return 是否选中
+	 * @see corner.orm.tapestry.page.AbstractEntityListPage#isCheckboxSelected()
+	 */
+	public boolean isCheckboxSelected(){
+		//在model类文件中定义的inverseJoinColumns
+		if(isInverse())
+			return this.getRelationshipCollection(this.getEntity()).contains(this.getRootedObject());
+		else{
+			//一般不反向控制,从getRelationshipCollection返回一个Collection判断是否包括当前entity
+			return this.getRelationshipCollection(this.getRootedObject()).contains(this.getEntity());
+		}
+	}
+	/**
+	 * 根据给定的实体和属性名称取得对应的属性值
+	 * <p>本方法中是根据传入的实体和关联的属性名称取得该实体关联的实体的集合
+	 * @param obj
+	 * @return
+	 */
+	private Collection getRelationshipCollection(Object obj){
+		Collection c= (Collection) BeanUtils.getProperty(obj,this.getRelativePropertyName());
+		if(c==null){
+			throw new IllegalStateException
+				("从["+obj+"] 通过属性 ["+this.getRelativePropertyName()+"] 得到的集合为空!");
+		}
+		return c;
+	}
+	/**
+	 * 得到关联实体的名称，作为集合的复数。
+	 * <p>譬如：users,groups等。
+	 * 假设我们从User实体进行编辑，进入UserGroup页面，此时UserGroup页面将对应本类，对于该页面来说
+	 * User实体为:this.getRootedObject(),而Group实体为:this.getEntity().当isInverse()为true的时候，
+	 * 返回"users",当isInverse()为false的时候，返回"groups",因为默认情况下isInverse()为false，因此默认返回"groups"
+	 * @return 关联的额属性名称，一般为复数形式。
+	 */
+	protected String getRelativePropertyName()
+	{
+		if(isInverse()){
+			return EntityConverter.getClassNameAsCollectionProperty(this.getRootedObject());
+		}else{
+			return EntityConverter.getClassNameAsCollectionProperty(this.getEntity());
+		}
+	}
+	//....
+}
+工具类EntityConverter
+
+public class EntityConverter {
+	//...
+	/**
+	 * 通过给定的类来得到类名的复数属性，譬如: com.abc.AbCd,将返回 abCds
+	 * @param object 待处理的对象。
+	 * @return 类名的复数属性。
+	 */
+	public static String getClassNameAsCollectionProperty(Object object) {
+		
+		return getClassNameAsPropertyName(object)+"s";
+
+	}
+	/**
+	 * 通过对象来得到classd的名称，譬如 com.abc.Abc，返回为：abc
+	 * @param object 待处理的对象。
+	 * @return 属性名称。
+	 */
+	public static String getClassNameAsPropertyName(Object object){
+		String name=getShortClassName(object);
+		StringBuffer sb = new StringBuffer();
+		sb.append(Character.toLowerCase(name.charAt(0)));
+		sb.append(name.substring(1));
+		return sb.toString();
+	}
+	/**
+	 * 得到类的不含包名的名称。
+	 * <p>譬如 com.abc.A 将返回 A
+	 * @param obj 对象。
+	 * @return 不含包名的类名
+	 */
+	public static  String getShortClassName(Object obj) {
+		String name = EntityService.getEntityClass(obj).getName();
+
+		name = name.substring(name.lastIndexOf(".") + 1);
+		return name;
+	}
+	//...
+}
+8.2.1.3. 更新A与B的关联
+
+抽象类AbstractRelativeSelectionListPage
+
+ReflectRelativeSelectionListPage的父类AbstractRelativeSelectionListPage中可以找到doNewRelativeAction
+
+public abstract class AbstractRelativeSelectionListPage<T,E> extends AbstractEntityListPage<E> 
+	implements IPageRooted<T,E>{
+	//...
+	/**
+	 * 新增加关系的操作。
+	 * @return 增加关系后的页面。
+	 */
+	public IPage doNewRelativeAction(){
+		this.flushHibernate();	//调用父类AbstractEntityPage的方法
+		return this.goReturnPage();
+	}
+	/**
+	 * 返回到rootformPage {@link #getRootFormPage()}
+	 * 
+	 * @return
+	 */
+	public IPage goReturnPage(){
+		EntityPage<T> page=this.getRootFormPage();
+		if(page == null){
+			throw new IllegalStateException("RootFormPage 为空！");
+		}
+		if(page instanceof IPageRooted){
+			((IPageRooted<T,E>) page).setRootedObject(this.getRootedObject());
+		}else{
+			page.setEntity(this.getRootedObject());
+		}
+		return page;
+	}
+	//...
+}
+抽象类AbstractEntityPage
+
+从getEntityService中获得一个实现了ObjectRelativeUtils接口的实例，把这个实例强制转换为实现了ObjectRelativeUtils接口的HibernateObjectRelativeUtils，由于HibernateObjectRelativeUtils继承了HibernateDaoSupport所以代码“((HibernateObjectRelativeUtils) this.getEntityService().getObjectRelativeUtils())”就和使用HibernateDaoSupport的一个实例一样
+
+public abstract class AbstractEntityPage<T> extends BasePage implements
+		EntityPage<T>,IBlobPage {
+	//...
+	/**
+	 * 对hibernate进行flush操作。
+	 */
+	protected void flushHibernate() {
+		((HibernateObjectRelativeUtils) this.getEntityService()
+				.getObjectRelativeUtils()).getHibernateTemplate().flush();
+	}
+	
+	//...
+}
+8.2.1.4. 删除关联
+
+删除步骤
+
+(1)单击AForm页面中删除按钮
+(2)调用AbstractManyEntityFormPage.doDeleteRelativeAction(T t,E e)方法
+(3)调用ReflectMultiManyEntityFormPage.doDeleteRelativeAction(T t, E e, String relativeName)方法
+(4)调用EntityConverter.getShortClassName方法
+(5)调用AbstractManyEntityFormPage.doDeleteRelativeAction(T t, E e, String relativeName)方法
+(6)调用AbstractManyEntityFormPage.deleteRelationship方法
+(7)调用AbstractEntityPage.flushHibernate方法
+从AForm删除
+
+<td><a href="#" jwcid="@DirectLink" parameters="ognl:{entity,relativeObject}" 
+	listener="listener:doDeleteRelativeAction"><span key="doDeleteRelativeAction" /></a></td>
+抽象类AbstractManyEntityFormPage
+
+	/**
+	 * 响应删除关联关系的操作。
+	 * @param t 当前的实体对象。
+	 * @param e 关联关系实体对象。
+	 * @return 删除关联关系后的返回页面。
+	 */
+	public IPage doDeleteRelativeAction(T t,E e){
+		//调用ReflectMultiManyEntityFormPage类的doDeleteRelativeAction方法
+		this.doDeleteRelativeAction(t, e, null);
+		return this;
+	}
+	/**
+	 * 响应删除关联关系的操作。
+	 * @param t 当前的实体对象。
+	 * @param e 关联关系实体对象。
+	 * @param relativeName 关联关系的名程
+	 * @return 删除关联关系后的返回页面。
+	 */
+	public IPage doDeleteRelativeAction(T t,E e,String relativeName){
+		this.deleteRelationship(t,e,relativeName);
+		this.setEntity(t);
+		this.flushHibernate();	//更新关系表
+		return this;
+	}
+	/**
+	 * 删除对象之间的关联关系。
+	 * @param t 当前的实体对象。
+	 * @param e 关联的关系实体对象。
+	 * @param relativeName 关联关系的名程
+	 */
+	@SuppressWarnings("unchecked")
+	protected void deleteRelationship(T t,E e, String relativeName){
+		if(relativeName==null){
+			throw new IllegalArgumentException("relativeName is null!");
+		}
+		//通过反射获得集合
+		Collection<Object> c = (Collection<Object>) BeanUtils.getProperty(t, relativeName);
+		if(c==null){
+			throw new IllegalStateException("从["+t+"],通过关系["+relativeName+"]得到的集合为空！");
+		}
+		c.remove(e);	//删除关系
+		this.getEntityService().saveOrUpdateEntity(t);	//由于在model中的极连关系，所以更新t就会更新关系
+	}
+	
+ReflectMultiManyEntityFormPage类
+
+public abstract class ReflectMultiManyEntityFormPage extends
+		AbstractMultiManyEntityFormPage<Object> {
+	//...
+	@SuppressWarnings("unchecked")
+	protected void deleteRelationship(Object t, Object e, String relativeName) {
+		if(relativeName==null){
+			// 得到属性的名称，譬如：groups,users 注意后面的复数s。
+			String name = EntityConverter.getShortClassName(e);
+	
+			StringBuffer sb = new StringBuffer();
+			sb.append(Character.toLowerCase(name.charAt(0)));
+			sb.append(name.substring(1));
+			sb.append("s");
+			relativeName=sb.toString();
+		}
+		super.deleteRelationship(t, e, relativeName);
+	}
+	//...
+}
+8.2.2. 从B表建立与A表的关联
+
+同从A表建立与B表的关联表的做法一样
