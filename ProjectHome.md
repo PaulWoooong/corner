@@ -1,0 +1,2 @@
+Corner是一个快速开发J2EE应用的框架，采用spring作为核心service的管理，采用hibernate作为持久化层，采用tapestry作为其展现层.
+
